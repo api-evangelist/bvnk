@@ -1,0 +1,48 @@
+generated: '2026-08-08'
+method: searched
+source: https://www.bvnk.com/changelog
+url: https://www.bvnk.com/changelog
+scheme: undated product-update posts, filterable by product line
+dated: false
+note: BVNK publishes a marketing-site changelog of product updates, paginated across 12 pages and filterable by
+  Managed payments / Self-managed payments / Embedded / AI / Compliance / Direct. Entries carry no visible publication
+  date and no version number, so no version or date is recorded below — only the entry titles and categories as
+  published. There is no developer-facing API changelog on docs.bvnk.com.
+categories:
+- Managed payments
+- Self-managed payments
+- Embedded
+- AI
+- Compliance
+- Direct
+entries:
+- title: Virtual wallet management now live
+  categories:
+  - Direct
+  - Embedded
+  - Managed payments
+  - Compliance
+  highlights: Create, read, update, block, unblock and terminate fiat and crypto wallets via the portal or API.
+- title: Named USD wallets now support Swift
+  categories:
+  - Embedded
+  - Managed payments
+  highlights: Send and receive USD internationally in your own name with automatic reconciliation; Swift, stablecoins,
+    ACH and Fedwire from one wallet.
+- title: Streamlined business onboarding for your customers
+  categories:
+  - Embedded
+  breaking: false
+  highlights: Customer Onboarding API v2 for embedded partners — submit business data in one request, upload documents
+    and sign agreements in any order, full webhook coverage to eliminate polling.
+- title: Merchant Portal improvements for payments and channels
+  categories:
+  - Managed payments
+  highlights: Edit channel references and delete channels in the portal, partial-text channel search, UUID lookup
+    for crypto payment search, beneficiary and network shown during 4-eyes payout approval.
+- title: Channel creation webhook and reversal traceability
+  categories:
+  - Embedded
+  highlights: Channel webhooks now fire at creation and include customer details; reversal entries carry the original
+    payout reference and UUID.
+entries_note: Most recent page only (5 of ~12 pages). The live page is the source of truth.

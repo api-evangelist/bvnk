@@ -1,0 +1,39 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.bvnk.com/bvnk/use-cases/cards/display-card-details
+families:
+- family: Card details
+  name: '@bvnk/card-details-sdk'
+  type: web-sdk
+  loader: npm install @bvnk/card-details-sdk
+  framework: framework-agnostic
+  package: https://www.npmjs.com/package/@bvnk/card-details-sdk
+  docs: https://docs.bvnk.com/bvnk/use-cases/cards/display-card-details
+  description: Renders PAN, CVV and expiry for an issued card inside a secure iframe so sensitive card data never
+    touches the integrator DOM. Paired with the two-step sensitive-card-details token flow.
+  status: beta
+- family: Hosted checkout
+  name: BVNK hosted payment page
+  type: hosted-surface
+  docs: https://docs.bvnk.com/bvnk/use-cases/stablecoin-payments-for-platforms/get-payment
+  description: BVNK-hosted checkout for payment links and channels; integrators may instead build their own UI against
+    the channel spot-rate and payment endpoints.
+- family: Embedded Express wallet
+  name: Express wallet session
+  type: hosted-surface
+  operation: create-express-session
+  docs: https://docs.bvnk.com/bvnk/use-cases/xpress-store-funds/express-overview
+  description: Creates a wallet session URL that embeds a branded stablecoin wallet UI for the partner's customers;
+    the URL is returned in walletSessionUrl.
+- family: Webhook signature validator
+  name: Webhook validator
+  type: browser-tool
+  docs: https://docs.bvnk.com/bvnk/references/webhook-validator
+  description: Client-side tool that validates a BVNK webhook signature in the browser without sending payloads
+    anywhere.
+- family: Workflow automation
+  name: n8n-nodes-bvnk
+  type: integration-node
+  package: https://www.npmjs.com/package/n8n-nodes-bvnk
+  repository: https://github.com/bvnk/bvnk-n8n
+  description: n8n community node exposing BVNK operations inside n8n workflows.

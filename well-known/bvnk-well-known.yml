@@ -1,0 +1,72 @@
+generated: '2026-08-08'
+method: probed
+source: live GET of /.well-known/* on every BVNK and Layer1 host in apis.yml and the OpenAPI servers[]
+note: api.bvnk.com, api.sandbox.bvnk.com, api.layer1.com and api.sandbox.layer1.com answer 401 to every anonymous
+  request including /.well-known/*, so nothing is discoverable there. docs.bvnk.com is a Docusaurus SPA that answers
+  200 with an HTML shell for every unknown path — those 200s are soft-404s and are recorded as such, never as hits.
+  The two real hits are the Keycloak OIDC discovery documents for the BVNK realm on the Layer1 auth hosts.
+hosts:
+- host: https://auth.layer1.com
+  documents:
+  - path: /auth/realms/bvnk/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: bvnk-openid-configuration.json
+    kind: OpenID Connect Discovery
+    issuer: https://auth.layer1.com/auth/realms/bvnk
+    scopes_supported: 156
+- host: https://auth.sandbox.layer1.com
+  documents:
+  - path: /auth/realms/bvnk/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: bvnk-sandbox-openid-configuration.json
+    kind: OpenID Connect Discovery
+    issuer: https://auth.sandbox.layer1.com/auth/realms/bvnk
+- host: https://api.bvnk.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+- host: https://api.sandbox.bvnk.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 401
+- host: https://www.bvnk.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    body: Invalid .well-known request
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://docs.bvnk.com
+  documents:
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    file: ../llms/bvnk-llms.txt
+    kind: llms.txt
+    entries: 272
+  - path: /.well-known/security.txt
+    status: 200
+    soft_404: true
+    note: Docusaurus SPA shell (text/html), not a security.txt
+  - path: /.well-known/agent-card.json
+    status: 200
+    soft_404: true
+    note: Docusaurus SPA shell (text/html), rejected as an agent card
+security_txt: false
+api_catalog: false
+ai_plugin: false
+agent_card: false

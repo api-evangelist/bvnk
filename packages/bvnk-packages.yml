@@ -1,0 +1,120 @@
+generated: '2026-08-08'
+method: searched
+source: https://github.com/bvnk + https://www.npmjs.com/org/bvnk
+note: 'BVNK ships client libraries from its own GitHub organization rather than from language package registries:
+  the six 2023-era SDKs are OpenAPI-generated repos with no npm/PyPI/Maven/Packagist/RubyGems/NuGet publication
+  found. Only two BVNK packages are published to a registry, both on npm.'
+packages:
+- language: javascript
+  registry: npm
+  name: '@bvnk/card-details-sdk'
+  version: 0.0.14
+  url: https://www.npmjs.com/package/@bvnk/card-details-sdk
+  install: npm install @bvnk/card-details-sdk
+  official: true
+  description: Framework-agnostic web SDK for displaying sensitive card details via secure iframe.
+- language: typescript
+  registry: npm
+  name: n8n-nodes-bvnk
+  version: 1.0.1
+  url: https://www.npmjs.com/package/n8n-nodes-bvnk
+  install: npm install n8n-nodes-bvnk
+  official: true
+  source_code: https://github.com/bvnk/bvnk-n8n
+  description: n8n community node for the BVNK stablecoin payments API.
+- language: typescript
+  registry: npm
+  name: agent-wallet-cli
+  version: 1.4.0
+  url: https://www.npmjs.com/package/agent-wallet-cli
+  install: npx agent-wallet-cli
+  official: true
+  source_code: https://github.com/bvnk/agent-wallet-cli
+  description: Cross-platform CLI wallet for Ethereum and Solana designed for AI-agent integration; supports x402
+    stablecoin payments.
+- language: java
+  registry: github
+  name: bvnk/java-sdk
+  url: https://github.com/bvnk/java-sdk
+  install: git clone https://github.com/bvnk/java-sdk
+  official: true
+  description: OpenAPI-generated Java client for the BVNK API. Ships the source OpenAPI at api/openapi.yaml.
+- language: python
+  registry: github
+  name: bvnk/python-sdk
+  url: https://github.com/bvnk/python-sdk
+  install: git clone https://github.com/bvnk/python-sdk
+  official: true
+  description: OpenAPI-generated Python client for the BVNK API.
+- language: javascript
+  registry: github
+  name: bvnk/javascript-sdk
+  url: https://github.com/bvnk/javascript-sdk
+  install: git clone https://github.com/bvnk/javascript-sdk
+  official: true
+  description: OpenAPI-generated JavaScript client for the BVNK API.
+- language: php
+  registry: github
+  name: bvnk/php-sdk
+  url: https://github.com/bvnk/php-sdk
+  install: git clone https://github.com/bvnk/php-sdk
+  official: true
+  description: OpenAPI-generated PHP client for the BVNK API.
+- language: ruby
+  registry: github
+  name: bvnk/ruby-sdk
+  url: https://github.com/bvnk/ruby-sdk
+  install: git clone https://github.com/bvnk/ruby-sdk
+  official: true
+  description: OpenAPI-generated Ruby client for the BVNK API.
+- language: csharp
+  registry: github
+  name: bvnk/c-sharp-sdk
+  url: https://github.com/bvnk/c-sharp-sdk
+  install: git clone https://github.com/bvnk/c-sharp-sdk
+  official: true
+  description: OpenAPI-generated C# client for the BVNK API.
+- language: java
+  registry: github
+  name: bvnk/layer1-sdk-java8-digital
+  url: https://github.com/bvnk/layer1-sdk-java8-digital
+  official: true
+  description: OpenAPI-generated Java 8 client for the Layer1 Digital Asset API. Ships the source OpenAPI at api/openapi.yaml.
+- language: java
+  registry: github
+  name: bvnk/layer1-sdk-java-auth
+  url: https://github.com/bvnk/layer1-sdk-java-auth
+  official: true
+  description: Java auth helper for the Layer1 platform (OIDC client credentials + HTTP message signatures).
+- language: python
+  registry: github
+  name: bvnk/layer1-sdk-python-digital
+  url: https://github.com/bvnk/layer1-sdk-python-digital
+  official: true
+  description: OpenAPI-generated Python client for the Layer1 Digital Asset API.
+- language: javascript
+  registry: github
+  name: bvnk/layer1-sdk-javascript-digital
+  url: https://github.com/bvnk/layer1-sdk-javascript-digital
+  official: true
+  description: OpenAPI-generated JavaScript client for the Layer1 Digital Asset API. Ships the source OpenAPI as
+    digital.json.
+- language: php
+  registry: github
+  name: bvnk/layer1-sdk-php-digital
+  url: https://github.com/bvnk/layer1-sdk-php-digital
+  official: true
+  description: OpenAPI-generated PHP client for the Layer1 Digital Asset API.
+registries_probed:
+- registry: npm
+  result: 2 first-party packages under @bvnk plus n8n-nodes-bvnk and agent-wallet-cli
+- registry: pypi
+  result: no first-party package (pypi.org/pypi/bvnk/json returned 404)
+- registry: maven-central
+  result: no first-party artifact found
+- registry: rubygems
+  result: no first-party gem found
+- registry: packagist
+  result: no first-party package found
+- registry: nuget
+  result: no first-party package found

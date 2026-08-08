@@ -1,0 +1,3439 @@
+openapi: 3.1.0
+info:
+  description: Layer1 API making management of crypto assets simple and easy
+  title: Digital Asset
+  version: 1.0.0
+servers:
+- description: Staging
+  url: https://api.staging.layer1.com
+tags:
+- description: Create and manage asset pools
+  name: Asset Pool
+- description: Create and manage addresses
+  name: Address
+- description: Create and manage key-pairs
+  name: Key Pair
+- description: Create and manage transactions
+  name: Transaction
+- description: Network fee estimation
+  name: Fee
+- description: Manage screening requests
+  name: Screening
+- description: Create and manage data exports
+  name: Export
+paths:
+  /digital/v1/screenings/action:
+    put:
+      description: Approves or rejects a held transfer based on the provided transfer
+        ID and the destination address ID.
+      operationId: manuallyActionHeldTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualActionRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          description: Invalid request
+        "200":
+          description: Transfer reviewed successfully
+        "410":
+          description: Withdrawal not found or has already been completed
+      security:
+      - oauth2:
+        - screenings:edit
+      - httpSignature: []
+      summary: Approve or reject a held transfer. Deposits can be only approved.
+      tags:
+      - Screening
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/transaction-requests:
+    get:
+      description: Retrieve paginated list of transaction requests
+      operationId: listTransactionRequests
+      parameters:
+      - description: "Query in lucene like format, e.g. reference:REF-12a1. Supported\
+          \ properties: reference, type"
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: asset pool id
+        explode: true
+        in: query
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: current page number
+        explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - description: number of items in a page
+        explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 50
+          format: int32
+          maximum: 500
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultTransactionRequest'
+          description: OK
+      security:
+      - oauth2:
+        - transactions:view
+      - httpSignature: []
+      summary: List transaction requests
+      tags:
+      - Transaction Request
+      x-accepts:
+      - application/json
+    post:
+      description: Create a new blockchain transaction
+      operationId: createTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionRequest'
+          description: Accepted
+      security:
+      - oauth2:
+        - transactions:edit
+      - httpSignature: []
+      summary: Create transaction request
+      tags:
+      - Transaction Request
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/transaction-claims:
+    post:
+      description: Claim an existing blockchain transaction
+      operationId: claimTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionClaimRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          description: OK
+      security:
+      - oauth2:
+        - transactions:edit
+      - httpSignature: []
+      summary: Claim blockchain transaction
+      tags:
+      - Transaction
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/staking-requests:
+    post:
+      description: Create a new blockchain staking transaction
+      operationId: createStakingTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStakingTransactionRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionRequest'
+          description: Accepted
+      security:
+      - oauth2:
+        - transactions:edit
+      - httpSignature: []
+      summary: Create staking transaction request
+      tags:
+      - Transaction Request
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/returns:
+    post:
+      description: Create a new blockchain transaction meant to return previously
+        deposited funds
+      operationId: createReturnTransactionRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReturnRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionRequest'
+          description: Accepted
+      security:
+      - oauth2:
+        - transactions:edit
+      - httpSignature: []
+      summary: Create return transaction request
+      tags:
+      - Return
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/key-pairs:
+    get:
+      description: Retrieve paginated list of key-pairs belonging to a asset pool
+      operationId: listKeyPairs
+      parameters:
+      - explode: true
+        in: query
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 64
+          format: int32
+          maximum: 100
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultKeyPair'
+          description: Created
+      security:
+      - oauth2:
+        - keypairs:view
+      - httpSignature: []
+      summary: List key pairs
+      tags:
+      - Key Pair
+      x-accepts:
+      - application/json
+    post:
+      description: Creates a new key pair from which different addresses can be created
+      operationId: createKeyPair
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateKeyPairRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyPair'
+          description: Created
+      security:
+      - oauth2:
+        - keypairs:edit
+      - httpSignature: []
+      summary: Create key pair
+      tags:
+      - Key Pair
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/fee-estimate:
+    post:
+      description: Estimate fee to send blockchain transaction
+      operationId: estimateTransactionFee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstimateTransactionFeeRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetValue'
+          description: OK
+      security:
+      - oauth2:
+        - fee-estimate:edit
+      - httpSignature: []
+      summary: Estimate transaction fee
+      tags:
+      - Fee
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/exports:
+    get:
+      description: Retrieves a paginated list of exports based on type and pagination
+        settings.
+      operationId: getExports
+      parameters:
+      - description: Filter exports by type
+        explode: true
+        in: query
+        name: type
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        style: form
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 16
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Invalid input
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PaginatedExports'
+                type: array
+          description: Paginated list of exports
+      security:
+      - oauth2:
+        - "${exports.read-scope:exports:view}"
+      - httpSignature: []
+      summary: List all exports
+      tags:
+      - Export
+      x-accepts:
+      - application/json
+    post:
+      description: Initiates a job to export balance data in the CSV format.
+      operationId: createBalanceExport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBalanceExportRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: "Conflict: Export job is already running for the specified\
+            \ criteria"
+        "201":
+          description: Export job created successfully
+      security:
+      - oauth2:
+        - exports:edit
+      - httpSignature: []
+      summary: Create a balance export
+      tags:
+      - Export
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools:
+    get:
+      description: Retrieve paginated list of asset pools
+      operationId: listAssetPools
+      parameters:
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 64
+          format: int32
+          maximum: 100
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content: {}
+          description: OK
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: List asset pools
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+    post:
+      description: Creates a new asset pool which serves as a collection of assets
+      operationId: createAssetPool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssetPoolRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad Request
+        "201":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Created
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Tenant doesn't exist
+      security:
+      - oauth2:
+        - asset-pools:edit
+      - httpSignature: []
+      summary: Create asset pool
+      tags:
+      - Asset Pool
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/addresses:
+    get:
+      description: Retrieve paginated list of addresses
+      operationId: listAddresses
+      parameters:
+      - explode: true
+        in: query
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "Query in lucene format. Supported fields: reference, customerId"
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 64
+          format: int32
+          maximum: 100
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultAddress'
+          description: OK
+      security:
+      - oauth2:
+        - addresses:view
+      - httpSignature: []
+      summary: List addresses
+      tags:
+      - Address
+      x-accepts:
+      - application/json
+    post:
+      description: Creates a new address
+      operationId: createAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAddressRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: OK
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: Accepted for asynchronous creation
+      security:
+      - oauth2:
+        - addresses:edit
+      - httpSignature: []
+      summary: Create a new address
+      tags:
+      - Address
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/addresses/validate:
+    post:
+      description: Validate a blockchain address
+      operationId: validateAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateAddressRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateAddressResponse'
+          description: OK
+      security:
+      - oauth2:
+        - addresses:edit
+      - httpSignature: []
+      summary: Validate address
+      tags:
+      - Address
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools/{assetPoolId}:
+    delete:
+      description: Delete asset pool with given id if it has not addresses nor transactions
+        created
+      operationId: deleteAssetPool
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad Request
+        "200":
+          description: OK
+        "412":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: If pool is not empty
+      security:
+      - oauth2:
+        - asset-pools:edit
+      - httpSignature: []
+      summary: Delete asset pool
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+    get:
+      description: Retrieve a specific asset pool given id
+      operationId: getAssetPool
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Created
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: Get asset pool
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+    patch:
+      description: Update an asset pool
+      operationId: updateAssetPool
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssetPoolRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+      security:
+      - oauth2:
+        - asset-pools:edit
+      - httpSignature: []
+      summary: Update asset pool
+      tags:
+      - Asset Pool
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/transactions:
+    get:
+      description: Retrieve paginated list of transactions
+      operationId: listTransactions
+      parameters:
+      - description: "Query in lucene like format, e.g. hash:0x012a1. Supported properties:\
+          \ hash, reference, customerId, from, to. If time bounds are not provided\
+          \ default are applied"
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: asset pool id
+        explode: true
+        in: query
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: current page number
+        explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - description: number of items in a page
+        explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 50
+          format: int32
+          maximum: 500
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultTransaction'
+          description: OK
+      security:
+      - oauth2:
+        - transactions:view
+      - httpSignature: []
+      summary: List transactions
+      tags:
+      - Transaction
+      x-accepts:
+      - application/json
+  /digital/v1/transactions/{transactionId}:
+    get:
+      description: Get transaction by id
+      operationId: getTransactionById
+      parameters:
+      - explode: false
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: OK
+      security:
+      - oauth2:
+        - transactions:view
+      - httpSignature: []
+      summary: Get transaction
+      tags:
+      - Transaction
+      x-accepts:
+      - application/json
+  /digital/v1/transaction-requests/{requestId}:
+    get:
+      description: Get transaction request by id
+      operationId: getTransactionRequestById
+      parameters:
+      - explode: false
+        in: path
+        name: requestId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionRequest'
+          description: OK
+      security:
+      - oauth2:
+        - transactions:view
+      - httpSignature: []
+      summary: Get transaction request
+      tags:
+      - Transaction Request
+      x-accepts:
+      - application/json
+  /digital/v1/screenings:
+    get:
+      description: Retrieves a paginated list of the most recent transfers along with
+        their screening results.
+      operationId: listScreenings
+      parameters:
+      - deprecated: true
+        description: Filter by transaction hash
+        explode: true
+        in: query
+        name: hash
+        required: false
+        schema:
+          type: string
+        style: form
+      - deprecated: true
+        description: Set of operations to filter by
+        explode: true
+        in: query
+        name: operation
+        required: false
+        schema:
+          items:
+            enum:
+            - DEPOSIT
+            - WITHDRAWAL
+            - CONSOLIDATION
+            - RETURN
+            - STAKE
+            - UNSTAKE
+            - DELEGATE
+            - UNDELEGATE
+            - RELEASE
+            type: string
+          type: array
+          uniqueItems: true
+        style: form
+      - deprecated: true
+        description: Set of screening states to filter by
+        explode: true
+        in: query
+        name: state
+        required: false
+        schema:
+          items:
+            enum:
+            - APPROVED
+            - REJECTED
+            - PENDING_SCREENING
+            type: string
+          type: array
+          uniqueItems: true
+        style: form
+      - deprecated: true
+        description: Start date for filtering by transfer creation date
+        explode: true
+        in: query
+        name: startDate
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - deprecated: true
+        description: End date for filtering by transfer creation date
+        explode: true
+        in: query
+        name: endDate
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 16
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - example: "screeningId.transfer.id.createdAt,desc"
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          default: "screeningId.transfer.id.createdAt,desc"
+          type: string
+        style: form
+      - description: "Query using Lucene-like syntax. Supported properties: notReasonCode,\
+          \ reasonCode, reason, hash, state, operation, from, to"
+        example: notReasonCode:DUST_AMOUNT
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad Request
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedScreenings'
+          description: List screenings successfully
+      security:
+      - oauth2:
+        - screenings:view
+      - httpSignature: []
+      summary: List screening results
+      tags:
+      - Screening
+      x-accepts:
+      - application/json
+  /digital/v1/networks:
+    get:
+      description: "Get all supported networks and their assets. By default, only\
+        \ enabled networks are returned."
+      operationId: getNetworks
+      parameters:
+      - description: Include disabled networks in the response
+        explode: true
+        in: query
+        name: includeDisabled
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Network'
+                type: array
+          description: OK
+      security:
+      - oauth2:
+        - networks:view
+      - httpSignature: []
+      summary: Get all networks
+      tags:
+      - Network
+      x-accepts:
+      - application/json
+  /digital/v1/key-pairs/{keyPairId}:
+    get:
+      description: Retrieve a key pair given id
+      operationId: getKeyPair
+      parameters:
+      - explode: false
+        in: path
+        name: keyPairId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyPair'
+          description: Created
+      security:
+      - oauth2:
+        - keypairs:view
+      - httpSignature: []
+      summary: Get key pair
+      tags:
+      - Key Pair
+      x-accepts:
+      - application/json
+  /digital/v1/exports/{id}:
+    get:
+      description: Retrieves export details with a short-lived download link by its
+        ID.
+      operationId: getExport
+      parameters:
+      - description: The ID of the export to retrieve
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad Request
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Export'
+          description: Export details
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Export not found
+      security:
+      - oauth2:
+        - "${exports.read-scope:exports:view}"
+      - httpSignature: []
+      summary: Get export with a download link
+      tags:
+      - Export
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools/{assetPoolId}/max-withdrawable-amount:
+    get:
+      description: Retrieve maximal approximate (does not take fees into account)
+        amount withdrawable for specific network and asset
+      operationId: getAssetPoolMaxWithdrawableAmount
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: network
+        required: true
+        schema:
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: asset
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+          description: Created
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: Get max asset pool withdrawable balance
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools/{assetPoolId}/balances:
+    get:
+      description: Retrieve an asset pool balance for specific network and asset
+      operationId: getAssetPoolBalance
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: network
+        required: true
+        schema:
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: asset
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+          description: Created
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: Get asset pool balance
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools/summary:
+    get:
+      description: Retrieve authenticated summary across all asset pools.
+      operationId: getAssetPoolSummary
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetPoolSummary'
+          description: OK
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: Get asset pool summary
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+  /digital/v1/addresses/{addressId}:
+    get:
+      description: Retrieve select address details
+      operationId: getAddress
+      parameters:
+      - explode: false
+        in: path
+        name: addressId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Address'
+                type: array
+          description: OK
+      security:
+      - oauth2:
+        - addresses:view
+      - httpSignature: []
+      summary: Get address
+      tags:
+      - Address
+      x-accepts:
+      - application/json
+  /digital/v1/addresses/{addressId}/tags:
+    get:
+      description: Retrieve paginated list of address tags
+      operationId: listTags
+      parameters:
+      - explode: false
+        in: path
+        name: addressId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 64
+          format: int32
+          maximum: 100
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultAddress'
+          description: OK
+      security:
+      - oauth2:
+        - addresses:view
+      - httpSignature: []
+      summary: List address tags
+      tags:
+      - Address
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    ManualActionRequest:
+      example:
+        reason: Confirmed false positive
+        action: APPROVE
+        transferId: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
+        operation: DEPOSIT
+        addressId: 11e785c1-a31a-4de9-9585-351056bea639
+      properties:
+        action:
+          description: Screening action to execute on the transfer
+          enum:
+          - APPROVE
+          - REJECT
+          example: APPROVE
+          type: string
+        operation:
+          description: Transaction type
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          example: DEPOSIT
+          type: string
+        reason:
+          description: Reason for approving or rejecting the suspended transfer
+          example: Confirmed false positive
+          type: string
+        transferId:
+          description: Transfer identifier for which screening is performed
+          example: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
+          format: uuid
+          type: string
+        addressId:
+          description: Specific destination address identifier for which screening
+            is performed. Required only for deposits.
+          example: 11e785c1-a31a-4de9-9585-351056bea639
+          format: uuid
+          type: string
+      required:
+      - action
+      - operation
+      - reason
+      - transferId
+    Failure:
+      example:
+        reason: INSUFFICIENT_FUNDS
+        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        reason:
+          description: reason for failure
+          example: INSUFFICIENT_FUNDS
+          type: string
+        message:
+          description: error message
+          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+    Participant:
+      example:
+        amount: ""
+        address: 0x1234567890abcdef1234567890abcdef12345678
+        tag: 123456789
+        asset: ETH
+      properties:
+        address:
+          description: blockchain address
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
+          type: string
+        tag:
+          description: "destination tag that serves as optional payment identifier.\
+            \ Only applicable to select networks like Ripple, Solana etc."
+          example: 123456789
+          type: string
+    TransactionRequest:
+      example:
+        reference: myUniqueRef333
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        sources:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        requestId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        failure:
+          reason: INSUFFICIENT_FUNDS
+          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        destinations:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        asset: USDT
+        type: DEPOSIT
+        network: ETHEREUM
+        status: BLOCKED
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        requestId:
+          description: transaction request id
+          format: uuid
+          type: string
+        asset:
+          description: currency
+          example: USDT
+          type: string
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        reference:
+          description: custom identifier supplied for transaction that is used to
+            link transaction to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        status:
+          description: transaction request status
+          enum:
+          - BLOCKED
+          - CONFIRMED
+          - CREATED
+          - DETECTED
+          - FAILED
+          - FUNDS_RESERVED
+          - HELD
+          - REJECTED
+          - SCREENING_PASSED
+          - SCREENING_REQUESTED
+          - SIGNED
+          - SUCCESS
+          - UNCONFIRMED
+          - REPLACED
+          type: string
+        sources:
+          description: requested list of addresses and amounts that fund the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        destinations:
+          description: requested list of recipient addresses and amounts that benefit
+            from the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        type:
+          description: transaction request type
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          - CONSOLIDATION
+          - RETURN
+          - STAKE
+          - UNSTAKE
+          - DELEGATE
+          - UNDELEGATE
+          - RELEASE
+          type: string
+        createdAt:
+          description: timestamp when transaction request was created
+          format: date-time
+          type: string
+        updatedAt:
+          description: timestamp when transaction request was updated
+          format: date-time
+          type: string
+        failure:
+          $ref: '#/components/schemas/Failure'
+    CreateTransactionRequest:
+      example:
+        reference: myUniqueRef333
+        sources:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        destinations:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        asset: USDT
+        network: ETHEREUM
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        asset:
+          description: currency
+          example: USDT
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        reference:
+          description: custom identifier supplied for transaction that is used to
+            link transaction to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        sources:
+          description: (Optional) list of addresses and amounts that fund the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        destinations:
+          description: list of recipient addresses and amounts that benefit from the
+            transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+    TransactionClaimRequest:
+      example:
+        hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+        network: ETHEREUM
+      properties:
+        hash:
+          description: blockchain transaction hash
+          example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+    CreateStakingTransactionRequest:
+      example:
+        reference: myUniqueRef333
+        amount: ""
+        metadata:
+          key: metadata
+        address: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        asset: TRX
+        type: STAKE
+        network: TRON
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        asset:
+          description: currency
+          example: TRX
+          type: string
+        network:
+          description: crypto network
+          example: TRON
+          type: string
+        type:
+          enum:
+          - STAKE
+          - UNSTAKE
+          - RELEASE
+          type: string
+        reference:
+          description: custom identifier supplied for transaction that is used to
+            link transaction to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        address:
+          description: blockchain address
+          example: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
+          type: string
+        amount: {}
+        metadata:
+          additionalProperties:
+            type: string
+    ReturnRequest:
+      example:
+        destinationAddress: destinationAddress
+        transactionId: transactionId
+      properties:
+        transactionId:
+          description: ID of the transaction to return
+          type: string
+        destinationAddress:
+          description: address into which funds should be returned
+          type: string
+    KeyPair:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        master: true
+      properties:
+        id:
+          description: key pair id
+          format: uuid
+          type: string
+        reference:
+          description: custom identifier supplied for key pair that is used to link
+            key pair to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        master:
+          description: whether this is a master key for the asset pool
+          type: boolean
+    CreateKeyPairRequest:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        master: true
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        reference:
+          description: custom identifier supplied for key pair that is used to link
+            key pair to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        master:
+          description: whether this is a master key for the asset pool
+          type: boolean
+    AssetValue:
+      example:
+        amount: ""
+        asset: BTC
+      properties:
+        amount: {}
+        asset:
+          description: currency
+          example: BTC
+          type: string
+    EstimateTransactionFeeRequest:
+      example:
+        sources:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        destinations:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        asset: USDT
+        network: ETHEREUM
+      properties:
+        asset:
+          description: currency
+          example: USDT
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        sources:
+          description: (Optional) list of addresses and amounts that fund the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        destinations:
+          description: (Optional) list of recipient addresses and amounts that benefit
+            from the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+    CreateBalanceExportRequest:
+      example:
+        assets: "[BTC]"
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        asset: BTC
+        networks: "[BITCOIN]"
+        network: BITCOIN
+      properties:
+        network:
+          deprecated: true
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          deprecated: true
+          description: asset
+          example: BTC
+          type: string
+        networks:
+          description: networks
+          example: "[BITCOIN]"
+          items:
+            enum:
+            - BASE
+            - BINANCE
+            - BITCOIN
+            - BITCOIN_CASH
+            - DOGECOIN
+            - ETHEREUM
+            - LITECOIN
+            - POLYGON
+            - RIPPLE
+            - SOLANA
+            - TRON
+            type: string
+          type: array
+          uniqueItems: true
+        assets:
+          description: assets
+          example: "[BTC]"
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        assetPoolId:
+          description: The ID of the asset pool for which the report will be generated.
+          format: uuid
+          type: string
+    CreateAssetPoolRequest:
+      example:
+        reference: myUniqueRef333
+        name: Payment Processing Spanish VASP
+      properties:
+        name:
+          description: name of asset pool
+          example: Payment Processing Spanish VASP
+          type: string
+        reference:
+          description: custom supplied identifier for asset pool. Also used to initialise
+            master key pair
+          example: myUniqueRef333
+          type: string
+    Address:
+      example:
+        address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+        aliases:
+        - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+        supportedAssets:
+        - BTC
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        network: BITCOIN
+        master: true
+        reference: reference
+        balances:
+        - reserved: ""
+          blockchain: ""
+          available: ""
+          asset: BTC
+          network: BITCOIN
+        - reserved: ""
+          blockchain: ""
+          available: ""
+          asset: BTC
+          network: BITCOIN
+        supportedNetworks:
+        - ETHEREUM
+        customerId: cust123456789
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tag: 123456789
+      properties:
+        id:
+          description: internal id
+          format: uuid
+          type: string
+        address:
+          description: blockchain address
+          example: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          type: string
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        keyPairId:
+          description: key pair id
+          format: uuid
+          type: string
+        reference:
+          description: key pair reference
+          type: string
+        supportedAssets:
+          description: list of assets supported by network
+          example:
+          - BTC
+          items:
+            type: string
+          type: array
+        aliases:
+          description: alternative address (e.g. BTC has segwitt and legacy format)
+          example:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          items:
+            type: string
+          type: array
+        tag:
+          description: "destination tag that serves as optional payment identifier.\
+            \ Only applicable to select networks like Ripple, Solana etc."
+          example: 123456789
+          type: string
+        balances:
+          description: address balances
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+        customerId:
+          description: custom non-unique identifier supplied for address that is used
+            to link address to external entity like customer
+          example: cust123456789
+          type: string
+        master:
+          description: flag indicating whether this address is asset pool master address
+          type: boolean
+        supportedNetworks:
+          description: list of networks supporting given asset. mutually exclusive
+            with network and supportedAssets
+          example:
+          - ETHEREUM
+          items:
+            type: string
+          type: array
+    Balance:
+      example:
+        reserved: ""
+        blockchain: ""
+        available: ""
+        asset: BTC
+        network: BITCOIN
+      properties:
+        network:
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          description: asset
+          example: BTC
+          type: string
+        available: {}
+        reserved: {}
+        blockchain: {}
+    CreateAddressRequest:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        customerId: customer123
+        asset: BTC
+        network: BITCOIN
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        asset:
+          description: crypto currency for which address(es) should be created. if
+            network is not given will create addreses in all networks supporting given
+            asset
+          example: BTC
+          type: string
+        reference:
+          description: unique identifier for each destination that is receiving funds
+            (whether tag or address). Similar to banking reference it is used to link
+            deposit to a specific invoice
+          example: myUniqueRef333
+          type: string
+        customerId:
+          description: "custom non-unique identifier supplied for address that is\
+            \ used to link address to external entity like customer, merchant, company,\
+            \ etc."
+          example: customer123
+          type: string
+    ValidateAddressRequest:
+      example:
+        address: 0x1234567890abcdef1234567890abcdef12345678
+        tag: 123456789
+        network: ETHEREUM
+      properties:
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        address:
+          description: blockchain address
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+        tag:
+          description: "destination tag that serves as optional payment identifier.\
+            \ Only applicable to select networks like Ripple, Solana etc."
+          example: 123456789
+          type: string
+    ValidateAddressResponse:
+      example:
+        valid: true
+        errors:
+        - invalid format
+        - should be 32 characters
+      properties:
+        valid:
+          description: whether the address is valid
+          type: boolean
+        errors:
+          description: list of error messages if the address is invalid
+          example:
+          - invalid format
+          - should be 32 characters
+          items:
+            type: string
+          type: array
+    UpdateAssetPoolRequest:
+      example:
+        property: masterKeyPairId
+        value: value
+      properties:
+        property:
+          description: name of asset pool property
+          enum:
+          - masterKeyPairId
+          - reference
+          example: masterKeyPairId
+          type: string
+        value:
+          description: value for the property
+          type: string
+    BlockDetail:
+      example:
+        number: 123456
+        timestamp: 2021-01-01T00:00:00Z
+      properties:
+        number:
+          description: blockchain number
+          example: 123456
+          format: int64
+          type: integer
+        timestamp:
+          description: timestamp of the block
+          example: 2021-01-01T00:00:00Z
+          format: date-time
+          type: string
+    NetworkDetail:
+      example:
+        fee:
+          amount: ""
+          asset: BTC
+        block:
+          number: 123456
+          timestamp: 2021-01-01T00:00:00Z
+      properties:
+        block:
+          $ref: '#/components/schemas/BlockDetail'
+        fee:
+          $ref: '#/components/schemas/AssetValue'
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
+    PaginatedResultTransaction:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - amount: ""
+          metadata:
+            failure:
+              reason: INSUFFICIENT_FUNDS
+              message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          address:
+            address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+            aliases:
+            - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+            supportedAssets:
+            - BTC
+            assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            network: BITCOIN
+            master: true
+            reference: reference
+            balances:
+            - reserved: ""
+              blockchain: ""
+              available: ""
+              asset: BTC
+              network: BITCOIN
+            - reserved: ""
+              blockchain: ""
+              available: ""
+              asset: BTC
+              network: BITCOIN
+            supportedNetworks:
+            - ETHEREUM
+            customerId: cust123456789
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tag: 123456789
+          sources:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          destinations:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          type: DEPOSIT
+          reference: myUniqueRef333
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          asset: USDT
+          networkDetail:
+            fee:
+              amount: ""
+              asset: BTC
+            block:
+              number: 123456
+              timestamp: 2021-01-01T00:00:00Z
+          hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          status: BLOCKED
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - amount: ""
+          metadata:
+            failure:
+              reason: INSUFFICIENT_FUNDS
+              message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          address:
+            address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+            aliases:
+            - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+            supportedAssets:
+            - BTC
+            assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            network: BITCOIN
+            master: true
+            reference: reference
+            balances:
+            - reserved: ""
+              blockchain: ""
+              available: ""
+              asset: BTC
+              network: BITCOIN
+            - reserved: ""
+              blockchain: ""
+              available: ""
+              asset: BTC
+              network: BITCOIN
+            supportedNetworks:
+            - ETHEREUM
+            customerId: cust123456789
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tag: 123456789
+          sources:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          destinations:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          type: DEPOSIT
+          reference: myUniqueRef333
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          asset: USDT
+          networkDetail:
+            fee:
+              amount: ""
+              asset: BTC
+            block:
+              number: 123456
+              timestamp: 2021-01-01T00:00:00Z
+          hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          status: BLOCKED
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Transaction'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    Transaction:
+      example:
+        amount: ""
+        metadata:
+          failure:
+            reason: INSUFFICIENT_FUNDS
+            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+        address:
+          address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          aliases:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          supportedAssets:
+          - BTC
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          network: BITCOIN
+          master: true
+          reference: reference
+          balances:
+          - reserved: ""
+            blockchain: ""
+            available: ""
+            asset: BTC
+            network: BITCOIN
+          - reserved: ""
+            blockchain: ""
+            available: ""
+            asset: BTC
+            network: BITCOIN
+          supportedNetworks:
+          - ETHEREUM
+          customerId: cust123456789
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tag: 123456789
+        sources:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        destinations:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        type: DEPOSIT
+        reference: myUniqueRef333
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        id: id
+        asset: USDT
+        networkDetail:
+          fee:
+            amount: ""
+            asset: BTC
+          block:
+            number: 123456
+            timestamp: 2021-01-01T00:00:00Z
+        hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+        status: BLOCKED
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: transaction id
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        reference:
+          description: custom identifier supplied for transaction that is used to
+            link transaction to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        status:
+          description: transaction status
+          enum:
+          - BLOCKED
+          - CONFIRMED
+          - CREATED
+          - DETECTED
+          - FAILED
+          - FUNDS_RESERVED
+          - HELD
+          - REJECTED
+          - SCREENING_PASSED
+          - SCREENING_REQUESTED
+          - SIGNED
+          - SUCCESS
+          - UNCONFIRMED
+          - REPLACED
+          type: string
+        sources:
+          description: list of addresses and amounts that fund the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        destinations:
+          description: list of recipient addresses and amounts that benefit from the
+            transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        type:
+          description: transaction type
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          - CONSOLIDATION
+          - RETURN
+          - STAKE
+          - UNSTAKE
+          - DELEGATE
+          - UNDELEGATE
+          - RELEASE
+          type: string
+        asset:
+          description: currency
+          example: USDT
+          type: string
+        amount: {}
+        hash:
+          description: blockchain transaction hash
+          example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          type: string
+        networkDetail:
+          $ref: '#/components/schemas/NetworkDetail'
+        metadata:
+          $ref: '#/components/schemas/TransactionMetadata'
+        createdAt:
+          description: timestamp when transaction was created
+          format: date-time
+          type: string
+        updatedAt:
+          description: timestamp when transaction was updated
+          format: date-time
+          type: string
+    TransactionMetadata:
+      example:
+        failure:
+          reason: INSUFFICIENT_FUNDS
+          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        failure:
+          $ref: '#/components/schemas/Failure'
+    PaginatedResultTransactionRequest:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - reference: myUniqueRef333
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          sources:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          requestId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          failure:
+            reason: INSUFFICIENT_FUNDS
+            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          destinations:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          asset: USDT
+          type: DEPOSIT
+          network: ETHEREUM
+          status: BLOCKED
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - reference: myUniqueRef333
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          sources:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          requestId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          failure:
+            reason: INSUFFICIENT_FUNDS
+            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          destinations:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          asset: USDT
+          type: DEPOSIT
+          network: ETHEREUM
+          status: BLOCKED
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/TransactionRequest'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    PaginatedScreenings:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - transactionMetadata:
+            failure:
+              reason: INSUFFICIENT_FUNDS
+              message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          screeningState: PENDING_SCREENING
+          transactionStatus: SCREENING_PASSED
+          transactionCreatedAt: 2000-01-23T04:56:07.000+00:00
+          screeningMetadata:
+            urls:
+            - urls
+            - urls
+            ids:
+            - ids
+            - ids
+          screeningUpdatedAt: 2000-01-23T04:56:07.000+00:00
+          transactionId: e7b67a42-ebb7-4f35-913b-29d89068e74c
+          transactionHash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          network: ETHEREUM
+          transactionUpdatedAt: 2000-01-23T04:56:07.000+00:00
+          addressId: fefc3e7b-743b-489f-9311-0921f4930dc7
+          screeningReasonCode: DUST_AMOUNT
+          screeningCreatedAt: 2000-01-23T04:56:07.000+00:00
+          screeningReason: Manual review required
+          operation: WITHDRAWAL
+          participants:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+        - transactionMetadata:
+            failure:
+              reason: INSUFFICIENT_FUNDS
+              message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          screeningState: PENDING_SCREENING
+          transactionStatus: SCREENING_PASSED
+          transactionCreatedAt: 2000-01-23T04:56:07.000+00:00
+          screeningMetadata:
+            urls:
+            - urls
+            - urls
+            ids:
+            - ids
+            - ids
+          screeningUpdatedAt: 2000-01-23T04:56:07.000+00:00
+          transactionId: e7b67a42-ebb7-4f35-913b-29d89068e74c
+          transactionHash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          network: ETHEREUM
+          transactionUpdatedAt: 2000-01-23T04:56:07.000+00:00
+          addressId: fefc3e7b-743b-489f-9311-0921f4930dc7
+          screeningReasonCode: DUST_AMOUNT
+          screeningCreatedAt: 2000-01-23T04:56:07.000+00:00
+          screeningReason: Manual review required
+          operation: WITHDRAWAL
+          participants:
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+          - amount: ""
+            address: 0x1234567890abcdef1234567890abcdef12345678
+            tag: 123456789
+            asset: ETH
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/ScreeningView'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    ScreeningMetadata:
+      example:
+        urls:
+        - urls
+        - urls
+        ids:
+        - ids
+        - ids
+      properties:
+        urls:
+          description: URLs to external screening providers relevant to the deposit
+          items:
+            type: string
+          type: array
+        ids:
+          description: Deposit screening identifiers within external screening providers
+          items:
+            type: string
+          type: array
+    ScreeningView:
+      example:
+        transactionMetadata:
+          failure:
+            reason: INSUFFICIENT_FUNDS
+            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+        screeningState: PENDING_SCREENING
+        transactionStatus: SCREENING_PASSED
+        transactionCreatedAt: 2000-01-23T04:56:07.000+00:00
+        screeningMetadata:
+          urls:
+          - urls
+          - urls
+          ids:
+          - ids
+          - ids
+        screeningUpdatedAt: 2000-01-23T04:56:07.000+00:00
+        transactionId: e7b67a42-ebb7-4f35-913b-29d89068e74c
+        transactionHash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+        network: ETHEREUM
+        transactionUpdatedAt: 2000-01-23T04:56:07.000+00:00
+        addressId: fefc3e7b-743b-489f-9311-0921f4930dc7
+        screeningReasonCode: DUST_AMOUNT
+        screeningCreatedAt: 2000-01-23T04:56:07.000+00:00
+        screeningReason: Manual review required
+        operation: WITHDRAWAL
+        participants:
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+        - amount: ""
+          address: 0x1234567890abcdef1234567890abcdef12345678
+          tag: 123456789
+          asset: ETH
+      properties:
+        transactionId:
+          description: Unique identifier of the transaction
+          example: e7b67a42-ebb7-4f35-913b-29d89068e74c
+          type: string
+        transactionHash:
+          description: Blockchain transaction hash
+          example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          type: string
+        transactionStatus:
+          description: Current status of the transaction
+          enum:
+          - BLOCKED
+          - CONFIRMED
+          - CREATED
+          - DETECTED
+          - FAILED
+          - FUNDS_RESERVED
+          - HELD
+          - REJECTED
+          - SCREENING_PASSED
+          - SCREENING_REQUESTED
+          - SIGNED
+          - SUCCESS
+          - UNCONFIRMED
+          - REPLACED
+          example: SCREENING_PASSED
+          type: string
+        network:
+          description: Network code used for the transaction
+          example: ETHEREUM
+          type: string
+        transactionMetadata:
+          $ref: '#/components/schemas/TransactionMetadata'
+        transactionCreatedAt:
+          description: Timestamp when the transaction was created
+          format: date-time
+          type: string
+        transactionUpdatedAt:
+          description: Timestamp when the transaction was last updated
+          format: date-time
+          type: string
+        screeningState:
+          description: Screening state of the transaction
+          enum:
+          - APPROVED
+          - REJECTED
+          - PENDING_SCREENING
+          example: PENDING_SCREENING
+          type: string
+        screeningReason:
+          description: Reason for the screening result
+          example: Manual review required
+          type: string
+        screeningReasonCode:
+          description: Reason code for the screening result
+          example: DUST_AMOUNT
+          type: string
+        screeningCreatedAt:
+          description: Timestamp when the screening was created
+          format: date-time
+          type: string
+        screeningUpdatedAt:
+          description: Timestamp when the screening was last updated
+          format: date-time
+          type: string
+        screeningMetadata:
+          $ref: '#/components/schemas/ScreeningMetadata'
+        participants:
+          description: List of participants involved in the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        operation:
+          description: Operation type for the screening
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          - CONSOLIDATION
+          - RETURN
+          - STAKE
+          - UNSTAKE
+          - DELEGATE
+          - UNDELEGATE
+          - RELEASE
+          example: WITHDRAWAL
+          type: string
+        addressId:
+          description: Unique identifier of the address involved in the screening
+          example: fefc3e7b-743b-489f-9311-0921f4930dc7
+          format: uuid
+          type: string
+    Asset:
+      example:
+        code: BTC
+        model: UTXO
+        decimalPrecision: 0
+      properties:
+        code:
+          description: currency code
+          example: BTC
+          type: string
+        decimalPrecision:
+          description: currency decimal precision
+          format: int32
+          type: integer
+        model:
+          description: transaction model supported by the asset
+          enum:
+          - UTXO
+          - ACCOUNT
+          - CONTRACT
+          type: string
+    Network:
+      example:
+        nativeAsset: BTC
+        tagSupported: false
+        supportedAssets:
+        - code: BTC
+          model: UTXO
+          decimalPrecision: 0
+        - code: BTC
+          model: UTXO
+          decimalPrecision: 0
+        network: BITCOIN
+      properties:
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        nativeAsset:
+          description: native network currency
+          example: BTC
+          type: string
+        supportedAssets:
+          description: list of assets supported by network
+          items:
+            $ref: '#/components/schemas/Asset'
+          type: array
+        tagSupported:
+          default: false
+          description: whether network supports address tags
+          type: boolean
+    PaginatedResultKeyPair:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - reference: myUniqueRef333
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          master: true
+        - reference: myUniqueRef333
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          master: true
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/KeyPair'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    Export:
+      example:
+        createdAt: 2020-01-01T00:00:00Z
+        filename: transaction_2024_04_19T11_20_11_901Z.csv
+        id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        type: transaction
+        inputParameters:
+          from: 2020-01-01T00:00:00Z
+          to: 2020-01-31T23:59:59Z
+        url: url
+        status: PROCESSING
+        updatedAt: 2020-01-02T12:34:56Z
+      properties:
+        id:
+          description: Unique identifier of the export
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          format: uuid
+          type: string
+        status:
+          description: Current status of the export job
+          enum:
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: PROCESSING
+          type: string
+        type:
+          description: Export type name
+          example: transaction
+          type: string
+        inputParameters:
+          additionalProperties:
+            type: string
+          description: JSON string containing input parameters for the job
+          example:
+            from: 2020-01-01T00:00:00Z
+            to: 2020-01-31T23:59:59Z
+        filename:
+          description: Filename of the resulting export
+          example: transaction_2024_04_19T11_20_11_901Z.csv
+          type: string
+        url:
+          description: URL for file download
+          type: string
+        createdAt:
+          description: Timestamp when the export was created
+          example: 2020-01-01T00:00:00Z
+          format: date-time
+          type: string
+        updatedAt:
+          description: Timestamp when the export was last updated
+          example: 2020-01-02T12:34:56Z
+          format: date-time
+          type: string
+    PaginatedExports:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - createdAt: 2020-01-01T00:00:00Z
+          filename: transaction_2024_04_19T11_20_11_901Z.csv
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          type: transaction
+          inputParameters:
+            from: 2020-01-01T00:00:00Z
+            to: 2020-01-31T23:59:59Z
+          url: url
+          status: PROCESSING
+          updatedAt: 2020-01-02T12:34:56Z
+        - createdAt: 2020-01-01T00:00:00Z
+          filename: transaction_2024_04_19T11_20_11_901Z.csv
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          type: transaction
+          inputParameters:
+            from: 2020-01-01T00:00:00Z
+            to: 2020-01-31T23:59:59Z
+          url: url
+          status: PROCESSING
+          updatedAt: 2020-01-02T12:34:56Z
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Export'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    AssetPoolSummary:
+      example:
+        balances:
+        - reserved: ""
+          blockchain: ""
+          available: ""
+          asset: BTC
+          network: BITCOIN
+        - reserved: ""
+          blockchain: ""
+          available: ""
+          asset: BTC
+          network: BITCOIN
+      properties:
+        balances:
+          description: balances summary
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+    PaginatedResultAddress:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          aliases:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          supportedAssets:
+          - BTC
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          network: BITCOIN
+          master: true
+          reference: reference
+          balances:
+          - reserved: ""
+            blockchain: ""
+            available: ""
+            asset: BTC
+            network: BITCOIN
+          - reserved: ""
+            blockchain: ""
+            available: ""
+            asset: BTC
+            network: BITCOIN
+          supportedNetworks:
+          - ETHEREUM
+          customerId: cust123456789
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tag: 123456789
+        - address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          aliases:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          supportedAssets:
+          - BTC
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          network: BITCOIN
+          master: true
+          reference: reference
+          balances:
+          - reserved: ""
+            blockchain: ""
+            available: ""
+            asset: BTC
+            network: BITCOIN
+          - reserved: ""
+            blockchain: ""
+            available: ""
+            asset: BTC
+            network: BITCOIN
+          supportedNetworks:
+          - ETHEREUM
+          customerId: cust123456789
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tag: 123456789
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Address'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+  securitySchemes:
+    openId:
+      openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+      type: openIdConnect
+    httpSignature:
+      scheme: signature
+      type: http
+    oauth2:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+      type: oauth2
+

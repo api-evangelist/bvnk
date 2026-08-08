@@ -1,0 +1,146 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/bvnk-webhooks-api
+spec_type: Webhooks
+asyncapi_published: false
+note: BVNK documents a full webhook event catalog but publishes no AsyncAPI document. No AsyncAPI was
+  authored on their behalf. Event URNs below are recorded only where BVNK states them in its own documentation;
+  entries without an event_urn are documented events whose URN is rendered from the spec rather than written
+  in the prose.
+delivery:
+  transport: https-webhook
+  configuration: BVNK Portal > Integrations > Webhooks, or via API
+  docs: https://docs.bvnk.com/bvnk/get-started/create-webhook-listener
+  subscription_model: per-listener event selection by event URN
+security:
+  signature: true
+  scheme: BVNK signs webhook payloads; a client-side signature validator is published
+  validator: https://docs.bvnk.com/bvnk/references/webhook-validator
+event_count: 35
+events:
+- name: Agreement status change
+  category: onboarding
+  event_urn: bvnk:customers:agreements:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/agreement-status-change
+- name: Associate documents status change
+  category: onboarding
+  event_urn: bvnk:customers:associates:documents:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/associate-documents-status-change
+- name: Associate status change
+  category: onboarding
+  event_urn: bvnk:customers:associates:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/associate-status-change
+- name: Company documents status change
+  category: onboarding
+  event_urn: bvnk:customers:documents:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/company-documents-status-change
+- name: Customer document status change
+  category: onboarding
+  event_urn: bvnk:customers:documents:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/customer-document-status-change
+- name: Customer status change
+  category: onboarding
+  event_urn: bvnk:customers:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/customers-status-change
+- name: Customer status change (platform)
+  category: onboarding
+  event_urn: bvnk:platform:customer:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/customer-status-change
+- name: Customer update
+  category: onboarding
+  event_urn: bvnk:platform:customer:update
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/customer-update
+- name: Agreement session status change
+  category: onboarding
+  event_urn: bvnk:platform:customer:agreement-session-status-change
+- name: Customer document status change (platform)
+  category: onboarding
+  event_urn: bvnk:platform:customer:document-status-change
+- name: Customer questionnaire status change
+  category: onboarding
+  event_urn: bvnk:platform:customer:questionnaire-status-change
+- name: Compliance information request (Travel Rule)
+  category: compliance
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/compliance-information-request
+- name: Channel created
+  category: channels
+  event_urn: bvnk:payment:channel:created
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/channel-created
+- name: Channel transaction detected
+  category: channels
+  event_urn: bvnk:payment:channel:transaction-detected
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/channel-transaction-detected
+- name: Channel transaction confirmed
+  category: channels
+  event_urn: bvnk:payment:channel:transaction-confirmed
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/channel-transaction-confirmed
+- name: Channel transaction on hold
+  category: channels
+  event_urn: bvnk:payment:channel:transaction-on-hold
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/channel-transaction-on-hold
+- name: Cryptocurrency payment status change
+  category: crypto-payments
+  event_urn: bvnk:payment:crypto:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/crypto-status-change
+- name: Cryptocurrency transaction detected
+  category: crypto-payments
+  event_urn: bvnk:payment:crypto:transaction-detected
+- name: Cryptocurrency transaction confirmed
+  category: crypto-payments
+  event_urn: bvnk:payment:crypto:transaction-confirmed
+- name: Cryptocurrency transaction settled
+  category: crypto-payments
+  event_urn: bvnk:payment:crypto:transaction-settled
+- name: Cryptocurrency transaction late
+  category: crypto-payments
+  event_urn: bvnk:payment:crypto:transaction-late
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/crypto-transaction-late
+- name: Cryptocurrency transaction on hold
+  category: crypto-payments
+  event_urn: bvnk:payment:crypto:transaction-on-hold
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/crypto-transaction-on-hold
+- name: Cryptocurrency refund initiated
+  category: crypto-payments
+  event_urn: bvnk:payment:crypto:refund-initiated
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/crypto-refund-initiated
+- name: Fiat pay-in status change (v1)
+  category: fiat-payments
+  event_urn: bvnk:payment:payin:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/payment-payin-status-change
+- name: Fiat pay-in status change (v2)
+  category: fiat-payments
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/payment-payin-status-change-v-2
+- name: Fiat payout status change (v1)
+  category: fiat-payments
+  event_urn: bvnk:payment:payout:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/payment-payout-status-change
+- name: Fiat payout status change (v2)
+  category: fiat-payments
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/payment-payout-status-change-v-2
+- name: Internal transfer status change (v1)
+  category: transfers
+  event_urn: bvnk:payment:transfer:status-change
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/payment-transfer-status-change
+- name: Internal transfer status change (v2)
+  category: transfers
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/payment-transfer-status-change-v-2
+- name: Internal transfer status change (v3)
+  category: transfers
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/payment-transfer-status-change-v-3
+- name: Ledger wallet created (v1)
+  category: wallets
+  event_urn: bvnk:ledger:wallet:create
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/ledger-wallet-create
+- name: Ledger wallet status change (v2)
+  category: wallets
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/ledger-wallet-status-change-v-2
+- name: Ledger report ready
+  category: reporting
+  event_urn: bvnk:ledger:report:ready
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/ledger-report-ready
+- name: Card updated
+  category: cards
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/card-card-updated
+- name: Card transaction status change
+  category: cards
+  docs: https://docs.bvnk.com/bvnk/api-explorer/bvnk-webhooks/card-transaction-status-change

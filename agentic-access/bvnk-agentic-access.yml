@@ -1,0 +1,774 @@
+generated: '2026-08-08'
+method: generated
+source: openapi/bvnk-api-endpoints-openapi-original.yml, openapi/bvnk-layer1-digital-asset-openapi-original.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 54
+  by_action_class:
+    connected: 34
+    acting: 20
+  by_consequence:
+    read: 34
+    write: 17
+    physical: 3
+  human_in_the_loop_required: 0
+operations:
+- path: /api/currency/crypto
+  method: get
+  operationId: listCurrenciesCrypto
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/currency/fiat
+  method: get
+  operationId: listCurrenciesFiat
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/currency/deposit
+  method: get
+  operationId: listCurrenciesDeposit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/merchant
+  method: get
+  operationId: merchantIdList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - merchant
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/merchant
+  method: post
+  operationId: merchantIdCreate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - merchant
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/pay/summary
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - merchant
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/pay/summary
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - merchant
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/pay/{uuid}/summary
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - merchant
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/pay/validate
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/channel
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - merchant
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/channel
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - merchant
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/channel/{uuid}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - merchant
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/channel/payment/{uuid}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - merchant
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/channel/payment
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - merchant
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/wallet
+  method: get
+  operationId: walletList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - user
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/wallet
+  method: post
+  operationId: walletCreate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - user
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/wallet/{id}
+  method: get
+  operationId: walletRGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - user
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/wallet/balances
+  method: get
+  operationId: walletBalanceList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - user
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/transaction/report
+  method: get
+  operationId: transactionReport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - user
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/quote
+  method: post
+  operationId: quoteCreate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - merchant
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/quote/accept/{uuid}
+  method: put
+  operationId: quoteAccept
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - merchant
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/quote/{uuid}
+  method: get
+  operationId: quoteRead
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - merchant
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/quote/{merchantId}
+  method: get
+  operationId: quoteList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - x-example
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/screenings/action
+  method: put
+  operationId: manuallyActionHeldTransfer
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - screenings:edit
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/transaction-requests
+  method: get
+  operationId: listTransactionRequests
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transactions:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/transaction-requests
+  method: post
+  operationId: createTransaction
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transactions:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/transaction-claims
+  method: post
+  operationId: claimTransaction
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transactions:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/staking-requests
+  method: post
+  operationId: createStakingTransaction
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transactions:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/returns
+  method: post
+  operationId: createReturnTransactionRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transactions:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/key-pairs
+  method: get
+  operationId: listKeyPairs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - keypairs:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/key-pairs
+  method: post
+  operationId: createKeyPair
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - keypairs:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/fee-estimate
+  method: post
+  operationId: estimateTransactionFee
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - fee-estimate:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/exports
+  method: get
+  operationId: getExports
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - ${exports.read-scope:exports:view}
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/exports
+  method: post
+  operationId: createBalanceExport
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - exports:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/asset-pools
+  method: get
+  operationId: listAssetPools
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - asset-pools:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/asset-pools
+  method: post
+  operationId: createAssetPool
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - asset-pools:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/addresses
+  method: get
+  operationId: listAddresses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - addresses:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/addresses
+  method: post
+  operationId: createAddress
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - addresses:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/addresses/validate
+  method: post
+  operationId: validateAddress
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - addresses:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/asset-pools/{assetPoolId}
+  method: delete
+  operationId: deleteAssetPool
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - asset-pools:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/asset-pools/{assetPoolId}
+  method: get
+  operationId: getAssetPool
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - asset-pools:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/asset-pools/{assetPoolId}
+  method: patch
+  operationId: updateAssetPool
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - asset-pools:edit
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /digital/v1/transactions
+  method: get
+  operationId: listTransactions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transactions:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/transactions/{transactionId}
+  method: get
+  operationId: getTransactionById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transactions:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/transaction-requests/{requestId}
+  method: get
+  operationId: getTransactionRequestById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transactions:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/screenings
+  method: get
+  operationId: listScreenings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - screenings:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/networks
+  method: get
+  operationId: getNetworks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - networks:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/key-pairs/{keyPairId}
+  method: get
+  operationId: getKeyPair
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - keypairs:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/exports/{id}
+  method: get
+  operationId: getExport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - ${exports.read-scope:exports:view}
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/asset-pools/{assetPoolId}/max-withdrawable-amount
+  method: get
+  operationId: getAssetPoolMaxWithdrawableAmount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - asset-pools:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/asset-pools/{assetPoolId}/balances
+  method: get
+  operationId: getAssetPoolBalance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - asset-pools:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/asset-pools/summary
+  method: get
+  operationId: getAssetPoolSummary
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - asset-pools:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/addresses/{addressId}
+  method: get
+  operationId: getAddress
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - addresses:view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /digital/v1/addresses/{addressId}/tags
+  method: get
+  operationId: listTags
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - addresses:view
+    token:
+      max-ttl: 3600
+    audit: none

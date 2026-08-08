@@ -1,0 +1,701 @@
+generated: '2026-08-08'
+method: searched
+source: https://auth.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+docs: https://docs.layer1.com/reference/api-authentication
+note: Scopes are published anonymously by the BVNK Keycloak realm "bvnk" via OIDC discovery on both the
+  production (auth.layer1.com) and sandbox (auth.sandbox.layer1.com) issuers. The Layer1 Digital Asset
+  OpenAPI declares an oauth2 clientCredentials scheme with an empty scopes map, so the per-operation scopes
+  below were recovered from operation security[] requirements in that spec and from the discovery document.
+  One spec entry is an unresolved build placeholder (${exports.read-scope:exports:view}) and is recorded
+  as a defect rather than a scope.
+issuers:
+- environment: production
+  issuer: https://auth.layer1.com/auth/realms/bvnk
+  discovery: https://auth.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+  file: well-known/bvnk-openid-configuration.json
+  http_status: 200
+- environment: sandbox
+  issuer: https://auth.sandbox.layer1.com/auth/realms/bvnk
+  discovery: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+  file: well-known/bvnk-sandbox-openid-configuration.json
+  http_status: 200
+schemes:
+- name: oauth2
+  source: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+    sandboxTokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+  token_endpoint_auth_methods:
+  - private_key_jwt
+  - client_secret_basic
+  - client_secret_post
+  - tls_client_auth
+  - client_secret_jwt
+  grant_types:
+  - authorization_code
+  - client_credentials
+  - implicit
+  - password
+  - refresh_token
+  - urn:ietf:params:oauth:grant-type:card-sensitive-details-token-exchange
+  - urn:ietf:params:oauth:grant-type:device_code
+  - urn:ietf:params:oauth:grant-type:token-exchange
+  - urn:ietf:params:oauth:grant-type:uma-ticket
+  - urn:openid:params:grant-type:ciba
+scope_count: 156
+scopes:
+- scope: NetworkWhitelist
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: account:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: account:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: acr
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: address
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: addresses:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: addresses:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: addresses:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: ai:assistants:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: ai:assistants:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: ai:knowledgebases:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: ai:knowledgebases:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: ai:query
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: ai:tools:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: ai:tools:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: approval-settings:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: approval-settings:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: approvals:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: asset-pools:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: asset-pools:consolidation
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: asset-pools:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: asset-pools:support
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: asset-pools:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: asset:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: balance-adjustments:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: basic
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: book-entries:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: book-entries:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: books:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: books:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: books:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: bvnk-api-gateway-audience
+  kind: audience
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: bvnk-centrifugo-audience
+  kind: audience
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: bvnk-trino-audience
+  kind: audience
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: bvnk:tenantId
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: card:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: card:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: card:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: channel-payments:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: channels-admin:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: channels-admin:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: channels:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: channels:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: clients:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: clients:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: configuration:compliance:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: configuration:compliance:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: configuration:digital:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: configuration:digital:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: configuration:feature-flags:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: configuration:feature-flags:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: configuration:trade:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: configuration:trade:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: contacts:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: contacts:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: conversions:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: conversions:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: cross-border-payments:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: cross-border-payments:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: cross-border-templates:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: email
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: exchange-rates:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: exports:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: exports:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: failing-configurations:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: failing-configurations:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: fee-estimate:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: fee:configuration:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: fee:configuration:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: fee:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: hook-destinations:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: hook-destinations:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: hook-events:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: hook-webhooks:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: hook:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: identity-broker-login
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: identity-user:action
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: identity-user:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: identity-user:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: integration-admin:signing-keys:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: integration-admin:signing-keys:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: kc_idp_hint
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: keypairs:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: keypairs:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: layer1:opa:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: layer1:scope:roles
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: ledger:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: merchant-settings:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: merchant-settings:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: microprofile-jwt
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: networks:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: networks:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: offline_access
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: openid
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: organization
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: payment-admin:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: payment-admin:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: payment-instruments:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: payment-instruments:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: payment:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: payment:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: phone
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: profile
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: quote:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: quote:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: report:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: risk-warehouse:configuration:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: risk-warehouse:configuration:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: roles
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: screenings:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: screenings:override
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: screenings:remediate
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: screenings:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: secrets:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: secrets:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: service_account
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: staking-transactions:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: superset:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: superset:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: symbol:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: symbol:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: tenant-user:authz
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: tenants-vault:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: tenants:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: tenants:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: tokenisation:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: tokenisation:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: trade-admin:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: trade-settings:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: trade-settings:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: trade:exports:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: trade:exports:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: trade:quote-service:quotes:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: trade:quote-service:quotes:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: transaction-claims:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: transactions:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: transactions:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  in_spec: true
+- scope: treasury:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: treasury:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: treasury:settlement:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: treasury:settlement:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: treasury:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: venue-balances:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: venue-deposit-addresses:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: venue-deposit-addresses:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: venue-transfer:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: venue-transfer:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: wallet:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: wallet:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: web-origins
+  kind: standard-oidc
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: webhook:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: webhook:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: workflow-orchestrator:admin
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: workflow:edit
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: workflow:execute
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+- scope: workflow:view
+  kind: platform
+  sources:
+  - well-known/bvnk-openid-configuration.json
+defects:
+- scope: ${exports.read-scope:exports:view}
+  issue: unresolved build-time placeholder shipped in the published OpenAPI security requirement
+  source: openapi/bvnk-layer1-digital-asset-openapi-original.yml

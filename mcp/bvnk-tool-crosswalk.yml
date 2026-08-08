@@ -1,0 +1,110 @@
+generated: '2026-08-08'
+method: derived
+source: https://github.com/bvnk/layer1-mcp-digital/blob/main/index.js + openapi/bvnk-layer1-digital-asset-openapi-original.yml
+note: Every binding below is confirmed against the MCP server source, which calls the Layer1 REST paths directly,
+  so each tool inherits its real input contract from the backing operation parameters and requestBody in the OpenAPI.
+  No mapping is inferred by name alone.
+surfaces:
+  openapi:
+    file: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+    title: Digital Asset 1.0.0
+    operations: 31
+    gated: false
+    published_at: https://github.com/bvnk/layer1-sdk-java8-digital/blob/main/api/openapi.yaml
+  mcp:
+    server: layer1-digital-mcp
+    transport: stdio
+    hosted: false
+    gated: true
+    gated_reason: self-hosted stdio server; no remote endpoint exists to call tools/list against
+    repository: https://github.com/bvnk/layer1-mcp-digital
+  graphql: null
+  rest_bvnk_main:
+    file: openapi/bvnk-api-endpoints-openapi-original.yml
+    note: The BVNK payments API has no MCP surface; the published MCP server only covers Layer1 Digital Asset.
+crosswalk:
+- tool: create_address
+  category: addresses
+  rest:
+  - createAddress
+  binding: rest
+  confidence: high
+  note: MCP handler calls POST /digital/v1/addresses.
+- tool: list_transactions
+  category: transactions
+  rest:
+  - listTransactions
+  binding: rest
+  confidence: high
+  note: MCP handler calls GET /digital/v1/transactions with hash/reference filters.
+- tool: get_asset_pool_balance
+  category: asset-pools
+  rest:
+  - getAssetPool
+  binding: rest
+  confidence: high
+  note: Tool name says balance but the handler calls GET /digital/v1/asset-pools/{assetPoolId}. getAssetPoolBalance
+    exists in the spec and is NOT the operation used.
+- tool: send_transaction_request
+  category: transaction-requests
+  rest:
+  - createTransaction
+  binding: rest
+  confidence: high
+  note: MCP handler calls POST /digital/v1/transaction-requests.
+mcp_only: []
+rest_only:
+- capability: Address
+  operations:
+  - getAddress
+  - listAddresses
+  - listTags
+  - validateAddress
+- capability: Asset Pool
+  operations:
+  - createAssetPool
+  - deleteAssetPool
+  - getAssetPoolBalance
+  - getAssetPoolMaxWithdrawableAmount
+  - getAssetPoolSummary
+  - listAssetPools
+  - updateAssetPool
+- capability: Export
+  operations:
+  - createBalanceExport
+  - getExport
+  - getExports
+- capability: Fee
+  operations:
+  - estimateTransactionFee
+- capability: Key Pair
+  operations:
+  - createKeyPair
+  - getKeyPair
+  - listKeyPairs
+- capability: Network
+  operations:
+  - getNetworks
+- capability: Return
+  operations:
+  - createReturnTransactionRequest
+- capability: Screening
+  operations:
+  - listScreenings
+  - manuallyActionHeldTransfer
+- capability: Transaction
+  operations:
+  - claimTransaction
+  - getTransactionById
+- capability: Transaction Request
+  operations:
+  - createStakingTransaction
+  - getTransactionRequestById
+  - listTransactionRequests
+coverage:
+  tools_named: 4
+  tools_bound: 4
+  mcp_only: 0
+  rest_operations_total: 31
+  rest_operations_with_tool: 4
+  rest_operations_without_tool: 27

@@ -1,0 +1,64 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for BVNK API Endpoints
+  version: 1.0.0
+extends: openapi/bvnk-api-endpoints-openapi-original.yml
+x-generated: '2026-08-08'
+x-method: generated
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/bvnk/
+    x-apievangelist-enriched: '2026-08-08'
+    x-apievangelist-artifacts:
+    - authentication/bvnk-authentication.yml
+    - conventions/bvnk-conventions.yml
+    - errors/bvnk-error-codes.yml
+    - lifecycle/bvnk-lifecycle.yml
+    - sandbox/bvnk-sandbox.yml
+    - asyncapi/bvnk-webhooks.yml
+- target: $
+  update:
+    x-apievangelist-idempotency:
+      header: X-Idempotency-Key
+      header_v2: Idempotency-Key
+      format: uuid
+      docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/idempotency
+- target: $
+  update:
+    x-apievangelist-pagination:
+      params:
+      - page
+      - size
+      - sort
+      - offset
+      max_size: 100
+      docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/pagination
+- target: $
+  update:
+    x-apievangelist-errors:
+      envelope:
+      - code
+      - status
+      - traceId
+      - message
+      - details
+      docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/errors
+- target: $
+  update:
+    x-apievangelist-webhooks: asyncapi/bvnk-webhooks.yml
+- target: $.info
+  update:
+    x-apievangelist-gaps:
+      operations_without_operationId: 9
+      examples:
+      - GET /api/v1/pay/summary
+      - POST /api/v1/pay/summary
+      - GET /api/v1/pay/{uuid}/summary
+      - PUT /api/v1/pay/validate
+      - GET /api/v2/channel
+      - POST /api/v2/channel
+      - GET /api/v2/channel/{uuid}
+      - GET /api/v2/channel/payment/{uuid}
+      - GET /api/v2/channel/payment
+      note: Reported to improve tooling/codegen; the original spec is never mutated.

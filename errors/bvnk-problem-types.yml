@@ -1,0 +1,200 @@
+generated: '2026-08-08'
+method: derived
+source: openapi/bvnk-api-endpoints-openapi-original.yml, openapi/bvnk-layer1-digital-asset-openapi-original.yml
+format: proprietary
+rfc9457: false
+note: Derived from the 4xx/5xx/default responses declared in the two published BVNK OpenAPI documents. Neither spec
+  uses application/problem+json, so this is not an RFC 9457 catalog. The human-facing code registry lives in errors/bvnk-error-codes.yml.
+problem_count: 17
+problems:
+- status: '400'
+  description: Bad Request
+  media_types: []
+  source_spec: openapi/bvnk-api-endpoints-openapi-original.yml
+  operation_count: 10
+  source_operations:
+  - listCurrenciesCrypto
+  - listCurrenciesDeposit
+  - listCurrenciesFiat
+  - merchantIdCreate
+  - merchantIdList
+  - quoteAccept
+  - quoteCreate
+  - quoteList
+  - quoteRead
+  - walletCreate
+- status: '400'
+  description: Bad Request
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-api-endpoints-openapi-original.yml
+  operation_count: 3
+  source_operations:
+  - GET /api/v2/channel
+  - GET /api/v2/channel/payment/{uuid}
+  - POST /api/v2/channel
+- status: '400'
+  description: Bad request
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-api-endpoints-openapi-original.yml
+  operation_count: 4
+  source_operations:
+  - GET /api/v1/pay/summary
+  - GET /api/v1/pay/{uuid}/summary
+  - POST /api/v1/pay/summary
+  - PUT /api/v1/pay/validate
+- status: '404'
+  description: Not Found
+  media_types: []
+  source_spec: openapi/bvnk-api-endpoints-openapi-original.yml
+  operation_count: 4
+  source_operations:
+  - GET /api/v2/channel/payment/{uuid}
+  - GET /api/v2/channel/{uuid}
+  - quoteList
+  - quoteRead
+- status: '500'
+  description: Unexpected Error
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-api-endpoints-openapi-original.yml
+  operation_count: 7
+  source_operations:
+  - GET /api/v1/pay/summary
+  - GET /api/v1/pay/{uuid}/summary
+  - GET /api/v2/channel
+  - POST /api/v1/pay/summary
+  - POST /api/v2/channel
+  - PUT /api/v1/pay/validate
+  - walletCreate
+- status: '400'
+  description: Bad Request
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 4
+  source_operations:
+  - createAssetPool
+  - deleteAssetPool
+  - getExport
+  - listScreenings
+- status: '400'
+  description: Bad request
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 1
+  source_operations:
+  - createBalanceExport
+- status: '400'
+  description: Invalid input
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 1
+  source_operations:
+  - getExports
+- status: '400'
+  description: Invalid request
+  media_types: []
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 1
+  source_operations:
+  - manuallyActionHeldTransfer
+- status: '400'
+  description: Standard error response
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 24
+  source_operations:
+  - claimTransaction
+  - createAddress
+  - createKeyPair
+  - createReturnTransactionRequest
+  - createStakingTransaction
+  - createTransaction
+  - estimateTransactionFee
+  - getAddress
+  - getAssetPool
+  - getAssetPoolBalance
+  - getAssetPoolMaxWithdrawableAmount
+  - getAssetPoolSummary
+- status: '404'
+  description: Export not found
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 1
+  source_operations:
+  - getExport
+- status: '404'
+  description: Tenant doesn't exist
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 1
+  source_operations:
+  - createAssetPool
+- status: '409'
+  description: 'Conflict: Export job is already running for the specified criteria'
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 1
+  source_operations:
+  - createBalanceExport
+- status: '410'
+  description: Withdrawal not found or has already been completed
+  media_types: []
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 1
+  source_operations:
+  - manuallyActionHeldTransfer
+- status: '412'
+  description: If pool is not empty
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 1
+  source_operations:
+  - deleteAssetPool
+- status: '503'
+  description: Service Unavailable
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 31
+  source_operations:
+  - claimTransaction
+  - createAddress
+  - createAssetPool
+  - createBalanceExport
+  - createKeyPair
+  - createReturnTransactionRequest
+  - createStakingTransaction
+  - createTransaction
+  - deleteAssetPool
+  - estimateTransactionFee
+  - getAddress
+  - getAssetPool
+- status: default
+  description: Request invalid
+  media_types:
+  - application/json
+  source_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operation_count: 31
+  source_operations:
+  - claimTransaction
+  - createAddress
+  - createAssetPool
+  - createBalanceExport
+  - createKeyPair
+  - createReturnTransactionRequest
+  - createStakingTransaction
+  - createTransaction
+  - deleteAssetPool
+  - estimateTransactionFee
+  - getAddress
+  - getAssetPool

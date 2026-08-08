@@ -1,0 +1,39 @@
+generated: '2026-08-08'
+method: derived
+source: openapi/bvnk-api-endpoints-openapi-original.yml, openapi/bvnk-layer1-digital-asset-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  - openIdConnect
+  api_key_in:
+  - header
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: Hawk
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'Hawk Payload (see: https://github.com/hueniverse/hawk)'
+  sources:
+  - openapi/bvnk-api-endpoints-openapi-original.yml
+- name: openId
+  type: openIdConnect
+  openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+  sources:
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+- name: httpSignature
+  type: http
+  scheme: signature
+  sources:
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+    scopes: 0
+  sources:
+  - openapi/bvnk-layer1-digital-asset-openapi-original.yml

@@ -1,0 +1,87 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.bvnk.com/bvnk/get-started/create-sandbox-account
+environments:
+- name: sandbox
+  api_base_url: https://api.sandbox.bvnk.com
+  portal: https://app.sandbox.bvnk.com/login
+  signup: https://signup.sandbox.bvnk.com/create-dev-account
+  notes: Self-serve developer signup; public-domain email addresses (gmail/outlook/yahoo/hotmail) are rejected.
+    Email six-digit verification required.
+- name: production
+  api_base_url: https://api.bvnk.com
+  portal: https://app.bvnk.com/login
+- name: layer1-sandbox
+  auth_issuer: https://auth.sandbox.layer1.com/auth/realms/bvnk
+  api_base_url: https://api.sandbox.layer1.com
+- name: layer1-production
+  auth_issuer: https://auth.layer1.com/auth/realms/bvnk
+  api_base_url: https://api.layer1.com
+credentials:
+  model: separate Hawk Auth ID + Hawk Auth Key per environment, issued in the portal under Integrations > Generate
+    API Key
+  key_prefixes: null
+  note: BVNK does not publish test-vs-live key prefixes; separation is by environment host, not by key prefix.
+  docs: https://docs.bvnk.com/bvnk/get-started/generate-api-keys
+simulators:
+- name: Fiat pay-in simulator
+  operation: POST /payment/v2/payins/simulation
+  docs: https://docs.bvnk.com/bvnk/get-started/payment-sim
+  description: Credits a sandbox wallet as if a fiat pay-in arrived, with a chosen scheme and originator.
+  methods_by_currency:
+    GBP:
+    - FASTER_PAYMENT
+    - SWIFT
+    EUR:
+    - SEPA_CT
+    - SEPA_INST
+    - SWIFT
+    USD:
+    - ACH
+    - ACH_SAME_DAY
+    - FEDWIRE
+    - CUBIX
+    - SWIFT
+  account_number_formats:
+  - SCAN
+  - IBAN
+  - SWIFT
+  - ABA
+  - CUBIX
+- name: Fiat payout simulator
+  trigger: customer reference prefix
+  docs: https://docs.bvnk.com/bvnk/get-started/payment-sim
+  triggers:
+  - flow: NORMAL
+    prefix: null
+    description: Standard successful payout; the default when no prefix is supplied.
+  - flow: FAILED
+    prefix: FAILED
+    description: Simulates a banking-partner failure such as the scheme rejecting the payout.
+  - flow: RETURN
+    prefix: RETURN
+    description: Simulates a successful payout followed by a return/reversal event.
+  usage: Prefix your own reference, e.g. FAILED<my-own-reference>.
+- name: Card authorization simulator
+  operations:
+  - simulate-authorization
+  - simulate-transaction-update
+  docs: https://docs.bvnk.com/bvnk/api-explorer/cards/simulate-authorization
+  description: Sandbox-only endpoints that create a simulated card authorization and then move it through settlement,
+    reversal and refund states.
+- name: Crypto test wallets
+  docs: https://docs.bvnk.com/bvnk/get-started/set-up-metamask-ethereum-wallet-for-eth-and-usdt-erc20-tokens
+  description: Docs walk through connecting MetaMask (ETH, USDT/USDC ERC-20) and TronLink (TRX, USDT TRC-20) wallets
+    for sandbox crypto testing.
+test_values_published: false
+test_values_note: BVNK publishes simulator ENDPOINTS and reference PREFIXES rather than fixed magic test values.
+  The example IBAN/ABA numbers in the pay-in simulator docs are illustrative payloads, not guaranteed fixtures,
+  and are deliberately not recorded here as test data.
+test_clocks: false
+tooling:
+  postman: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  postman_docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/testing-the-api-endpoints-using-a-postman-collection
+  postman_variables:
+  - baseUrl
+  - hawk_auth_id
+  - hawk_auth_key

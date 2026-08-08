@@ -1,0 +1,555 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.bvnk.com/bvnk/api-explorer/api-overview/errors
+format: proprietary
+note: 'BVNK publishes a code registry, not RFC 9457 problem+json. Two envelopes are in use: the current URN-style
+  codes (bvnk:<domain>:<nnnn>) and a legacy MER-<AREA>-<nnnn> errorList envelope. Codes are grouped by numeric range
+  in the published reference; the range and area headings are preserved verbatim.'
+envelope:
+  current:
+    fields:
+    - code
+    - status
+    - traceId
+    - message
+    - details
+    details_fields:
+    - errors
+    - documentLink
+  legacy:
+    fields:
+    - requestId
+    - errorList
+    errorList_fields:
+    - requestId
+    - code
+    - parameter
+    - message
+code_count: 86
+error_codes:
+- code: BVNK:PAYMENT:0001
+  range: 0001-0099
+  area: Fiat payouts
+  message: Received Bad Request
+  description: The system received a request with invalid parameters or missing required information. Check the
+    request format, parameters, and ensure all required fields are correctly filled.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0002
+  range: 0001-0099
+  area: Fiat payouts
+  message: Payout with the given identifier could not be found
+  description: The system was unable to locate the requested payout using the provided ID. Verify that the payout
+    ID is correct and exists in the system.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0003
+  range: 0001-0099
+  area: Fiat payouts
+  message: Forbidden → received request with wrong authentication details
+  description: The request was rejected due to an authentication failure. Ensure your API keys, tokens, or credentials
+    are valid and correctly included in the request header.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0004
+  range: 0001-0099
+  area: Fiat payouts
+  message: Error while receiving or validating beneficiary
+  description: The beneficiary details could not be retrieved, or failed validation checks. This may occur due to
+    missing or malformed fields (name, address, account identifiers), failed KYC/KYB or sanctions screening, or
+    temporary downstream connectivity errors. Verify beneficiary data to ensure the required fields and formats
+    (e.g., IBAN/ABA) are accurate. Confirm the beneficiary is allowed, and retry once issues are resolved.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0005
+  range: 0001-0099
+  area: Fiat payouts
+  message: Validation of the beneficiary has failed
+  description: The beneficiary did not pass mandatory validation rules. Typical reasons include invalid account
+    identifiers, an unsupported destination, a mismatched currency/network, or a compliance screening failure. Correct
+    the beneficiary information (names, address, account numbers, tags/memos where required) or select a different,
+    validated beneficiary before retrying.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0006
+  range: 0001-0099
+  area: Fiat payouts
+  message: Payout with the idempotency key already exists
+  description: A payout using the provided idempotency key already exists. For idempotent safety, the platform rejects
+    creating a new payout with the same key. If you intend to retry the same request, use the original response;
+    otherwise, generate a new, unique idempotency key for a new payout.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0007
+  range: 0001-0099
+  area: Fiat payouts
+  message: Insufficient funds
+  description: A wallet does not have sufficient funds to complete the requested transaction.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0008
+  range: 0001-0099
+  area: Fiat payouts
+  message: The payment method is not supported
+  description: The platform does not currently support the payment method specified in the request. Review the documentation
+    for a list of supported payment methods.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0009
+  range: 0001-0099
+  area: Fiat payouts
+  message: Specific functionality is not enabled for this account or wallet
+  description: The specific functionality or flow is not enabled or provisioned for this account or wallet. Check
+    your permissions and product enablement. If the feature is available, enable it in the portal; otherwise, contact
+    support to request access.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0010
+  range: 0001-0099
+  area: Fiat payouts
+  message: The virtual account has been disabled for this given wallet. Customer should use a different wallet or
+    choose different payment method.
+  description: The virtual account assigned to the specified wallet is disabled. Use a different wallet or select
+    an alternative payment method. If you need this virtual account re-enabled, review the wallet configuration
+    and contact support or your account manager.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0030
+  range: 0001-0099
+  area: Fiat payouts
+  message: Could not find a single payment within a given payout batch
+  description: The referenced payout batch contains no payments matching your query, or the payments have not been
+    associated with the batch yet. Verify the payout batch identifier, ensure the batch was created successfully,
+    and confirm that items were added and not removed by validation. If you are filtering, check the date/status
+    filters to ensure you are querying the correct environment (sandbox vs. production).
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0031
+  range: 0001-0099
+  area: Fiat payouts
+  message: Could not find specific payout batch
+  description: The payout batch could not be located. The batch identifier may be invalid, belong to another account,
+    or the batch may have been archived/expired. Double-check the batch ID/token and your account permissions, then
+    try again. If the batch was created recently, allow a short delay and retry.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0032
+  range: 0001-0099
+  area: Fiat payouts
+  message: Cannot delete a single payout from a batch, as it has started processing already
+  description: Once batch processing has started, individual payouts become immutable. Deletions are only permitted
+    while the batch is in a pre‑processing state. To remove items, cancel the whole batch if supported, or create
+    a new batch without the unwanted payout.
+  family: bvnk-urn
+- code: BVNK:PAYMENT:0033
+  range: 0001-0099
+  area: Fiat payouts
+  message: Cannot update a single payout from a batch, as it has started processing already
+  description: Individual payout updates are blocked after batch processing begins. Modify items only before submission.
+    If you need changes, cancel the batch (where supported) and recreate it with corrected payout details, or submit
+    a follow‑up adjustment as a new payout.
+  family: bvnk-urn
+- code: BVNK:FEES:0001
+  range: 0001-0099
+  area: Fees
+  message: Invalid wallet selected on client request.
+  description: The wallet selected in the client request is invalid. Check that the wallet identifier is correctly
+    formatted and belongs to a valid wallet type.
+  family: bvnk-urn
+- code: BVNK:FEES:0002
+  range: 0001-0099
+  area: Fees
+  message: Provided wallet not found for a specific account.
+  description: The system was unable to find the specified wallet associated with the requested account. Verify
+    that the wallet exists and is correctly linked to the account.
+  family: bvnk-urn
+- code: BVNK:FEES:0003
+  range: 0001-0099
+  area: Fees
+  message: Invalid customer fee wallet configuration.
+  description: The customer fee wallet configuration contains invalid settings or parameters. Review and correct
+    the fee wallet configuration in your account settings.
+  family: bvnk-urn
+- code: MER-PAY-1000
+  range: 1000-1999
+  message: Not authorized to perform this action
+  description: A user or merchant is not authorised to perform the requested action. This can occur due to insufficient
+    permissions or invalid authentication credentials.
+  family: legacy-mer
+- code: MER-PAY-2000
+  range: 2000-2999
+  message: Invalid parameter value
+  description: The request parameters fail validation. This includes JSON parsing errors, missing required parameters,
+    invalid data types, or constraint violations on request fields.
+  family: legacy-mer
+- code: MER-PAY-2001
+  range: 2000-2999
+  message: Amount x.xx \<currency> failed is less than minimum limit of x.xx \<currency>
+  description: The payment amount fails validation. This occurs when the amount is below the minimum limit or above
+    the maximum limit for the specified currency.
+  family: legacy-mer
+- code: MER-PAY-2002
+  range: 2000-2999
+  message: Payment has no quote
+  description: An error occurs when a payment operation requires an exchange quote, but none is found. This typically
+    occurs when attempting to process payments that require currency conversion.
+  family: legacy-mer
+- code: MER-PAY-2003
+  range: 2000-2999
+  message: Exchange quote \<id> for payment \<id> has status ACCEPTED so cannot be accepted
+  description: An error is given when attempting to modify a quote that has already been finalised. Once a quote
+    is in a final state, it cannot be changed.
+  family: legacy-mer
+- code: MER-PAY-2004
+  range: 2000-2999
+  message: Payment has expired
+  description: An error occurs when attempting to process a payment that has exceeded its expiration time. Expired
+    payments cannot be processed and need to be recreated.
+  family: legacy-mer
+- code: MER-PAY-2005
+  range: 2000-2999
+  message: Instruction validation failed message
+  description: The payment instruction data is invalid. This includes validation failures for payment addresses,
+    amounts, or other instruction-specific parameters.
+  family: legacy-mer
+- code: MER-PAY-2006
+  range: 2000-2999
+  message: Merchant not found
+  description: An error occurs when the Merchant ID provided in the payment request cannot be found in the account.
+  family: legacy-mer
+- code: MER-PAY-2008
+  range: 2000-2999
+  message: Payment not found
+  description: An error occurs when the payment ID cannot be found.
+  family: legacy-mer
+- code: MER-PAY-2009
+  range: 2000-2999
+  message: Invalid request message
+  description: Error given for general request validation failures.
+  family: legacy-mer
+- code: MER-PAY-2010
+  range: 2000-2999
+  message: A payment with reference \<reference> already exists. Please enter a unique reference.
+  description: An error was given when a payment was already created using this reference. All references need to
+    be unique.
+  family: legacy-mer
+- code: MER-PAY-2011
+  range: 2000-2999
+  message: Currency \<currency> is disabled
+  description: An error occurs when creating a payment with a disabled currency that is not available for trade.
+  family: legacy-mer
+- code: MER-PAY-2012
+  range: 2000-2999
+  message: Insufficient funds
+  description: A wallet does not have sufficient funds to complete the requested transaction.
+  family: legacy-mer
+- code: MER-PAY-2014
+  range: 2000-2999
+  message: Exchange quote \<id> for payment \<id> can no longer be accepted as acceptance has expired
+  description: A quote is accepted after it has expired.
+  family: legacy-mer
+- code: MER-PAY-2015
+  range: 2000-2999
+  message: Crypto instruction not found for payment \<id>
+  description: A required crypto payment instruction cannot be found for the specified payment.
+  family: legacy-mer
+- code: MER-PAY-2016
+  range: 2000-2999
+  message: Merchant not authorised to perform this action
+  description: A merchant is not authorised to perform the requested action.
+  family: legacy-mer
+- code: MER-PAY-2017
+  range: 2000-2999
+  message: Cannot cancel payment with external id \<id> and status PROCESSING
+  description: An attempt is made to cancel a payment and the status is not COMPLETE or PENDING.
+  family: legacy-mer
+- code: MER-PAY-2018
+  range: 2000-2999
+  message: Resource modified by another request
+  description: A concurrent modification conflict arises. This happens when multiple requests attempt to modify
+    the same resource simultaneously.
+  family: legacy-mer
+- code: MER-PAY-2019
+  range: 2000-2999
+  message: Currency \<currency> not found
+  description: The specified currency is not found in the system.
+  family: legacy-mer
+- code: MER-PAY-2024
+  range: 2000-2999
+  message: protocol \<protocol> not found for currency \<currency>
+  description: The specified protocol is not found or not supported for the given currency.
+  family: legacy-mer
+- code: MER-PAY-2025
+  range: 2000-2999
+  message: Please enter your own wallet address, not the address that you paid into originally.
+  description: The provided refund address fails validation checks.
+  family: legacy-mer
+- code: MER-PAY-2027
+  range: 2000-2999
+  message: 'address \<address> has failed validation for currency: \<currency>, protocol: \<protocol> and tag: \<tag>'
+  description: The crypto payout receive address format is invalid.
+  family: legacy-mer
+- code: MER-PAY-2028
+  range: 2000-2999
+  message: 'We couldn''t process your payout request to this address: \<address> this time, please try another address.'
+  description: The crypto payout receiving address is rejected due to risk and compliance reasons.
+  family: legacy-mer
+- code: MER-PAY-2029
+  range: 2000-2999
+  message: Protocol with code \<protocol> not found
+  description: The specified protocol code is not found in the system.
+  family: legacy-mer
+- code: MER-PAY-2030
+  range: 2000-2999
+  message: Unable to find protocol \<protocol> for currency code \<currency>
+  description: The specified protocol cannot be found for the given currency code.
+  family: legacy-mer
+- code: MER-PAY-2031
+  range: 2000-2999
+  message: 'Account not enabled for flow: \<flow>. Please check your permissions or contact support for more information.'
+  description: The account is not enabled for the specific payment flow being requested.
+  family: legacy-mer
+- code: MER-PAY-2033
+  range: 2000-2999
+  message: 'Multiple protocols found for currency \<currency> Please specify which one to use: \<protocols>.'
+  description: Multiple protocols are available for a currency, but no specific protocol is selected, rendering
+    automatic selection impossible.
+  family: legacy-mer
+- code: MER-PAY-2035
+  range: 2000-2999
+  message: mass payout data row validation failed
+  description: One or more rows in a mass payout file fail validation checks.
+  family: legacy-mer
+- code: MER-PAY-2036
+  range: 2000-2999
+  message: \<rows> payments uploaded. This exceeds the maximum number of \<max_rows> rows. Please reduce your file
+    to \<max_rows> rows.
+  description: A mass payout file contains more rows than the system maximum allows.
+  family: legacy-mer
+- code: MER-PAY-2037
+  range: 2000-2999
+  message: Failed to process mass upload file. File name already exists.
+  description: Attempting to upload a mass payout file with a filename that already exists.
+  family: legacy-mer
+- code: MER-PAY-2038
+  range: 2000-2999
+  message: Failed to process mass upload file. File is required.
+  description: A required mass payout file is not provided.
+  family: legacy-mer
+- code: MER-PAY-2039
+  range: 2000-2999
+  message: Failed to process mass upload file. One of Merchant id or Wallet id fields have to be provided.
+  description: A mass payout request is missing both the required merchant ID and wallet ID parameters.
+  family: legacy-mer
+- code: MER-PAY-2040
+  range: 2000-2999
+  message: Failed to process mass upload file. Header is invalid.
+  description: The mass payout file contains invalid or missing required headers.
+  family: legacy-mer
+- code: MER-PAY-2041
+  range: 2000-2999
+  message: Deleting mass payout item with status CREATED is not allowed.
+  description: An error is given when attempting to delete a mass payout item that is not in a deletable state.
+  family: legacy-mer
+- code: MER-PAY-2042
+  range: 2000-2999
+  message: Updating mass payout item with status \<status> is not allowed.
+  description: An error is given when attempting to edit a mass payout item that is not in an editable state.
+  family: legacy-mer
+- code: MER-PAY-2043
+  range: 2000-2999
+  message: One of merchantId or walletId properties have to be provided, both are missing
+  description: A request requires a merchant ID or a wallet ID, but neither is provided.
+  family: legacy-mer
+- code: MER-PAY-2044
+  range: 2000-2999
+  message: network \<network> not found
+  description: The specified blockchain network is not valid or supported.
+  family: legacy-mer
+- code: MER-PAY-2045
+  range: 2000-2999
+  message: Payout details currency \<currency> and network \<network> mismatch from previously provided currency
+    \<currency> and network \<network>
+  description: The payout details do not match the details previously provided for the estimate.
+  family: legacy-mer
+- code: MER-PAY-2046
+  range: 2000-2999
+  message: protocol not found for currency \<currency> and network \<network>
+  description: The specified protocol and network combination is not valid or supported.
+  family: legacy-mer
+- code: MER-PAY-2047
+  range: 2000-2999
+  message: Estimate cannot be modified. Payment with uuid \<uuid> already created for estimate \<estimate id>.
+  description: An error is given when attempting to accept an estimate that already has an associated payment.
+  family: legacy-mer
+- code: MER-PAY-2048
+  range: 2000-2999
+  message: Failed to process mass upload file. File is empty.
+  description: The uploaded mass payout file contains no data rows.
+  family: legacy-mer
+- code: MER-PAY-2049
+  range: 2000-2999
+  message: Recipient address is not associated with a contact. You will assign or add a contact to it on the next
+    step.
+  description: The specified contact cannot be found for the given address or criteria.
+  family: legacy-mer
+- code: MER-PAY-2050
+  range: 2000-2999
+  message: Recipient address is associated with more than 1 contact. You'll be asked to choose which contact to
+    use for this transaction.
+  description: Multiple matching contacts are found for the provided address.
+  family: legacy-mer
+- code: MER-PAY-2051
+  range: 2000-2999
+  message: Crypto account \<crypto account> is not verified. Please verify your crypto account before using it
+  description: An error occurs when attempting to use an unverified cryptocurrency account that requires verification.
+  family: legacy-mer
+- code: MER-PAY-2052
+  range: 2000-2999
+  message: This country is unavailable. If you require this region, please reach out to your account manager.
+  description: Geographical screening encounters an error or fails due to regional restrictions.
+  family: legacy-mer
+- code: MER-PAY-2053
+  range: 2000-2999
+  message: The payment can not be processed.
+  description: Geographical screening determines that the payment cannot be processed due to regional restrictions.
+  family: legacy-mer
+- code: MER-PAY-2054
+  range: 2000-2999
+  message: Payment direction 'IN' is not compatible with flow 'EMBEDDED_CRYPTO'
+  description: An error is given when attempting to use an unsupported payment direction with an embedded crypto
+    flow.
+  family: legacy-mer
+- code: MER-PAY-2055
+  range: 2000-2999
+  message: mesh client invalid request message
+  description: A request to the mesh client is invalid or malformed.
+  family: legacy-mer
+- code: MER-PAY-2056
+  range: 2000-2999
+  message: 'Customer not found for reference: \<customer reference>'
+  description: The specified customer cannot be found in the system.
+  family: legacy-mer
+- code: MER-PAY-2057
+  range: 2000-2999
+  message: required header missing
+  description: A required HTTP header is missing from the request.
+  family: legacy-mer
+- code: MER-PAY-2058
+  range: 2000-2999
+  message: Cannot confirm/accept payment \<uuid> as it has been cancelled
+  description: An error is given when attempting to perform operations on a payment that has been cancelled.
+  family: legacy-mer
+- code: MER-PAY-2059
+  range: 2000-2999
+  message: Wallet with ID \<walletId> not found
+  description: The specified wallet ID does not exist.
+  family: legacy-mer
+- code: BVNK-3001
+  range: 3000-3999
+  area: Network
+  message: Received Bad Request
+  description: The system received a request with invalid parameters or missing required information. Check the
+    request format, parameters, and ensure all required fields are properly filled and formatted correctly.
+  family: legacy-mer
+- code: BVNK-3003
+  range: 3000-3999
+  area: Network
+  message: Forbidden → received request with wrong authentication details
+  description: Access to the requested resource is denied due to authentication failure. Ensure your API keys, tokens,
+    or credentials are valid, correctly included in the request header, and have the necessary permissions to perform
+    this operation.
+  family: legacy-mer
+- code: BVNK-3040
+  range: 3000-3999
+  area: Network
+  message: Transfer not found
+  description: The requested transfer could not be located in the system. Verify that the transfer identifier is
+    correct and exists within your account. If you recently initiated the transfer, it may still be processing.
+  family: legacy-mer
+- code: MER-PAY-3003
+  range: 3000-3999
+  area: Customers
+  message: Resource not found
+  description: Error given when a requested static resource or endpoint cannot be found.
+  family: legacy-mer
+- code: BVNK:LEDGER:4001
+  range: 4001-4999
+  area: Wallets
+  message: Received Bad Request
+  description: The system received a request with invalid parameters or missing required information. Check the
+    request format, ensure all required fields are properly filled, and validate that parameter values meet the
+    expected format and constraints.
+  family: bvnk-urn
+- code: BVNK:LEDGER:4003
+  range: 4001-4999
+  area: Wallets
+  message: FORBIDDEN! You don't have the necessary permissions to access this resource.
+  description: Access to the requested resource is denied due to insufficient permissions. This could be due to
+    missing capabilities when creating a customer wallet, or because the customer has been rejected in the system.
+    Verify your account permissions and customer status before retrying.
+  family: bvnk-urn
+- code: BVNK:LEDGER:4004
+  range: 4001-4999
+  area: Wallets
+  message: Wallet creation request with the same idempotency key and account reference exists
+  description: A wallet creation request with the same idempotency key and account reference already exists in the
+    system. Idempotency keys must be unique for each new wallet creation. Check your records to find the existing
+    wallet or use a new idempotency key for a new wallet.
+  family: bvnk-urn
+- code: BVNK:LEDGER:4005
+  range: 4001-4999
+  area: Wallets
+  message: Wallet creation request with missing data, one of the customer reference and external reference has to
+    be provided
+  description: The wallet creation request is missing essential identifying information. Either a customer reference
+    or an external reference must be provided in the request. Review your request data and include at least one
+    of these required reference identifiers.
+  family: bvnk-urn
+- code: MER-PAY-4011
+  range: 4001-4999
+  area: Customers
+  message: Customer fee wallet not found. Please contact support if you need assistance.
+  description: The customer fee wallet has not been set. Configuration error.
+  family: legacy-mer
+- code: BVNK:LEDGER:5001
+  range: 5000-5999
+  area: Wallets
+  message: Wallet not found
+  description: The requested wallet could not be located in the system. Verify that the wallet identifier is correct
+    and exists within your account.
+  family: bvnk-urn
+- code: BVNK:LEDGER:5050
+  range: 5000-5999
+  area: Wallets
+  message: Wallet balance not found
+  description: The system could not retrieve balance information for the specified wallet. Ensure the wallet exists
+    and has been properly initialized with a balance.
+  family: bvnk-urn
+- code: BVNK:LEDGER:5040
+  range: 5000-5999
+  area: Wallets
+  message: Bad Request
+  description: The request contained invalid data, malformed parameters, or violated validation constraints. Review
+    your request format and ensure all required fields contain valid data.
+  family: bvnk-urn
+- code: BVNK:LEDGER:5051
+  range: 5000-5999
+  area: Wallets
+  message: Wallet creation failed
+  description: The wallet creation process failed to complete successfully. This could be due to system constraints,
+    validation issues, or conflicts with existing data. Check the request details and try again with valid parameters.
+  family: bvnk-urn
+- code: MER-PAY-5001
+  range: 5000-5999
+  area: Customers
+  message: The requested wallet could not be located in the system.
+  description: Verify that the wallet identifier is correct and exists within your account.
+  family: legacy-mer
+- code: MER-PAY-5050
+  range: 5000-5999
+  area: Customers
+  message: The system could not retrieve balance information for the specified wallet.
+  description: Ensure the wallet exists and has been properly initialized with a balance.
+  family: legacy-mer
+- code: MER-PAY-5040
+  range: 5000-5999
+  area: Customers
+  message: The request contained invalid data, malformed parameters, or violated validation constraints.
+  description: Review your request format and ensure all required fields contain valid data.
+  family: legacy-mer
+- code: MER-PAY-5051
+  range: 5000-5999
+  area: Customers
+  message: The wallet creation process failed to complete successfully. This could be due to system constraints,
+    validation issues, or conflicts with existing data.
+  description: Check the request details and try again with valid parameters.
+  family: legacy-mer

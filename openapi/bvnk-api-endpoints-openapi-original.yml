@@ -1,0 +1,2977 @@
+openapi: 3.0.3
+info:
+  description: "The BVNK API is designed to facilitate seamless and secure transactions\
+    \ including payments, channels, anddigital wallet transactions."
+  title: BVNK API Endpoints
+  version: 1.0.1
+servers:
+- description: Sandbox
+  url: https://api.sandbox.bvnk.com
+- description: Production
+  url: https://api.bvnk.com
+tags:
+- name: Currencies
+- name: Merchant IDs
+- name: Payments
+- name: Channels
+- name: Wallets
+- name: Trading and Conversions
+paths:
+  /api/currency/crypto:
+    get:
+      description: |-
+        Retrieves a list of all cryptocurrencies available on the BVNK platform. This list represents cryptocurrencies that end users can select whilst making a payment.
+
+        For sandbox, only Ethereum (ETH) is fully functional.
+      operationId: listCurrenciesCrypto
+      parameters:
+      - description: Offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          type: number
+        style: form
+      - description: Maximum number of items in response
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          default: 200
+          minimum: 1
+          type: number
+        style: form
+      - description: list currencies that only allow deposits
+        explode: true
+        in: query
+        name: allowDeposits
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Merchant'
+                type: array
+          description: OK
+        "400":
+          description: Bad Request
+      summary: List Crypto Currencies
+      tags:
+      - Currencies
+      x-accepts: application/json
+  /api/currency/fiat:
+    get:
+      description: |-
+        Retrieves a list of all display fiat currencies available on BVNK's Crypto Payments API.
+        This list refers to currencies merchants can display on a payment page to an end user. It does not represent the list of currencies that can be held on the platform in wallets.
+      operationId: listCurrenciesFiat
+      parameters:
+      - description: Offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          type: number
+        style: form
+      - description: Maximum number of items in response
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          default: 200
+          minimum: 1
+          type: number
+        style: form
+      - description: list currencies that are usable
+        explode: true
+        in: query
+        name: usable
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Merchant'
+                type: array
+          description: OK
+        "400":
+          description: Bad Request
+      summary: List Fiat Currencies
+      tags:
+      - Currencies
+      x-accepts: application/json
+  /api/currency/deposit:
+    get:
+      description: These are the currencies that can be used to create a new wallet.
+      operationId: listCurrenciesDeposit
+      parameters:
+      - description: Offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          type: number
+        style: form
+      - description: Maximum number of items in response
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          default: 200
+          minimum: 1
+          type: number
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Merchant'
+                type: array
+          description: OK
+        "400":
+          description: Bad Request
+      summary: List Wallet Currencies
+      tags:
+      - Currencies
+      x-accepts: application/json
+  /api/v1/merchant:
+    get:
+      description: Retrieves merchant IDs setup on your account.
+      operationId: merchantIdList
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Merchant'
+                type: array
+          description: OK
+        "400":
+          description: Bad Request
+      security:
+      - Hawk:
+        - merchant
+      summary: List Merchant IDs
+      tags:
+      - Merchant IDs
+      x-accepts: application/json
+    post:
+      description: |-
+        Generate a Merchant ID for your account to process pay-ins and pay-outs through our API.
+
+        A Merchant ID is essential as it designates the account wallet where incoming pay-ins will be settled. For instance, if a Merchant ID is associated with a EUR wallet ID, any incoming USDT payment will be automatically converted to EUR and deposited in the designated EUR wallet.
+
+        Vice versa, any outgoing USDT payment will be automatically converted and withdrawn from the designated EUR wallet.
+
+        For further information, please visit https://docs.bvnk.com/docs/creating-your-first-merchant to learn more about creating your first Merchant ID.
+      operationId: merchantIdCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/merchantIdCreate_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryPaymentDto'
+          description: OK
+        "400":
+          description: Bad Request
+      security:
+      - Hawk:
+        - merchant
+      summary: Create Merchant ID
+      tags:
+      - Merchant IDs
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v1/pay/summary:
+    get:
+      description: Retrieves a list of payments on a specific Merchant ID
+      parameters:
+      - description: Merchant identifier
+        explode: true
+        in: query
+        name: merchantId
+        required: true
+        schema:
+          default: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+          type: string
+        style: form
+      - description: Customer reference
+        example: REF123
+        explode: true
+        in: query
+        name: customerReference
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Merchant payment uuid
+        example: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+        explode: true
+        in: query
+        name: paymentExternalId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Start date
+        example: 2023-03-30
+        explode: true
+        in: query
+        name: fromDate
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: End date
+        example: 2023-03-30
+        explode: true
+        in: query
+        name: toDate
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          example: 0
+          minimum: 0
+          type: number
+        style: form
+      - description: Maximum number of items in response
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          example: 20
+          minimum: 1
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/PaymentStatusDto'
+        style: form
+      - description: Ordering direction
+        explode: true
+        in: query
+        name: order
+        required: false
+        schema:
+          enum:
+          - asc
+          - desc
+          example: asc
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SummaryPaymentDto'
+                type: array
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - merchant
+      summary: List Payments
+      tags:
+      - Payments
+      x-accepts: application/json
+    post:
+      description: "Creates a payment, either type IN or type OUT."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayRequestDto'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryPaymentDto'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - merchant
+      summary: Create payment
+      tags:
+      - Payments
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v1/pay/{uuid}/summary:
+    get:
+      description: Retrieves details of a specific payment using the UUID of the payment.
+      parameters:
+      - description: merchant payment uuid
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryPaymentDto'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - merchant
+      summary: Get Payment
+      tags:
+      - Payments
+      x-accepts: application/json
+  /api/v1/pay/validate:
+    put:
+      description: |-
+        Validates that a crypto address is correct.
+
+        Use this endpoint to validate that an address exists, is correctly formatted, and includes all the required data. This endpoint can help prevent your end users losing funds when submitting a payout.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayOutDetailDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      summary: Validate Address
+      tags:
+      - Payments
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v2/channel:
+    get:
+      description: Retrieves all channels related to a Merchant ID.
+      parameters:
+      - description: The merchant ID that the channels belong to
+        explode: true
+        in: query
+        name: merchantId
+        required: true
+        schema:
+          default: c02153ae-8ac8-4222-80e8-b2b2af85bd78
+          type: string
+        style: form
+      - description: Offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          example: "0"
+          type: string
+        style: form
+      - description: Maximum number of items in response
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          example: "10"
+          type: string
+        style: form
+      - description: The attribute used to sort the data
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          $ref: '#/components/schemas/PaymentStatusDto'
+        style: form
+      - description: Ordering direction
+        explode: true
+        in: query
+        name: order
+        required: false
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MerchantChannel'
+                type: array
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad Request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - merchant
+      summary: List Channels
+      tags:
+      - Channels
+      x-accepts: application/json
+    post:
+      description: Creates a channel that your end users can openly send payments
+        to.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantChannelRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantChannel'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad Request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - merchant
+      summary: Create Channel
+      tags:
+      - Channels
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v2/channel/{uuid}:
+    get:
+      description: Retrieves a specific channel by UUID.
+      parameters:
+      - description: The UUID of the channel you are querying
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantChannel'
+          description: OK
+        "404":
+          description: Not Found
+      security:
+      - Hawk:
+        - merchant
+      summary: Get Channel
+      tags:
+      - Channels
+      x-accepts: application/json
+  /api/v2/channel/payment/{uuid}:
+    get:
+      description: Retrieves a specific payment made into a channel.
+      parameters:
+      - description: The UUID of the payment you are querying.
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantChannelPayment'
+          description: "200"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad Request
+        "404":
+          description: Not Found
+      security:
+      - Hawk:
+        - merchant
+      summary: Get Channel Payment
+      tags:
+      - Channels
+      x-accepts: application/json
+  /api/v2/channel/payment:
+    get:
+      description: Retrieves a list of payments to a channel on a specific Merchant
+        ID.
+      parameters:
+      - description: The Merchant ID
+        explode: true
+        in: query
+        name: merchantId
+        required: true
+        schema:
+          default: c02153ae-8ac8-4222-80e8-b2b2af85bd78
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - DETECTED
+          - COMPLETE
+          - UNKNOWN
+          example: COMPLETE
+          type: string
+        style: form
+      - description: From which date to start searching.
+        explode: true
+        in: query
+        name: fromDate
+        required: false
+        schema:
+          example: 2023-03-05
+          type: string
+        style: form
+      - description: At which date to stop searching.
+        explode: true
+        in: query
+        name: toDate
+        required: false
+        schema:
+          example: 2023-05-03
+          type: string
+        style: form
+      - description: Where to start fetching records.
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          example: "0"
+          type: string
+        style: form
+      - description: Maximum number of items in response
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          example: "10"
+          type: string
+        style: form
+      - description: Ordering direction
+        explode: true
+        in: query
+        name: order
+        required: false
+        schema:
+          enum:
+          - asc
+          - desc
+          example: asc
+          type: string
+        style: form
+      - description: "Can be UUID of the payment, reference, channel UUID, transaction\
+          \ hash, or wallet code."
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MerchantChannelPayment'
+                type: array
+          description: OK
+      security:
+      - Hawk:
+        - merchant
+      summary: List Channel Payments
+      tags:
+      - Channels
+      x-accepts: application/json
+  /api/wallet:
+    get:
+      description: Retrieves a list of wallets on your account.
+      operationId: walletList
+      parameters:
+      - description: start offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: max number results
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Wallet'
+                type: array
+          description: OK
+      security:
+      - Hawk:
+        - user
+      summary: List Wallets
+      tags:
+      - Wallets
+      x-accepts: application/json
+    post:
+      description: Creates a wallet on the BVNK platform.
+      operationId: walletCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WalletRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+          description: Created
+        "400":
+          description: Bad Request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - user
+      summary: Create Wallet
+      tags:
+      - Wallets
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/wallet/{id}:
+    get:
+      description: Retrieves a specific wallet.
+      operationId: walletRGet
+      parameters:
+      - description: start offset
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          default: 255861
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+          description: OK
+      security:
+      - Hawk:
+        - user
+      summary: Get Wallet
+      tags:
+      - Wallets
+      x-accepts: application/json
+  /api/wallet/balances:
+    get:
+      description: Retrieves the balances of your wallets on platform.
+      operationId: walletBalanceList
+      parameters:
+      - description: Date at to retrieve balances
+        explode: true
+        in: query
+        name: date
+        required: false
+        schema:
+          example: 2020-03-17
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Balance'
+                type: array
+          description: OK
+      security:
+      - Hawk:
+        - user
+      summary: List Wallet Balances
+      tags:
+      - Wallets
+      x-accepts: application/json
+  /api/transaction/report:
+    get:
+      description: Report all transactions from wallet in specified format. Report
+        will be generated and sent to main account email in the specified format
+      operationId: transactionReport
+      parameters:
+      - description: Date at to retrieve balances
+        explode: true
+        in: query
+        name: walletId
+        required: false
+        schema:
+          default: 255861
+          format: int64
+          type: integer
+        style: form
+      - description: Export range from date in format 'yyyy-MM-dd'
+        explode: true
+        in: query
+        name: fromDate
+        required: false
+        schema:
+          default: 2022-09-17
+          type: string
+        style: form
+      - description: Export range to date in format 'yyyy-MM-dd'
+        explode: true
+        in: query
+        name: toDate
+        required: false
+        schema:
+          default: 2023-03-17
+          type: string
+        style: form
+      - description: "'json' - json format, 'csv' - csv format"
+        explode: true
+        in: query
+        name: format
+        required: false
+        schema:
+          default: csv
+          type: string
+        style: form
+      - description: Transaction type code
+        explode: true
+        in: query
+        name: transactionType
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TransactionReport'
+                type: array
+          description: OK
+      security:
+      - Hawk:
+        - user
+      summary: Transactions Report
+      tags:
+      - Wallets
+      x-accepts: application/json
+  /api/v1/quote:
+    post:
+      description: Creates a quote to convert between wallets.
+      operationId: quoteCreate
+      parameters:
+      - description: Create estimate quote
+        explode: true
+        in: query
+        name: estimate
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: OK
+        "400":
+          description: Bad Request
+      security:
+      - Hawk:
+        - merchant
+      summary: Create Quote
+      tags:
+      - Trading and Conversions
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v1/quote/accept/{uuid}:
+    put:
+      description: Executes a quote.
+      operationId: quoteAccept
+      parameters:
+      - description: The quote UUID you are accepting.
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: 5dc4e061-31c6-4b96-8c4d-0ea984aece0b
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedQuote'
+          description: OK
+        "400":
+          description: Bad Request
+      security:
+      - Hawk:
+        - merchant
+      summary: Accept Quote
+      tags:
+      - Trading and Conversions
+      x-accepts: application/json
+  /api/v1/quote/{uuid}:
+    get:
+      description: Retrieves a specific quote.
+      operationId: quoteRead
+      parameters:
+      - description: UUID of the quote you are retrieving.
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+      security:
+      - Hawk:
+        - merchant
+      summary: Read Quote
+      tags:
+      - Trading and Conversions
+      x-accepts: application/json
+  /api/v1/quote/{merchantId}:
+    get:
+      description: Retrieves all quotes on a specific Merchant ID.
+      operationId: quoteList
+      parameters:
+      - description: Merchant ID you are retrieving quotes from.
+        explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Quote'
+                type: array
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+      security:
+      - Hawk:
+        - x-example
+      summary: List Quotes
+      tags:
+      - Trading and Conversions
+      x-accepts: application/json
+components:
+  callbacks: {}
+  examples: {}
+  headers: {}
+  links: {}
+  parameters: {}
+  requestBodies: {}
+  responses:
+    "200Currencies":
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/Merchant'
+            type: array
+      description: OK
+    BadRequest:
+      description: Bad Request
+  schemas:
+    Currency:
+      example:
+        quantityPrecision: 6
+        pricePrecision: 0
+        withdrawalFee: 0.01
+        code: ETH
+        icon: https://cdn.com/eth-icon.png
+        depositFee: 0.0
+        withdrawalParameters:
+        - code: destinationTag
+          name: Destination Tag
+          id: 1432
+          required: false
+          example: "123432312"
+        - code: destinationTag
+          name: Destination Tag
+          id: 1432
+          required: false
+          example: "123432312"
+        name: Ethereum
+        options:
+          address: "https://etherscan.io/address/{{address}}"
+          explorer: https://etherscan.io/
+          confirmations: 12
+          transaction: "https://etherscan.io/tx/{{hash}}"
+        fiat: false
+        id: 1432
+        supportsDeposits: false
+        protocols:
+        - code: ERC20
+          network: Ethereum
+        - code: ERC20
+          network: Ethereum
+        supportsWithdrawals: false
+      properties:
+        code:
+          example: ETH
+          type: string
+        depositFee:
+          example: 0.0
+          type: number
+        fiat:
+          default: false
+          type: boolean
+        icon:
+          example: https://cdn.com/eth-icon.png
+          type: string
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        name:
+          example: Ethereum
+          type: string
+        options:
+          $ref: '#/components/schemas/CurrencyOptions'
+        pricePrecision:
+          default: 5
+          format: int32
+          type: integer
+        protocols:
+          items:
+            $ref: '#/components/schemas/CurrencyProtocol'
+          type: array
+        quantityPrecision:
+          default: 5
+          format: int32
+          type: integer
+        supportsDeposits:
+          default: false
+          type: boolean
+        supportsWithdrawals:
+          default: false
+          type: boolean
+        withdrawalFee:
+          example: 0.01
+          type: number
+        withdrawalParameters:
+          items:
+            $ref: '#/components/schemas/ExternalCurrencyWithdrawalParameter'
+          type: array
+      type: object
+    CurrencyFiat:
+      properties:
+        code:
+          example: EUR
+          type: string
+        depositFee:
+          example: 0.0
+          type: number
+        fiat:
+          default: true
+          type: boolean
+        icon:
+          type: string
+          example: null
+        id:
+          example: 1773
+          format: int64
+          type: integer
+        name:
+          example: Euro
+          type: string
+        options:
+          type: object
+        pricePrecision:
+          default: 2
+          format: int32
+          type: integer
+        protocols:
+          example: []
+          items: {}
+          type: array
+        quantityPrecision:
+          default: 2
+          format: int32
+          type: integer
+        supportsDeposits:
+          default: true
+          type: boolean
+        supportsWithdrawals:
+          default: true
+          type: boolean
+        withdrawalFee:
+          example: 0.4
+          type: number
+        withdrawalParameters:
+          example: []
+          items: {}
+          type: array
+      type: object
+    ExternalCurrencyWithdrawalParameter:
+      example:
+        code: destinationTag
+        name: Destination Tag
+        id: 1432
+        required: false
+        example: "123432312"
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: destinationTag
+          type: string
+        name:
+          example: Destination Tag
+          type: string
+        required:
+          default: false
+          type: boolean
+        example:
+          example: "123432312"
+          type: string
+      type: object
+    CurrencyProtocol:
+      example:
+        code: ERC20
+        network: Ethereum
+      properties:
+        code:
+          example: ERC20
+          type: string
+        network:
+          example: Ethereum
+          type: string
+      type: object
+    CurrencyOptions:
+      example:
+        address: "https://etherscan.io/address/{{address}}"
+        explorer: https://etherscan.io/
+        confirmations: 12
+        transaction: "https://etherscan.io/tx/{{hash}}"
+      properties:
+        transaction:
+          example: "https://etherscan.io/tx/{{hash}}"
+          type: string
+        explorer:
+          example: https://etherscan.io/
+          type: string
+        address:
+          example: "https://etherscan.io/address/{{address}}"
+          type: string
+        confirmations:
+          example: 12
+          type: integer
+      type: object
+    Merchant:
+      example:
+        autoConvertInvalidPayments: true
+        webhookVersion: 1
+        wallet:
+          lookup: lookup
+          withdrawalFee: 0.001
+          address: 0x7be879d34f3Db833f70d9fE4873Bdd0cBcaC6bf6
+          available: 0.59573928
+          description: ETH wallet
+          depositFee: 0.0
+          approxAvailable: "0.59573928"
+          convertedAvailable: 20917.59
+          protocol: ETH
+          balance: 0.59573928
+          approxBalance: "0.59573928"
+          alternatives: []
+          supportsThirdParty: false
+          currency:
+            quantityPrecision: 6
+            pricePrecision: 0
+            withdrawalFee: 0.01
+            code: ETH
+            icon: https://cdn.com/eth-icon.png
+            depositFee: 0.0
+            withdrawalParameters:
+            - code: destinationTag
+              name: Destination Tag
+              id: 1432
+              required: false
+              example: "123432312"
+            - code: destinationTag
+              name: Destination Tag
+              id: 1432
+              required: false
+              example: "123432312"
+            name: Ethereum
+            options:
+              address: "https://etherscan.io/address/{{address}}"
+              explorer: https://etherscan.io/
+              confirmations: 12
+              transaction: "https://etherscan.io/tx/{{hash}}"
+            fiat: false
+            id: 1432
+            supportsDeposits: false
+            protocols:
+            - code: ERC20
+              network: Ethereum
+            - code: ERC20
+              network: Ethereum
+            supportsWithdrawals: false
+          custodianWallet: true
+          id: 1432
+          supportsDeposits: true
+          supportsWithdrawals: true
+          isEmoney: false
+        merchantId: b312436e-e477-49d4-be7f-9d027f9b9e34
+        displayName: Test Merchant Name
+        emailRecipients: emailRecipients
+        id: 1432
+        secret: MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM
+        webhookUrl: https://www.URL.com/to/send/webhooks/to
+        defaultExpiryMinutes: 1440
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        merchantId:
+          example: b312436e-e477-49d4-be7f-9d027f9b9e34
+          type: string
+        displayName:
+          example: Test Merchant Name
+          type: string
+        secret:
+          example: MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM
+          type: string
+        webhookUrl:
+          example: https://www.URL.com/to/send/webhooks/to
+          type: string
+        autoConvertInvalidPayments:
+          default: true
+          type: boolean
+        defaultExpiryMinutes:
+          example: 1440
+          format: int32
+          type: integer
+        webhookVersion:
+          example: 1
+          format: int32
+          type: integer
+        wallet:
+          $ref: '#/components/schemas/Wallet'
+        emailRecipients:
+          type: string
+          example: null
+      type: object
+    Wallet:
+      example:
+        lookup: lookup
+        withdrawalFee: 0.001
+        address: 0x7be879d34f3Db833f70d9fE4873Bdd0cBcaC6bf6
+        available: 0.59573928
+        description: ETH wallet
+        depositFee: 0.0
+        approxAvailable: "0.59573928"
+        convertedAvailable: 20917.59
+        protocol: ETH
+        balance: 0.59573928
+        approxBalance: "0.59573928"
+        alternatives: []
+        supportsThirdParty: false
+        currency:
+          quantityPrecision: 6
+          pricePrecision: 0
+          withdrawalFee: 0.01
+          code: ETH
+          icon: https://cdn.com/eth-icon.png
+          depositFee: 0.0
+          withdrawalParameters:
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: "123432312"
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: "123432312"
+          name: Ethereum
+          options:
+            address: "https://etherscan.io/address/{{address}}"
+            explorer: https://etherscan.io/
+            confirmations: 12
+            transaction: "https://etherscan.io/tx/{{hash}}"
+          fiat: false
+          id: 1432
+          supportsDeposits: false
+          protocols:
+          - code: ERC20
+            network: Ethereum
+          - code: ERC20
+            network: Ethereum
+          supportsWithdrawals: false
+        custodianWallet: true
+        id: 1432
+        supportsDeposits: true
+        supportsWithdrawals: true
+        isEmoney: false
+      properties:
+        address:
+          example: 0x7be879d34f3Db833f70d9fE4873Bdd0cBcaC6bf6
+          type: string
+        alternatives:
+          example: []
+          items: {}
+          type: array
+        approxAvailable:
+          example: "0.59573928"
+          type: string
+        approxBalance:
+          example: "0.59573928"
+          type: string
+        available:
+          example: 0.59573928
+          format: float
+          type: number
+        balance:
+          example: 0.59573928
+          format: float
+          type: number
+        convertedAvailable:
+          example: 20917.59
+          format: float
+          type: number
+        currency:
+          $ref: '#/components/schemas/Currency'
+        custodianWallet:
+          type: boolean
+        depositFee:
+          example: 0.0
+          format: float
+          type: number
+        description:
+          example: ETH wallet
+          type: string
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        isEmoney:
+          default: false
+          type: boolean
+        lookup:
+          type: string
+          example: null
+        protocol:
+          example: ETH
+          type: string
+        supportsDeposits:
+          default: true
+          type: boolean
+        supportsThirdParty:
+          default: false
+          type: boolean
+        supportsWithdrawals:
+          default: true
+          type: boolean
+        withdrawalFee:
+          example: 0.001
+          format: float
+          type: number
+      type: object
+    PayRequestDto:
+      description: DTO required to create a payment in or a payment out
+      example:
+        reference: myUniqueRef333
+        amount: 0.08008281904610115
+        expiryMinutes: 6
+        merchantId: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+        payInDetails:
+          currency: ETH
+        payOutDetails:
+          protocol: ERC20
+          code: crypto
+          address: 0xb794f5ea0ba39494ce839613fffba74279579268
+          currency: ETH
+          tag: ""
+        currency: EUR
+        returnUrl: https://my-shop.com/payment-complete?ref=xyz
+        type: null
+      properties:
+        merchantId:
+          default: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+          description: Your Merchant ID. You can find it on the Merchant Details page
+            in your account
+          maxLength: 50
+          minLength: 6
+          type: string
+        amount:
+          default: 223.05
+          description: payment amount
+          exclusiveMinimum: true
+          minimum: 0
+          type: number
+        expiryMinutes:
+          default: 20
+          description: time period after which payment expires
+          type: integer
+        currency:
+          default: EUR
+          description: currency acronym
+          maxLength: 20
+          minLength: 2
+          type: string
+          x-setter-extra-annotation: '@ToUpperCase'
+        returnUrl:
+          default: https://my-shop.com/payment-complete?ref=xyz
+          description: URL that the customer will be redirected to if they click a
+            'Back to Merchant' button on the payment web page
+          type: string
+        reference:
+          default: myUniqueRef333
+          description: Your payment reference ID. Feel free to submit any ID to tie
+            the payment to your customer
+          maxLength: 255
+          minLength: 6
+          type: string
+        type:
+          $ref: '#/components/schemas/DirectionDto'
+        payInDetails:
+          $ref: '#/components/schemas/PayInDetailDto'
+        payOutDetails:
+          $ref: '#/components/schemas/PayOutDetailDto'
+      required:
+      - amount
+      - currency
+      - merchantId
+      - reference
+      - type
+      type: object
+    DirectionDto:
+      description: Payment in or payment out
+      enum:
+      - IN
+      - OUT
+      type: string
+    PayInDetailDto:
+      description: Specify payment details
+      example:
+        currency: ETH
+      properties:
+        currency:
+          description: Crypto currency that customer must pay in or has selected to
+            pay in
+          example: ETH
+          maxLength: 20
+          minLength: 2
+          type: string
+          x-setter-extra-annotation: '@ToUpperCase'
+      required:
+      - currency
+      type: object
+    PayOutDetailDto:
+      description: Specify payment details
+      example:
+        protocol: ERC20
+        code: crypto
+        address: 0xb794f5ea0ba39494ce839613fffba74279579268
+        currency: ETH
+        tag: ""
+      properties:
+        code:
+          description: Gateway to be used (crypto or wallet)
+          example: crypto
+          type: string
+        currency:
+          description: Currency acronym payout needs to be made in
+          example: ETH
+          maxLength: 20
+          minLength: 2
+          type: string
+          x-setter-extra-annotation: '@ToUpperCase'
+        address:
+          description: Address to withdrawal funds to
+          example: 0xb794f5ea0ba39494ce839613fffba74279579268
+          type: string
+        tag:
+          description: This is a payment destination tag. This fields isn't null when
+            the paidCurrency currency value is XRP
+          example: ""
+          type: string
+        protocol:
+          description: Protocol behind a currency (ERC20 or TRC20)
+          example: ERC20
+          type: string
+      required:
+      - address
+      - code
+      - currency
+      type: object
+    SummaryPaymentDto:
+      description: Contains all the information about a summary payment object
+      example:
+        address:
+          protocol: ERC20
+          address: 0xb794f5ea0ba39494ce839613fffba74279579268
+          alternatives:
+          - protocol: protocol
+            address: address
+            tag: tag
+            uri: uri
+          - protocol: protocol
+            address: address
+            tag: tag
+            uri: uri
+          tag: ""
+          uri: ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18
+        redirectUrl: https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+        walletCurrency:
+          actual: 76.45
+          amount: 0.0
+          currency: ETH
+        feeCurrency:
+          actual: 76.45
+          amount: 0.0
+          currency: ETH
+        type: null
+        transactions:
+        - amount: 100.0
+          dateCreated: 1566203005000
+          sources:
+          - 0xb794f5ea0ba39494ce839613fffba74279579268
+          - 0xb794f5ea0ba39494ce839613fffba74279579268
+          exchangeRate:
+            rate: 1680.1
+            counter: EUR
+            base: ETH
+          networkFeeAmount: 1.05
+          risk: ETH wallet
+          dateConfirmed: 1566203005000
+          hash: hash
+          networkFeeCurrency: BTC
+          displayRate:
+            rate: 1680.1
+            counter: EUR
+            base: ETH
+        - amount: 100.0
+          dateCreated: 1566203005000
+          sources:
+          - 0xb794f5ea0ba39494ce839613fffba74279579268
+          - 0xb794f5ea0ba39494ce839613fffba74279579268
+          exchangeRate:
+            rate: 1680.1
+            counter: EUR
+            base: ETH
+          networkFeeAmount: 1.05
+          risk: ETH wallet
+          dateConfirmed: 1566203005000
+          hash: hash
+          networkFeeCurrency: BTC
+          displayRate:
+            rate: 1680.1
+            counter: EUR
+            base: ETH
+        uuid: 3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+        quoteStatus: quoteStatus
+        displayRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        refunds:
+        - "{}"
+        - "{}"
+        merchantDisplayName: Test Merchant Name
+        expiryDate: 1566203005000
+        reference: myUniqueRef333
+        acceptanceExpiryDate: 1566203005000
+        dateCreated: 1566203005000
+        merchantId: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+        exchangeRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        subType: merchantPayIn
+        displayCurrency:
+          actual: 76.45
+          amount: 0.0
+          currency: ETH
+        paidCurrency:
+          actual: 76.45
+          amount: 0.0
+          currency: ETH
+        returnUrl: https://my-shop.com/payment-complete?ref=xyz
+        quoteExpiryDate: 1566203005000
+        status: PENDING
+        refund: "{}"
+      properties:
+        uuid:
+          description: unique identifier for the merchant payment
+          example: 3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          type: string
+        merchantDisplayName:
+          description: display name for the merchant payment
+          example: Test Merchant Name
+          type: string
+        merchantId:
+          description: Your Merchant ID. You can find it on the Merchant Details page
+            in your account
+          example: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+          type: string
+        dateCreated:
+          description: Currently this is a long - can it be changed? Date and times
+            are encoded into UNIX epoch timestamps
+          example: 1566203005000
+          format: int64
+          type: integer
+        expiryDate:
+          description: Date and times are encoded into UNIX epoch timestamps
+          example: 1566203005000
+          format: int64
+          type: integer
+        quoteExpiryDate:
+          description: Date and times are encoded into UNIX epoch timestamps
+          example: 1566203005000
+          format: int64
+          type: integer
+        acceptanceExpiryDate:
+          description: Date and times are encoded into UNIX epoch timestamps
+          example: 1566203005000
+          format: int64
+          type: integer
+        quoteStatus:
+          type: string
+        reference:
+          description: Your payment reference ID. Feel free to submit any ID to tie
+            the payment to your customer
+          example: myUniqueRef333
+          type: string
+        type:
+          $ref: '#/components/schemas/DirectionDto'
+        subType:
+          default: merchantPayIn
+          description: Payment sub type
+          enum:
+          - merchantPayIn
+          - merchantPayOut
+          - merchantRefund
+          type: string
+        status:
+          $ref: '#/components/schemas/PaymentStatusDto'
+        displayCurrency:
+          $ref: '#/components/schemas/PayAmountsDto'
+        walletCurrency:
+          $ref: '#/components/schemas/PayAmountsDto'
+        paidCurrency:
+          $ref: '#/components/schemas/PayAmountsDto'
+        feeCurrency:
+          $ref: '#/components/schemas/PayAmountsDto'
+        displayRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        exchangeRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        address:
+          $ref: '#/components/schemas/CryptoAddressDto'
+        returnUrl:
+          description: URL that the customer will be redirected to if they click a
+            "Back to Merchant" button on the payment web page
+          example: https://my-shop.com/payment-complete?ref=xyz
+          type: string
+        redirectUrl:
+          description: URL to the payment page that you can redirect your customers
+            to
+          example: https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          type: string
+        transactions:
+          items:
+            $ref: '#/components/schemas/GatewayTransactionDto'
+          type: array
+        refund:
+          description: The payment this object is a refund of. This should reference
+            the pay in that this refund was created for
+          type: object
+        refunds:
+          description: Refunds that have been requested for this payment. This should
+            reference the refund payout for this pay in
+          items:
+            type: object
+          type: array
+      type: object
+    PaymentStatusDto:
+      description: Payment status
+      enum:
+      - PENDING
+      - PROCESSING
+      - CANCELLED
+      - COMPLETE
+      - UNDERPAID
+      - OVERPAID
+      - EXPIRED
+      example: PENDING
+      type: string
+    PayAmountsDto:
+      description: "Contains the type of currency, and amount to be paid and received"
+      example:
+        actual: 76.45
+        amount: 0.0
+        currency: ETH
+      properties:
+        currency:
+          description: currency acronym
+          example: ETH
+          type: string
+        amount:
+          description: amount to be paid
+          example: 0.0
+          type: number
+        actual:
+          description: actual amount paid/ received
+          example: 76.45
+          type: number
+      type: object
+    ExchangeRateDto:
+      description: contains exchange rate information to convert from base to counter
+        currency
+      example:
+        rate: 1680.1
+        counter: EUR
+        base: ETH
+      properties:
+        base:
+          description: currency acronym
+          example: ETH
+          type: string
+        counter:
+          description: currency acronym
+          example: EUR
+          type: string
+        rate:
+          description: TBC
+          example: 1680.1
+          type: number
+      type: object
+    CryptoAddressDto:
+      description: Payment address details
+      example:
+        protocol: ERC20
+        address: 0xb794f5ea0ba39494ce839613fffba74279579268
+        alternatives:
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        tag: ""
+        uri: ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18
+      properties:
+        address:
+          description: Address to withdrawal funds to
+          example: 0xb794f5ea0ba39494ce839613fffba74279579268
+          type: string
+        tag:
+          description: This is a payment destination tag. This fields isn't null when
+            the paidCurrency.currency value is XRP
+          example: ""
+          type: string
+        protocol:
+          description: protocol behind a currency (ERC20 or TRC20)
+          example: ERC20
+          type: string
+        uri:
+          description: The destination address URI for QR code
+          example: ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18
+          type: string
+        alternatives:
+          description: List of non-default addresses for other tokens
+          items:
+            $ref: '#/components/schemas/AlternativeAddress'
+          type: array
+      type: object
+    AlternativeAddress:
+      description: List of non-default addresses for other tokens
+      example:
+        protocol: protocol
+        address: address
+        tag: tag
+        uri: uri
+      properties:
+        protocol:
+          type: string
+        address:
+          type: string
+        tag:
+          type: string
+        uri:
+          type: string
+      type: object
+    GatewayTransactionDto:
+      description: Specify details about transaction (onchain or offchain) linked
+        to the payment
+      example:
+        amount: 100.0
+        dateCreated: 1566203005000
+        sources:
+        - 0xb794f5ea0ba39494ce839613fffba74279579268
+        - 0xb794f5ea0ba39494ce839613fffba74279579268
+        exchangeRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        networkFeeAmount: 1.05
+        risk: ETH wallet
+        dateConfirmed: 1566203005000
+        hash: hash
+        networkFeeCurrency: BTC
+        displayRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+      properties:
+        dateCreated:
+          example: 1566203005000
+          format: int64
+          type: integer
+        dateConfirmed:
+          example: 1566203005000
+          format: int64
+          type: integer
+        hash:
+          description: Transaction hash
+          type: string
+        amount:
+          description: payment amount
+          example: 100.0
+          type: number
+        risk:
+          example: ETH wallet
+          type: object
+        networkFeeCurrency:
+          description: currency acronym
+          example: BTC
+          type: string
+        networkFeeAmount:
+          description: payment amount
+          example: 1.05
+          type: number
+        sources:
+          description: list of source addresses (only applicable if payment in)
+          items:
+            example: 0xb794f5ea0ba39494ce839613fffba74279579268
+            type: string
+          type: array
+        displayRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        exchangeRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+      type: object
+    ClientValidationErrorDto:
+      description: List of validation errors
+      properties:
+        errorList:
+          items:
+            $ref: '#/components/schemas/ValidationErrorDto'
+          type: array
+    ValidationErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        parameter:
+          description: input that is causing the error
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      - parameter
+    ServerErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    MerchantChannelRequest:
+      example:
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        payCurrency: ETH
+        displayCurrency: EUR
+      properties:
+        merchantId:
+          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          description: The merchant ID that you are creating the channel on.
+          type: string
+        payCurrency:
+          default: ETH
+          description: Cryptocurrency code that the channel will operate on.
+          type: string
+        displayCurrency:
+          default: EUR
+          description: "The currency which pricing will be displayed to the end user\
+            \ in (can be the same as payCurrency, or can be different)."
+          type: string
+        reference:
+          default: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          description: An external reference for the channel that your customer will
+            see.
+          type: string
+      required:
+      - displayCurrency
+      - merchantId
+      - payCurrency
+      - reference
+      type: object
+    MerchantChannel:
+      example:
+        address: 0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+        redirectUrl: https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0
+        walletCurrency: EUR
+        uuid: 9d1f67f2-a647-404b-9b02-247c77be81d0
+        uri: ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        lastUpdated: 1631619193321
+        protocol: ETH
+        dateCreated: 1631619193321
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        payCurrency: ETH
+        alternatives:
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        id: 65
+        tag: tag
+        displayCurrency: JPY
+        status: OPEN
+      properties:
+        id:
+          default: 0
+          example: 65
+          type: integer
+        dateCreated:
+          default: 0
+          example: 1631619193321
+          type: integer
+        lastUpdated:
+          default: 0
+          example: 1631619193321
+          type: integer
+        merchantId:
+          example: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        walletCurrency:
+          example: EUR
+          type: string
+        displayCurrency:
+          example: JPY
+          type: string
+        payCurrency:
+          example: ETH
+          type: string
+        address:
+          example: 0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+          type: string
+        tag:
+          type: string
+          example: null
+        protocol:
+          example: ETH
+          type: string
+        reference:
+          example: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          type: string
+        status:
+          enum:
+          - OPEN
+          - CLOSED
+          type: string
+        uuid:
+          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        redirectUrl:
+          example: https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        uri:
+          example: ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+          type: string
+        alternatives:
+          items:
+            $ref: '#/components/schemas/AlternativeAddress'
+          type: array
+      type: object
+    MerchantChannelPayment:
+      example:
+        address: 0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+        sources:
+        - sources
+        - sources
+        networkFee:
+          displayAmount: 6.027456183070403
+          paidCurrency: paidCurrency
+          displayCurrency: displayCurrency
+          paidAmount: 0.8008281904610115
+        walletCurrency: EUR
+        feeCurrency: EUR
+        uuid: c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4
+        walletAmount: 27.62
+        displayRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        merchantDisplayName: Merchant A
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        lastUpdated: 1631619562000
+        displayAmount: 3592.27
+        feeAmount: 0.27
+        dateCreated: 1631619489000
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        exchangeRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        risk:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        tag: tag
+        paidCurrency: ETH
+        displayCurrency: JPY
+        paidAmount: 0.01
+        channelId: 9d1f67f2-a647-404b-9b02-247c77be81d0
+        hash: 0x152f2b3a3650a3e2e132abca0f81421c552ae14bc8466fac16889e8d32b3fd6a
+        status: DETECTED
+      properties:
+        channelId:
+          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        merchantId:
+          example: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        merchantDisplayName:
+          example: Merchant A
+          type: string
+        reference:
+          example: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          type: string
+        dateCreated:
+          default: 0
+          example: 1631619489000
+          format: int64
+          type: integer
+        lastUpdated:
+          default: 0
+          example: 1631619562000
+          format: int64
+          type: integer
+        status:
+          enum:
+          - DETECTED
+          - COMPLETE
+          - UNKNOWN
+          type: string
+        uuid:
+          example: c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4
+          type: string
+        hash:
+          example: 0x152f2b3a3650a3e2e132abca0f81421c552ae14bc8466fac16889e8d32b3fd6a
+          type: string
+        address:
+          example: 0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+          type: string
+        tag:
+          type: string
+          example: null
+        paidCurrency:
+          example: ETH
+          type: string
+        displayCurrency:
+          example: JPY
+          type: string
+        walletCurrency:
+          example: EUR
+          type: string
+        feeCurrency:
+          example: EUR
+          type: string
+        paidAmount:
+          default: 0
+          example: 0.01
+          type: number
+        displayAmount:
+          default: 0
+          example: 3592.27
+          type: number
+        walletAmount:
+          default: 0
+          example: 27.62
+          type: number
+        feeAmount:
+          default: 0
+          example: 0.27
+          type: number
+        exchangeRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        displayRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        risk:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        sources:
+          items:
+            type: string
+          type: array
+        networkFee:
+          $ref: '#/components/schemas/NetworkFee'
+      type: object
+    NetworkFee:
+      example:
+        displayAmount: 6.027456183070403
+        paidCurrency: paidCurrency
+        displayCurrency: displayCurrency
+        paidAmount: 0.8008281904610115
+      properties:
+        paidCurrency:
+          type: string
+        paidAmount:
+          type: number
+        displayCurrency:
+          type: string
+        displayAmount:
+          type: number
+      type: object
+    WalletRequest:
+      example:
+        description: My 2nd EUR Wallet
+        currency: ETH
+      properties:
+        currency:
+          default: ETH
+          type: string
+        description:
+          default: My 2nd EUR Wallet
+          type: string
+      required:
+      - currency
+      - description
+      type: object
+    Balance:
+      example:
+        walletId: 255861
+        total: 101.03
+        reserved: 1.0
+        convertedReserved: 104.0
+        available: 100.03
+        currency:
+          quantityPrecision: 6
+          pricePrecision: 0
+          withdrawalFee: 0.01
+          code: ETH
+          icon: https://cdn.com/eth-icon.png
+          depositFee: 0.0
+          withdrawalParameters:
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: "123432312"
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: "123432312"
+          name: Ethereum
+          options:
+            address: "https://etherscan.io/address/{{address}}"
+            explorer: https://etherscan.io/
+            confirmations: 12
+            transaction: "https://etherscan.io/tx/{{hash}}"
+          fiat: false
+          id: 1432
+          supportsDeposits: false
+          protocols:
+          - code: ERC20
+            network: Ethereum
+          - code: ERC20
+            network: Ethereum
+          supportsWithdrawals: false
+        convertedAvailable: 100.0
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        walletId:
+          example: 255861
+          format: int64
+          type: integer
+        available:
+          example: 100.03
+          type: number
+        reserved:
+          example: 1.0
+          type: number
+        convertedAvailable:
+          example: 100.0
+          type: number
+        convertedReserved:
+          example: 104.0
+          type: number
+        total:
+          example: 101.03
+          type: number
+      type: object
+    TransactionReport:
+      example:
+        expiryDate: 1631619489000
+        lastUpdated: 1631619489000
+        dateCreated: 1631619489000
+        id: 594
+        type: transactions
+        requestData:
+          transactionType: "null"
+          fromDate: 2023-03-01
+          externalProcessing: "null"
+          walletId: 504841
+          include: include
+          accountName: "null"
+          toDate: 2023-06-30
+          format: CSV
+          exclude: exclude
+          languageTag: en-US
+          type: transactions
+          category: 0
+        uuid: 9d1f67f2-a647-404b-9b02-247c77be81d0
+        status: PENDING
+      properties:
+        id:
+          example: 594
+          format: int64
+          type: integer
+        uuid:
+          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        dateCreated:
+          example: 1631619489000
+          format: int64
+          type: integer
+        lastUpdated:
+          example: 1631619489000
+          format: int64
+          type: integer
+        expiryDate:
+          example: 1631619489000
+          format: int64
+          type: integer
+        status:
+          example: PENDING
+          type: string
+        type:
+          example: transactions
+          type: string
+        requestData:
+          $ref: '#/components/schemas/TransactionReportRequestData'
+      type: object
+    TransactionReportRequestData:
+      example:
+        transactionType: "null"
+        fromDate: 2023-03-01
+        externalProcessing: "null"
+        walletId: 504841
+        include: include
+        accountName: "null"
+        toDate: 2023-06-30
+        format: CSV
+        exclude: exclude
+        languageTag: en-US
+        type: transactions
+        category: 0
+      properties:
+        type:
+          example: transactions
+          type: string
+        externalProcessing:
+          example: "null"
+          type: string
+        walletId:
+          example: 504841
+          format: int64
+          type: integer
+        transactionType:
+          example: "null"
+          type: string
+        fromDate:
+          example: 2023-03-01
+          type: string
+        toDate:
+          example: 2023-06-30
+          type: string
+        format:
+          example: CSV
+          type: string
+        languageTag:
+          example: en-US
+          type: string
+        category:
+          example: 0
+          type: integer
+        accountName:
+          example: "null"
+          type: string
+        include:
+          type: string
+          example: null
+        exclude:
+          type: string
+          example: null
+      type: object
+    QuoteRequest:
+      example:
+        fromWallet: 0.8008281904610115
+        useMinimum: false
+        payInMethod: wallet
+        from: EUR
+        amountIn: 1.4658129805029452
+        to: USDC
+        payOutMethod: wallet
+        useMaximum: false
+        toWallet: 6.027456183070403
+      properties:
+        from:
+          default: EUR
+          type: string
+        to:
+          default: USDC
+          type: string
+        fromWallet:
+          default: 3598236
+          type: number
+        useMinimum:
+          default: false
+          type: boolean
+        useMaximum:
+          default: false
+          type: boolean
+        toWallet:
+          default: 3598514
+          type: number
+        amountIn:
+          default: 10
+          type: number
+        payInMethod:
+          default: wallet
+          type: string
+        payOutMethod:
+          default: wallet
+          type: string
+      required:
+      - amountIn
+      - from
+      - fromWallet
+      - payInMethod
+      - payOutMethod
+      - to
+      - toWallet
+      - useMaximum
+      - useMinimum
+      type: object
+    Quote:
+      example:
+        acceptanceDate: 1566198657000
+        fees:
+          percentage:
+            service: 0.8008281904610115
+            processing: 6.027456183070403
+          value:
+            service: 0.8008281904610115
+            processing: 6.027456183070403
+        fee: 1.02
+        netPrice: 1234.02
+        grossPrice: 1134.02
+        amountInGross: 102.0
+        type: FIXED
+        uuid: B6670497-D139-47E8-9F4A-F97A5D977057
+        quoteStatus: ESTIMATE
+        processingFee: 1.02
+        lastUpdated: 1566198657000
+        paymentReceiptDate: 1566198657000
+        dateCreated: 1566198657000
+        price: 446.43
+        from: EUR
+        amountOut: 1.12
+        amountInNet: 104.0
+        id: 1432
+        payOutMethod:
+          code: gateway
+          currency: EUR
+          id: 1432
+          accountMethods:
+          - display: Visa xxxx-090
+            id: 1432
+          - display: Visa xxxx-090
+            id: 1432
+        paymentStatus: PENDING
+        paymentExpiryDate: 1566198657000
+        payInMethod:
+          code: wallet
+          settlementCurrency: USD
+          estimatedExchangeRate: 0.923
+          id: 1432
+          accountMethods:
+          - display: Visa xxxx-090
+            id: 1432
+          - display: Visa xxxx-090
+            id: 1432
+          requestedCurrency: EUR
+        usePayInMethod:
+          display: Visa xxxx-090
+          id: 1432
+        payOutInstruction:
+          code: gateway
+          currency: ETH
+        payInLegs:
+        - reference: 0x2321321
+          amount: 100.32
+          dateCreated: 1566198657000
+          currency: ETH
+          id: 1432
+        - reference: 0x2321321
+          amount: 100.32
+          dateCreated: 1566198657000
+          currency: ETH
+          id: 1432
+        usePayOutMethod:
+          display: Visa xxxx-090
+          id: 1432
+        amountDue: 500.0
+        acceptanceExpiryDate: 1566198657000
+        amountIn: 500.0
+        to: ETH
+        payInInstruction:
+          redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          form:
+            action: action
+            parameters:
+              key: parameters
+          action: REDIRECT
+          displayParameters: "{}"
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        from:
+          example: EUR
+          type: string
+        to:
+          example: ETH
+          type: string
+        amountIn:
+          example: 500.0
+          type: number
+        amountDue:
+          example: 500.0
+          type: number
+        amountOut:
+          example: 1.12
+          type: number
+        price:
+          example: 446.43
+          type: number
+        quoteStatus:
+          enum:
+          - ESTIMATE
+          - TEMPLATE
+          - PENDING
+          - ACCEPTED
+          - PAYMENT_IN_RECEIVED
+          - PAYMENT_IN_SEEN
+          - PAYMENT_IN_FAILED
+          - FRAUD_CHECK_PENDING
+          - FRAUD_CHECK_FAILED
+          - PAYMENT_OUT_PENDING
+          - PAYMENT_OUT_PROCESSED
+          - PAYMENT_OUT_USED
+          - COMPLETED
+          - CONVERSION_FAILED
+          - PAYMENT_OUT_FAILED
+          - LOCKED
+          - REFUNDED
+          type: string
+        paymentStatus:
+          enum:
+          - PENDING
+          - SEEN
+          - SUCCESS
+          - CANCELLED
+          - FAILED
+          - FRAUD_PENDING
+          - FRAUD_PENDING_MANUAL_REVIEW
+          - FRAUD_FAILED
+          - REFUND_PENDING
+          - REFUNDED
+          - MANUAL_SUCCESS
+          - REFUND_FAILED
+          type: string
+        acceptanceExpiryDate:
+          example: 1566198657000
+          format: int64
+          type: integer
+        acceptanceDate:
+          example: 1566198657000
+          format: int64
+          type: integer
+        paymentExpiryDate:
+          example: 1566198657000
+          format: int64
+          type: integer
+        paymentReceiptDate:
+          example: 1566198657000
+          format: int64
+          type: integer
+        payInLegs:
+          items:
+            $ref: '#/components/schemas/PaymentLeg'
+          type: array
+        payInMethod:
+          $ref: '#/components/schemas/PayInMethod'
+        payOutMethod:
+          $ref: '#/components/schemas/PayOutMethod'
+        uuid:
+          example: B6670497-D139-47E8-9F4A-F97A5D977057
+          type: string
+        payOutInstruction:
+          $ref: '#/components/schemas/PayOutInstruction'
+        payInInstruction:
+          $ref: '#/components/schemas/PayInInstruction'
+        usePayInMethod:
+          $ref: '#/components/schemas/AccountMethod'
+        usePayOutMethod:
+          $ref: '#/components/schemas/AccountMethod'
+        fee:
+          example: 1.02
+          type: number
+        processingFee:
+          example: 1.02
+          type: number
+        type:
+          enum:
+          - FIXED
+          - MARKET
+          type: string
+        netPrice:
+          example: 1234.02
+          type: number
+        grossPrice:
+          example: 1134.02
+          type: number
+        amountInGross:
+          example: 102.0
+          type: number
+        amountInNet:
+          example: 104.0
+          type: number
+        fees:
+          $ref: '#/components/schemas/Fees'
+        dateCreated:
+          example: 1566198657000
+          format: int64
+          type: integer
+        lastUpdated:
+          example: 1566198657000
+          format: int64
+          type: integer
+      type: object
+    PaymentLeg:
+      example:
+        reference: 0x2321321
+        amount: 100.32
+        dateCreated: 1566198657000
+        currency: ETH
+        id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        amount:
+          example: 100.32
+          type: number
+        dateCreated:
+          example: 1566198657000
+          format: int64
+          type: integer
+        reference:
+          example: 0x2321321
+          type: string
+        currency:
+          example: ETH
+          type: string
+      type: object
+    PayInMethod:
+      example:
+        code: wallet
+        settlementCurrency: USD
+        estimatedExchangeRate: 0.923
+        id: 1432
+        accountMethods:
+        - display: Visa xxxx-090
+          id: 1432
+        - display: Visa xxxx-090
+          id: 1432
+        requestedCurrency: EUR
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: wallet
+          type: string
+        settlementCurrency:
+          example: USD
+          type: string
+        requestedCurrency:
+          example: EUR
+          type: string
+        estimatedExchangeRate:
+          example: 0.923
+          type: number
+        accountMethods:
+          items:
+            $ref: '#/components/schemas/AccountMethod'
+          type: array
+      type: object
+    PayOutMethod:
+      example:
+        code: gateway
+        currency: EUR
+        id: 1432
+        accountMethods:
+        - display: Visa xxxx-090
+          id: 1432
+        - display: Visa xxxx-090
+          id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: gateway
+          type: string
+        currency:
+          example: EUR
+          type: string
+        accountMethods:
+          items:
+            $ref: '#/components/schemas/AccountMethod'
+          type: array
+      type: object
+    AccountMethod:
+      example:
+        display: Visa xxxx-090
+        id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        display:
+          example: Visa xxxx-090
+          type: string
+      type: object
+    PayOutInstruction:
+      example:
+        code: gateway
+        currency: ETH
+      properties:
+        code:
+          example: gateway
+          type: string
+        currency:
+          example: ETH
+          type: string
+      type: object
+    PayInInstruction:
+      example:
+        redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+        form:
+          action: action
+          parameters:
+            key: parameters
+        action: REDIRECT
+        displayParameters: "{}"
+      properties:
+        action:
+          enum:
+          - REDIRECT
+          - FORM
+          - DISPLAY
+          - NONE
+          type: string
+        form:
+          $ref: '#/components/schemas/Form'
+        redirectUrl:
+          example: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          type: string
+        displayParameters:
+          example: "{}"
+          type: object
+      type: object
+    Form:
+      example:
+        action: action
+        parameters:
+          key: parameters
+      properties:
+        action:
+          type: string
+        parameters:
+          additionalProperties:
+            type: string
+          type: object
+      type: object
+    AcceptedQuote:
+      example:
+        quote:
+          acceptanceDate: 1566198657000
+          fees:
+            percentage:
+              service: 0.8008281904610115
+              processing: 6.027456183070403
+            value:
+              service: 0.8008281904610115
+              processing: 6.027456183070403
+          fee: 1.02
+          netPrice: 1234.02
+          grossPrice: 1134.02
+          amountInGross: 102.0
+          type: FIXED
+          uuid: B6670497-D139-47E8-9F4A-F97A5D977057
+          quoteStatus: ESTIMATE
+          processingFee: 1.02
+          lastUpdated: 1566198657000
+          paymentReceiptDate: 1566198657000
+          dateCreated: 1566198657000
+          price: 446.43
+          from: EUR
+          amountOut: 1.12
+          amountInNet: 104.0
+          id: 1432
+          payOutMethod:
+            code: gateway
+            currency: EUR
+            id: 1432
+            accountMethods:
+            - display: Visa xxxx-090
+              id: 1432
+            - display: Visa xxxx-090
+              id: 1432
+          paymentStatus: PENDING
+          paymentExpiryDate: 1566198657000
+          payInMethod:
+            code: wallet
+            settlementCurrency: USD
+            estimatedExchangeRate: 0.923
+            id: 1432
+            accountMethods:
+            - display: Visa xxxx-090
+              id: 1432
+            - display: Visa xxxx-090
+              id: 1432
+            requestedCurrency: EUR
+          usePayInMethod:
+            display: Visa xxxx-090
+            id: 1432
+          payOutInstruction:
+            code: gateway
+            currency: ETH
+          payInLegs:
+          - reference: 0x2321321
+            amount: 100.32
+            dateCreated: 1566198657000
+            currency: ETH
+            id: 1432
+          - reference: 0x2321321
+            amount: 100.32
+            dateCreated: 1566198657000
+            currency: ETH
+            id: 1432
+          usePayOutMethod:
+            display: Visa xxxx-090
+            id: 1432
+          amountDue: 500.0
+          acceptanceExpiryDate: 1566198657000
+          amountIn: 500.0
+          to: ETH
+          payInInstruction:
+            redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+            form:
+              action: action
+              parameters:
+                key: parameters
+            action: REDIRECT
+            displayParameters: "{}"
+        payInInstruction:
+          redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          form:
+            action: action
+            parameters:
+              key: parameters
+          action: REDIRECT
+          displayParameters: "{}"
+      properties:
+        quote:
+          $ref: '#/components/schemas/Quote'
+        payInInstruction:
+          $ref: '#/components/schemas/PayInInstruction'
+      type: object
+    Fees:
+      example:
+        percentage:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+        value:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+      properties:
+        percentage:
+          $ref: '#/components/schemas/Fee'
+        value:
+          $ref: '#/components/schemas/Fee'
+      type: object
+    Fee:
+      example:
+        service: 0.8008281904610115
+        processing: 6.027456183070403
+      properties:
+        service:
+          type: number
+        processing:
+          type: number
+      type: object
+    merchantIdCreate_request_wallet:
+      properties:
+        id:
+          default: "501098"
+          description: The ID of the wallet to link to the merchant ID
+          type: string
+      type: object
+    merchantIdCreate_request:
+      properties:
+        displayName:
+          default: Test Merchant Name
+          description: The name of the merchant that will be displayed on the payments
+            page
+          type: string
+        webhookUrl:
+          default: https://www.URL.com/to/send/webhooks/to
+          description: The URL that will recieve the webhooks
+          type: string
+        wallet:
+          $ref: '#/components/schemas/merchantIdCreate_request_wallet'
+      required:
+      - displayName
+      - wallet
+      type: object
+  securitySchemes:
+    Hawk:
+      description: "Hawk Payload (see: https://github.com/hueniverse/hawk)"
+      in: header
+      name: Authorization
+      type: apiKey
+

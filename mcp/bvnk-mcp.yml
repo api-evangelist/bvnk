@@ -1,0 +1,67 @@
+generated: '2026-08-08'
+method: searched
+source: https://github.com/bvnk/layer1-mcp-digital
+status: published
+hosted: false
+note: 'BVNK publishes a first-party MCP server from its own GitHub organization: layer1-mcp-digital, an MCP server
+  for the Layer1 Digital Asset API. It is described by BVNK as a prototype. It is self-hosted and stdio-transport
+  — there is no hosted/remote MCP endpoint to probe, so tools/list could not be called over the wire; the tool list
+  below is read verbatim from the published index.js ListToolsRequestSchema handler, including its real inputSchema
+  definitions.'
+server:
+  name: layer1-digital-mcp
+  package_name: layer1-mcp-digital
+  version: 1.0.0
+  transport: stdio
+  repository: https://github.com/bvnk/layer1-mcp-digital
+  license: MIT
+  runtime: Node.js 18+
+  sdk: '@modelcontextprotocol/sdk ^1.0.0'
+  authentication:
+    scheme: RFC 9421 HTTP Message Signatures
+    library: '@ltonetwork/http-message-signatures'
+    credentials:
+    - LAYER1_CLIENT_ID
+    - LAYER1_PRIVATE_KEY
+    - LAYER1_ASSET_POOL_ID
+  backing_api: Layer1 Digital Asset API
+  backing_spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+tool_count: 4
+tools:
+- name: create_address
+  description: Create a new blockchain address for an asset pool
+  required:
+  - network
+  - reference
+  source_operation: openapi/bvnk-layer1-digital-asset-openapi-original.yml#createAddress
+  rest: POST /digital/v1/addresses
+- name: list_transactions
+  description: List transactions for the asset pool
+  required: []
+  source_operation: openapi/bvnk-layer1-digital-asset-openapi-original.yml#listTransactions
+  rest: GET /digital/v1/transactions
+  defect: inputSchema declares the property transactionHash twice; the second declaration (address reference) shadows
+    the first.
+- name: get_asset_pool_balance
+  description: Get the balance of the asset pool
+  required: []
+  source_operation: openapi/bvnk-layer1-digital-asset-openapi-original.yml#getAssetPool
+  rest: GET /digital/v1/asset-pools/{assetPoolId}
+  note: Named "balance" but calls the asset-pool read operation, not getAssetPoolBalance.
+- name: send_transaction_request
+  description: Create a transaction request to send funds
+  required:
+  - toAddress
+  - amount
+  - asset
+  - network
+  - reference
+  source_operation: openapi/bvnk-layer1-digital-asset-openapi-original.yml#createTransaction
+  rest: POST /digital/v1/transaction-requests
+other_agent_surfaces:
+- name: agent-wallet-cli
+  repository: https://github.com/bvnk/agent-wallet-cli
+  description: First-party agent-facing wallet CLI with session tokens and x402 payment support.
+- name: n8n-nodes-bvnk
+  repository: https://github.com/bvnk/bvnk-n8n
+  description: n8n node for BVNK payment operations.

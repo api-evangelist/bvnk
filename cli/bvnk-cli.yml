@@ -1,0 +1,44 @@
+generated: '2026-08-08'
+method: searched
+source: https://github.com/bvnk/agent-wallet-cli
+note: BVNK ships no CLI for the BVNK payments API itself. The one first-party CLI it publishes is agent-wallet-cli,
+  an agent-facing self-custody wallet CLI released from the BVNK GitHub org and published to npm. It is explicitly
+  labelled experimental and unaudited by BVNK.
+clis:
+- name: agent-wallet-cli
+  version: 1.4.0
+  official: true
+  status: experimental
+  repository: https://github.com/bvnk/agent-wallet-cli
+  package: https://www.npmjs.com/package/agent-wallet-cli
+  install:
+  - npx agent-wallet-cli
+  - npm install -g agent-wallet-cli
+  purpose: Cross-platform TypeScript CLI wallet for Ethereum and Solana, designed for AI agent integration.
+  commands:
+  - command: init
+    description: Create a new BIP-39 HD wallet; mnemonic is displayed once.
+  - command: unlock
+    description: Create a time-limited session token (default 1h, max 24h) so an agent need not hold the password.
+  - command: lock
+    description: Invalidate the session token.
+  - command: balance
+    description: Read native or token balance for a chain/network.
+  - command: send
+    description: Send native currency or ERC-20/SPL tokens.
+  capabilities:
+  - multi-chain (Ethereum, Polygon, Arbitrum, Base, Solana)
+  - ERC-20 and SPL tokens
+  - gasless relay via EIP-3009 authorization
+  - Argon2id + AES-256-GCM key storage
+  - session tokens for agent use
+  - message signing (plain, EIP-712, raw)
+  - transaction history
+  - ERC-20 approval discovery
+  - x402 HTTP 402 stablecoin payments
+  - JSON-first machine-readable output
+  - token aliases
+  warnings:
+  - no security audit has been performed
+  - not recommended on mainnet with significant funds
+  - argon2 requires native bindings

@@ -1,0 +1,112 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.bvnk.com/bvnk/api-explorer/api-overview/overview
+authentication:
+  style: hawk-hmac-sha256
+  header: Authorization
+  credentials:
+  - Hawk Auth ID
+  - Hawk Auth Key
+  algorithm: HmacSHA256
+  payload_validation: supported by Hawk but NOT enabled on the BVNK API
+  docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/authentication
+  artifact: authentication/bvnk-authentication.yml
+idempotency:
+  supported: true
+  header: X-Idempotency-Key
+  header_v2: Idempotency-Key
+  header_note: v.2 endpoints use Idempotency-Key; earlier endpoints use X-Idempotency-Key
+  key_format: UUID, 36 characters
+  scope: per set of credentials + key
+  replay_behaviour: 'A repeat of a cached successful request returns 400 Bad Request stating a request
+    with this ID already exists. Exception: some endpoints (platform/v1/customers/* and platform/v1/customers/agreement/*)
+    return 200 OK with the same reference when the body is identical.'
+  failed_requests_cached: false
+  error_code: BVNK:PAYMENT:0006 — payout with the idempotency key already exists
+  docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/idempotency
+pagination:
+  style: page-and-size (Spring Pageable), with optional offset
+  params:
+  - name: page
+    description: Page number, zero-based
+  - name: size
+    description: Records per page, maximum 100
+  - name: sort
+    description: property,<asc|desc>; default ascending
+  - name: offset
+    description: Starting point, used instead of page for cursor-style paging
+  response_fields:
+  - pageable
+  - totalPages
+  - totalElements
+  - first
+  - last
+  - size
+  - number
+  - numberOfElements
+  - sort
+  - empty
+  docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/pagination
+filtering:
+  style: Lucene query syntax on Wallets API v.2 list endpoints
+  docs: https://docs.bvnk.com/bvnk/get-started/migrate-wallets-v1-to-v2
+metadata:
+  supported: true
+  field: metadata
+  shape: top-level JSON object of key/value pairs
+  limits:
+    max_pairs: 10
+    max_key_length: 40
+    max_value_length: 255
+    key_charset: A-Z a-z 0-9 _ -
+    value_restriction: may not contain < or >
+  echoed_in:
+  - status endpoints
+  - related webhook events
+  docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/metadata
+request_tracing:
+  supported: true
+  field: traceId
+  location: error response body
+  alternate_field: requestId (legacy MER-* error envelope)
+  note: traceId is returned on errors for support log correlation; no request-id request header is documented
+versioning:
+  style: uri-path
+  examples:
+  - /api/v1/...
+  - /api/v2/channel
+  - /ledger/v1/wallets
+  - /payment/v2/transfers
+  - /payment/v3/transfers
+  - /platform/v1/customers
+  - /digital/v1/...
+  note: versions are per product domain, not a single global API version
+  artifact: lifecycle/bvnk-lifecycle.yml
+error_envelope:
+  format: proprietary JSON (not RFC 9457)
+  primary_shape:
+    code: URN-style error code, e.g. bvnk:payment:0005
+    status: HTTP status name, e.g. Bad Request
+    traceId: trace identifier for support
+    message: human-readable explanation
+    details: object; details.errors[] lists field-level problems, details.documentLink points at the error
+      reference
+  legacy_shape:
+    requestId: request identifier
+    errorList: array of {requestId, code, parameter, message}
+  docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/errors
+  artifact: errors/bvnk-error-codes.yml
+rate_limits:
+  documented: false
+  note: No published rate-limit policy or rate-limit response headers were found in the public documentation.
+date_time:
+  format: UNIX epoch milliseconds
+  example: 1566203005000 is Monday, August 19, 2019 8:23:25 AM
+  docs: https://docs.bvnk.com/bvnk/references/date-time
+content_type: application/json
+cross_links:
+- errors/bvnk-error-codes.yml
+- errors/bvnk-problem-types.yml
+- lifecycle/bvnk-lifecycle.yml
+- authentication/bvnk-authentication.yml
+- sandbox/bvnk-sandbox.yml

@@ -1,0 +1,73 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.bvnk.com/bvnk/references/uptime-and-incident-handling
+versioning:
+  scheme: uri-path per product domain
+  current:
+    wallets: v2
+    transfers: v3
+    payins: v2
+    payouts: v2
+    customers: v2
+    channels: v2
+    contacts: v3 (beta)
+    digital (Layer1): v1
+  note: There is no single global API version; each product domain versions its own path segment.
+  docs: https://docs.bvnk.com/bvnk/api-explorer/api-overview/overview
+deprecation:
+  policy_url: https://docs.bvnk.com/bvnk/get-started/migrate-wallets-v1-to-v2
+  sunset_header: null
+  formal_policy: false
+  practice: BVNK marks superseded endpoints DEPRECATED inline in the reference and publishes a written migration
+    guide per deprecation. No RFC 8594 Sunset/Deprecation response headers and no dated end-of-life policy page
+    were found.
+  migration_guides:
+  - from: Wallets API v.1
+    to: Wallets API v.2
+    url: https://docs.bvnk.com/bvnk/get-started/migrate-wallets-v1-to-v2
+  - from: Quote API
+    to: Transfers v.3
+    url: https://docs.bvnk.com/bvnk/use-cases/migrate-quote-to-transfers-v3
+deprecated_surfaces:
+- name: Create a wallet (v.1)
+  docs: https://docs.bvnk.com/bvnk/get-started/creating-your-first-wallet
+  status: DEPRECATED
+- name: Create an internal transfer (Legacy)
+  docs: https://docs.bvnk.com/bvnk/use-cases/create-internal-transfer
+  status: legacy
+- name: Quote API
+  superseded_by: Transfers v.3
+  status: legacy
+- name: Create customer (v.1)
+  docs: https://docs.bvnk.com/bvnk/api-explorer/endpoints/create-customer
+  status: superseded by Customers API v2
+beta_surfaces:
+- name: Cards
+  docs: https://docs.bvnk.com/bvnk/use-cases/cards
+- name: Contacts v.3
+  docs: https://docs.bvnk.com/bvnk/use-cases/contacts/manage-contacts
+sla:
+  uptime_target: 99.90%
+  url: https://docs.bvnk.com/bvnk/references/uptime-and-incident-handling
+  allowed_downtime:
+    daily: 1m 26s
+    weekly: 10m 4.8s
+    monthly: 43m 28s
+    quarterly: 2h 10m 24s
+    yearly: 8h 41m 38s
+  on_call: 24/7/365 engineer on duty
+  post_mortem: completed within 48 hours of resolution
+status_page: https://bvnk.status.io/
+changelog: https://www.bvnk.com/changelog
+deprecated_operations: []
+deprecated_operations_note: 'Neither published OpenAPI marks an operation with deprecated: true. The Layer1 Digital
+  Asset spec does deprecate five query parameters on listScreenings.'
+deprecated_parameters:
+- spec: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+  operationId: listScreenings
+  parameters:
+  - hash
+  - operation
+  - state
+  - startDate
+  - endDate

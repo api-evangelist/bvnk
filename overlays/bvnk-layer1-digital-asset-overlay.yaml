@@ -1,0 +1,31 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Layer1 Digital Asset
+  version: 1.0.0
+extends: openapi/bvnk-layer1-digital-asset-openapi-original.yml
+x-generated: '2026-08-08'
+x-method: generated
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/bvnk/
+    x-apievangelist-enriched: '2026-08-08'
+    x-apievangelist-artifacts:
+    - authentication/bvnk-authentication.yml
+    - conventions/bvnk-conventions.yml
+    - errors/bvnk-error-codes.yml
+    - lifecycle/bvnk-lifecycle.yml
+    - sandbox/bvnk-sandbox.yml
+    - asyncapi/bvnk-webhooks.yml
+- target: $
+  update:
+    x-apievangelist-oauth-scopes: scopes/bvnk-scopes.yml
+- target: $.components.securitySchemes.oauth2
+  update:
+    x-apievangelist-production-token-url: https://auth.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+    x-apievangelist-production-issuer: https://auth.layer1.com/auth/realms/bvnk
+    x-apievangelist-note: The published spec points only at the sandbox issuer; the production issuer is live and
+      documented here.
+- target: $
+  update:
+    x-apievangelist-mcp: mcp/bvnk-mcp.yml
