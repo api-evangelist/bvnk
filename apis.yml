@@ -33,35 +33,13 @@ tags:
 - Banking
 - Compliance
 apis:
-- aid: bvnk:bvnk-api
-  name: BVNK API
-  description: The BVNK REST API for payments, blockchain payment channels, wallets, virtual accounts,
-    merchant IDs, currencies and trading/conversion quotes. Requests are authenticated with Hawk (HMAC-SHA256)
-    request signing using a Hawk Auth ID and Hawk Auth Key issued from the BVNK portal. Sandbox and production
-    share the same surface at api.sandbox.bvnk.com and api.bvnk.com.
-  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
-  baseURL: https://api.bvnk.com
-  tags:
-  - Payments
-  - Wallets
-  - Channels
-  - Currencies
-  - Trading
-  properties:
-  - type: OpenAPI
-    url: openapi/bvnk-api-endpoints-openapi-original.yml
-  - type: Overlay
-    url: overlays/bvnk-api-endpoints-overlay.yaml
-  - type: Documentation
-    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
-  - type: Postman
-    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
 - aid: bvnk:bvnk-cards-api
   name: BVNK Cards API
-  description: The BVNK Cards API issues and manages virtual cards linked to BVNK wallets — card creation,
-    renewal, cancellation, freeze/unfreeze, spend limits, eligibility checks, sensitive-card-detail tokens,
-    card transactions and dispute eligibility — plus sandbox-only endpoints to simulate authorizations
-    and transaction state changes.
+  description: >-
+    The BVNK Cards API issues and manages virtual cards linked to BVNK wallets — card creation, renewal,
+    cancellation, freeze/unfreeze, spend limits, eligibility checks, sensitive-card-detail tokens, card
+    transactions and dispute eligibility — plus sandbox-only endpoints to simulate authorizations and
+    transaction state changes.
   humanURL: https://docs.bvnk.com/bvnk/api-explorer/cards/cards-api
   baseURL: https://api.bvnk.com
   tags:
@@ -71,25 +49,260 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.bvnk.com/bvnk/api-explorer/cards/cards-api
-- aid: bvnk:layer1-digital-asset-api
-  name: Layer1 Digital Asset API
-  description: Layer1 is BVNK's institutional digital-asset platform. The Digital Asset API manages asset
-    pools, blockchain addresses and key pairs, transaction requests, staking, returns, fee estimation,
-    transfer screening and balance exports across Ethereum, Bitcoin, Tron, Solana, Polygon and other networks.
-    It is secured with OpenID Connect / OAuth 2.0 client credentials against a Keycloak realm plus RFC
-    9421 HTTP Message Signatures.
-  humanURL: https://docs.layer1.com/reference/api-authentication
-  baseURL: https://api.layer1.com
+- aid: bvnk:bvnk-address-api
+  name: BVNK Address API
+  description: Create and manage addresses
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
   tags:
-  - Digital Assets
-  - Custody
-  - Blockchain
-  - Treasury
+  - Address
   properties:
   - type: OpenAPI
-    url: openapi/bvnk-layer1-digital-asset-openapi-original.yml
-  - type: Overlay
-    url: overlays/bvnk-layer1-digital-asset-overlay.yaml
+    url: openapi/bvnk-address-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-asset-pool-api
+  name: BVNK Asset Pool API
+  description: Create and manage asset pools
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Asset Pool
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-asset-pool-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-channels-api
+  name: BVNK Channels API
+  description: The Channels API from BVNK — 4 operation(s) for channels.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-channels-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-currencies-api
+  name: BVNK Currencies API
+  description: The Currencies API from BVNK — 3 operation(s) for currencies.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Currencies
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-currencies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-export-api
+  name: BVNK Export API
+  description: Create and manage data exports
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Export
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-export-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-fee-api
+  name: BVNK Fee API
+  description: Network fee estimation
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Fee
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-fee-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-key-pair-api
+  name: BVNK Key Pair API
+  description: Create and manage key-pairs
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Key Pair
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-key-pair-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-merchant-ids-api
+  name: BVNK Merchant IDs API
+  description: The Merchant IDs API from BVNK — 1 operation(s) for merchant ids.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Merchant IDs
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-merchant-ids-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-network-api
+  name: BVNK Network API
+  description: The Network API from BVNK — 1 operation(s) for network.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Network
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-network-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-payments-api
+  name: BVNK Payments API
+  description: The Payments API from BVNK — 3 operation(s) for payments.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-payments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-return-api
+  name: BVNK Return API
+  description: The Return API from BVNK — 1 operation(s) for return.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Return
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-return-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-screening-api
+  name: BVNK Screening API
+  description: Manage screening requests
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Screening
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-screening-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-trading-and-conversions-api
+  name: BVNK Trading and Conversions API
+  description: The Trading and Conversions API from BVNK — 4 operation(s) for trading and conversions.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Trading and Conversions
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-trading-and-conversions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-transaction-api
+  name: BVNK Transaction API
+  description: Create and manage transactions
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Transaction
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-transaction-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-transaction-request-api
+  name: BVNK Transaction Request API
+  description: The Transaction Request API from BVNK — 3 operation(s) for transaction request.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Transaction Request
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-transaction-request-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
+  - type: Documentation
+    url: https://docs.layer1.com/reference
+- aid: bvnk:bvnk-wallets-api
+  name: BVNK Wallets API
+  description: The Wallets API from BVNK — 4 operation(s) for wallets.
+  humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  baseURL: https://api.bvnk.com
+  tags:
+  - Wallets
+  properties:
+  - type: OpenAPI
+    url: openapi/bvnk-wallets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
+  - type: Postman
+    url: https://docs.bvnk.com/postman/bvnk-api-endpoints.postman_collection.json
   - type: Documentation
     url: https://docs.layer1.com/reference
 maintainers:
@@ -98,6 +311,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/bvnk-api-endpoints-overlay.yaml
 - type: Website
   url: https://www.bvnk.com/
 - type: TrustCenter
