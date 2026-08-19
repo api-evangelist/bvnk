@@ -1,0 +1,667 @@
+openapi: 3.2.0
+info:
+  description: The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.
+  title: BVNK API Endpoints Wallets API
+  version: 1.0.1
+servers:
+- description: Sandbox
+  url: https://api.sandbox.bvnk.com
+- description: Production
+  url: https://api.bvnk.com
+tags:
+- name: Wallets
+paths:
+  /api/wallet:
+    get:
+      description: Retrieves a list of wallets on your account.
+      operationId: walletList
+      parameters:
+      - description: start offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: max number results
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Wallet'
+                type: array
+          description: OK
+      security:
+      - Hawk:
+        - user
+      summary: List Wallets
+      tags:
+      - Wallets
+      x-accepts: application/json
+    post:
+      description: Creates a wallet on the BVNK platform.
+      operationId: walletCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WalletRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+          description: Created
+        '400':
+          description: Bad Request
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - user
+      summary: Create Wallet
+      tags:
+      - Wallets
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/wallet/{id}:
+    get:
+      description: Retrieves a specific wallet.
+      operationId: walletRGet
+      parameters:
+      - description: start offset
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          default: 255861
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+          description: OK
+      security:
+      - Hawk:
+        - user
+      summary: Get Wallet
+      tags:
+      - Wallets
+      x-accepts: application/json
+  /api/wallet/balances:
+    get:
+      description: Retrieves the balances of your wallets on platform.
+      operationId: walletBalanceList
+      parameters:
+      - description: Date at to retrieve balances
+        explode: true
+        in: query
+        name: date
+        required: false
+        schema:
+          example: 2020-03-17
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Balance'
+                type: array
+          description: OK
+      security:
+      - Hawk:
+        - user
+      summary: List Wallet Balances
+      tags:
+      - Wallets
+      x-accepts: application/json
+  /api/transaction/report:
+    get:
+      description: Report all transactions from wallet in specified format. Report will be generated and sent to main account email in the specified format
+      operationId: transactionReport
+      parameters:
+      - description: Date at to retrieve balances
+        explode: true
+        in: query
+        name: walletId
+        required: false
+        schema:
+          default: 255861
+          format: int64
+          type: integer
+        style: form
+      - description: Export range from date in format 'yyyy-MM-dd'
+        explode: true
+        in: query
+        name: fromDate
+        required: false
+        schema:
+          default: 2022-09-17
+          type: string
+        style: form
+      - description: Export range to date in format 'yyyy-MM-dd'
+        explode: true
+        in: query
+        name: toDate
+        required: false
+        schema:
+          default: 2023-03-17
+          type: string
+        style: form
+      - description: '''json'' - json format, ''csv'' - csv format'
+        explode: true
+        in: query
+        name: format
+        required: false
+        schema:
+          default: csv
+          type: string
+        style: form
+      - description: Transaction type code
+        explode: true
+        in: query
+        name: transactionType
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TransactionReport'
+                type: array
+          description: OK
+      security:
+      - Hawk:
+        - user
+      summary: Transactions Report
+      tags:
+      - Wallets
+      x-accepts: application/json
+components:
+  schemas:
+    TransactionReport:
+      example:
+        expiryDate: 1631619489000
+        lastUpdated: 1631619489000
+        dateCreated: 1631619489000
+        id: 594
+        type: transactions
+        requestData:
+          transactionType: 'null'
+          fromDate: 2023-03-01
+          externalProcessing: 'null'
+          walletId: 504841
+          include: include
+          accountName: 'null'
+          toDate: 2023-06-30
+          format: CSV
+          exclude: exclude
+          languageTag: en-US
+          type: transactions
+          category: 0
+        uuid: 9d1f67f2-a647-404b-9b02-247c77be81d0
+        status: PENDING
+      properties:
+        id:
+          example: 594
+          format: int64
+          type: integer
+        uuid:
+          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        dateCreated:
+          example: 1631619489000
+          format: int64
+          type: integer
+        lastUpdated:
+          example: 1631619489000
+          format: int64
+          type: integer
+        expiryDate:
+          example: 1631619489000
+          format: int64
+          type: integer
+        status:
+          example: PENDING
+          type: string
+        type:
+          example: transactions
+          type: string
+        requestData:
+          $ref: '#/components/schemas/TransactionReportRequestData'
+      type: object
+    CurrencyProtocol:
+      example:
+        code: ERC20
+        network: Ethereum
+      properties:
+        code:
+          example: ERC20
+          type: string
+        network:
+          example: Ethereum
+          type: string
+      type: object
+    Currency:
+      example:
+        quantityPrecision: 6
+        pricePrecision: 0
+        withdrawalFee: 0.01
+        code: ETH
+        icon: https://cdn.com/eth-icon.png
+        depositFee: 0.0
+        withdrawalParameters:
+        - code: destinationTag
+          name: Destination Tag
+          id: 1432
+          required: false
+          example: '123432312'
+        - code: destinationTag
+          name: Destination Tag
+          id: 1432
+          required: false
+          example: '123432312'
+        name: Ethereum
+        options:
+          address: https://etherscan.io/address/{{address}}
+          explorer: https://etherscan.io/
+          confirmations: 12
+          transaction: https://etherscan.io/tx/{{hash}}
+        fiat: false
+        id: 1432
+        supportsDeposits: false
+        protocols:
+        - code: ERC20
+          network: Ethereum
+        - code: ERC20
+          network: Ethereum
+        supportsWithdrawals: false
+      properties:
+        code:
+          example: ETH
+          type: string
+        depositFee:
+          example: 0.0
+          type: number
+        fiat:
+          default: false
+          type: boolean
+        icon:
+          example: https://cdn.com/eth-icon.png
+          type: string
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        name:
+          example: Ethereum
+          type: string
+        options:
+          $ref: '#/components/schemas/CurrencyOptions'
+        pricePrecision:
+          default: 5
+          format: int32
+          type: integer
+        protocols:
+          items:
+            $ref: '#/components/schemas/CurrencyProtocol'
+          type: array
+        quantityPrecision:
+          default: 5
+          format: int32
+          type: integer
+        supportsDeposits:
+          default: false
+          type: boolean
+        supportsWithdrawals:
+          default: false
+          type: boolean
+        withdrawalFee:
+          example: 0.01
+          type: number
+        withdrawalParameters:
+          items:
+            $ref: '#/components/schemas/ExternalCurrencyWithdrawalParameter'
+          type: array
+      type: object
+    TransactionReportRequestData:
+      example:
+        transactionType: 'null'
+        fromDate: 2023-03-01
+        externalProcessing: 'null'
+        walletId: 504841
+        include: include
+        accountName: 'null'
+        toDate: 2023-06-30
+        format: CSV
+        exclude: exclude
+        languageTag: en-US
+        type: transactions
+        category: 0
+      properties:
+        type:
+          example: transactions
+          type: string
+        externalProcessing:
+          example: 'null'
+          type: string
+        walletId:
+          example: 504841
+          format: int64
+          type: integer
+        transactionType:
+          example: 'null'
+          type: string
+        fromDate:
+          example: 2023-03-01
+          type: string
+        toDate:
+          example: 2023-06-30
+          type: string
+        format:
+          example: CSV
+          type: string
+        languageTag:
+          example: en-US
+          type: string
+        category:
+          example: 0
+          type: integer
+        accountName:
+          example: 'null'
+          type: string
+        include:
+          type: string
+          example: null
+        exclude:
+          type: string
+          example: null
+      type: object
+    CurrencyOptions:
+      example:
+        address: https://etherscan.io/address/{{address}}
+        explorer: https://etherscan.io/
+        confirmations: 12
+        transaction: https://etherscan.io/tx/{{hash}}
+      properties:
+        transaction:
+          example: https://etherscan.io/tx/{{hash}}
+          type: string
+        explorer:
+          example: https://etherscan.io/
+          type: string
+        address:
+          example: https://etherscan.io/address/{{address}}
+          type: string
+        confirmations:
+          example: 12
+          type: integer
+      type: object
+    Wallet:
+      example:
+        lookup: lookup
+        withdrawalFee: 0.001
+        address: 707390250188898007213214622985268615627297025014
+        available: 0.59573928
+        description: ETH wallet
+        depositFee: 0.0
+        approxAvailable: '0.59573928'
+        convertedAvailable: 20917.59
+        protocol: ETH
+        balance: 0.59573928
+        approxBalance: '0.59573928'
+        alternatives: []
+        supportsThirdParty: false
+        currency:
+          quantityPrecision: 6
+          pricePrecision: 0
+          withdrawalFee: 0.01
+          code: ETH
+          icon: https://cdn.com/eth-icon.png
+          depositFee: 0.0
+          withdrawalParameters:
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: '123432312'
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: '123432312'
+          name: Ethereum
+          options:
+            address: https://etherscan.io/address/{{address}}
+            explorer: https://etherscan.io/
+            confirmations: 12
+            transaction: https://etherscan.io/tx/{{hash}}
+          fiat: false
+          id: 1432
+          supportsDeposits: false
+          protocols:
+          - code: ERC20
+            network: Ethereum
+          - code: ERC20
+            network: Ethereum
+          supportsWithdrawals: false
+        custodianWallet: true
+        id: 1432
+        supportsDeposits: true
+        supportsWithdrawals: true
+        isEmoney: false
+      properties:
+        address:
+          example: 707390250188898007213214622985268615627297025014
+          type: string
+        alternatives:
+          example: []
+          items: {}
+          type: array
+        approxAvailable:
+          example: '0.59573928'
+          type: string
+        approxBalance:
+          example: '0.59573928'
+          type: string
+        available:
+          example: 0.59573928
+          format: float
+          type: number
+        balance:
+          example: 0.59573928
+          format: float
+          type: number
+        convertedAvailable:
+          example: 20917.59
+          format: float
+          type: number
+        currency:
+          $ref: '#/components/schemas/Currency'
+        custodianWallet:
+          type: boolean
+        depositFee:
+          example: 0.0
+          format: float
+          type: number
+        description:
+          example: ETH wallet
+          type: string
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        isEmoney:
+          default: false
+          type: boolean
+        lookup:
+          type: string
+          example: null
+        protocol:
+          example: ETH
+          type: string
+        supportsDeposits:
+          default: true
+          type: boolean
+        supportsThirdParty:
+          default: false
+          type: boolean
+        supportsWithdrawals:
+          default: true
+          type: boolean
+        withdrawalFee:
+          example: 0.001
+          format: float
+          type: number
+      type: object
+    ExternalCurrencyWithdrawalParameter:
+      example:
+        code: destinationTag
+        name: Destination Tag
+        id: 1432
+        required: false
+        example: '123432312'
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: destinationTag
+          type: string
+        name:
+          example: Destination Tag
+          type: string
+        required:
+          default: false
+          type: boolean
+        example:
+          example: '123432312'
+          type: string
+      type: object
+    ServerErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    WalletRequest:
+      example:
+        description: My 2nd EUR Wallet
+        currency: ETH
+      properties:
+        currency:
+          default: ETH
+          type: string
+        description:
+          default: My 2nd EUR Wallet
+          type: string
+      required:
+      - currency
+      - description
+      type: object
+    Balance:
+      example:
+        walletId: 255861
+        total: 101.03
+        reserved: 1.0
+        convertedReserved: 104.0
+        available: 100.03
+        currency:
+          quantityPrecision: 6
+          pricePrecision: 0
+          withdrawalFee: 0.01
+          code: ETH
+          icon: https://cdn.com/eth-icon.png
+          depositFee: 0.0
+          withdrawalParameters:
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: '123432312'
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: '123432312'
+          name: Ethereum
+          options:
+            address: https://etherscan.io/address/{{address}}
+            explorer: https://etherscan.io/
+            confirmations: 12
+            transaction: https://etherscan.io/tx/{{hash}}
+          fiat: false
+          id: 1432
+          supportsDeposits: false
+          protocols:
+          - code: ERC20
+            network: Ethereum
+          - code: ERC20
+            network: Ethereum
+          supportsWithdrawals: false
+        convertedAvailable: 100.0
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        walletId:
+          example: 255861
+          format: int64
+          type: integer
+        available:
+          example: 100.03
+          type: number
+        reserved:
+          example: 1.0
+          type: number
+        convertedAvailable:
+          example: 100.0
+          type: number
+        convertedReserved:
+          example: 104.0
+          type: number
+        total:
+          example: 101.03
+          type: number
+      type: object
+  securitySchemes:
+    Hawk:
+      description: 'Hawk Payload (see: https://github.com/hueniverse/hawk)'
+      in: header
+      name: Authorization
+      type: apiKey

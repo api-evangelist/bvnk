@@ -1,0 +1,161 @@
+openapi: 3.2.0
+info:
+  description: Layer1 API making management of crypto assets simple and easy
+  title: Digital Asset Network API
+  version: 1.0.0
+servers:
+- description: Staging
+  url: https://api.staging.layer1.com
+tags:
+- name: Network
+paths:
+  /digital/v1/networks:
+    get:
+      description: Get all supported networks and their assets. By default, only enabled networks are returned.
+      operationId: getNetworks
+      parameters:
+      - description: Include disabled networks in the response
+        explode: true
+        in: query
+        name: includeDisabled
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Network'
+                type: array
+          description: OK
+      security:
+      - oauth2:
+        - networks:view
+      - httpSignature: []
+      summary: Get all networks
+      tags:
+      - Network
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    Network:
+      example:
+        nativeAsset: BTC
+        tagSupported: false
+        supportedAssets:
+        - code: BTC
+          model: UTXO
+          decimalPrecision: 0
+        - code: BTC
+          model: UTXO
+          decimalPrecision: 0
+        network: BITCOIN
+      properties:
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        nativeAsset:
+          description: native network currency
+          example: BTC
+          type: string
+        supportedAssets:
+          description: list of assets supported by network
+          items:
+            $ref: '#/components/schemas/Asset'
+          type: array
+        tagSupported:
+          default: false
+          description: whether network supports address tags
+          type: boolean
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    Asset:
+      example:
+        code: BTC
+        model: UTXO
+        decimalPrecision: 0
+      properties:
+        code:
+          description: currency code
+          example: BTC
+          type: string
+        decimalPrecision:
+          description: currency decimal precision
+          format: int32
+          type: integer
+        model:
+          description: transaction model supported by the asset
+          enum:
+          - UTXO
+          - ACCOUNT
+          - CONTRACT
+          type: string
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+  securitySchemes:
+    openId:
+      openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+      type: openIdConnect
+    httpSignature:
+      scheme: signature
+      type: http
+    oauth2:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+      type: oauth2

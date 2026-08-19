@@ -1,0 +1,1110 @@
+{
+  "item": [
+    {
+      "id": "dd409cae-2dbe-4383-a2a6-38a84c7cd877",
+      "name": "Channels",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e4ef154e-4363-4fbf-8d12-1acfcfd56a78",
+          "name": "List Channels",
+          "request": {
+            "name": "List Channels",
+            "description": {
+              "content": "Retrieves all channels related to a Merchant ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "channel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "merchantId",
+                  "value": "c02153ae-8ac8-4222-80e8-b2b2af85bd78",
+                  "description": "(Required) The merchant ID that the channels belong to"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "max",
+                  "value": "<string>",
+                  "description": "Maximum number of items in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "The attribute used to sort the data"
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Ordering direction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "56de298f-c3ce-4d95-b8ac-e44dd3455a67",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchantId",
+                      "value": "c02153ae-8ac8-4222-80e8-b2b2af85bd78"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 65,\n    \"dateCreated\": 1631619193321,\n    \"lastUpdated\": 1631619193321,\n    \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n    \"walletCurrency\": \"EUR\",\n    \"displayCurrency\": \"JPY\",\n    \"payCurrency\": \"ETH\",\n    \"address\": \"string\",\n    \"tag\": \"string\",\n    \"protocol\": \"ETH\",\n    \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n    \"status\": \"CLOSED\",\n    \"uuid\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n    \"redirectUrl\": \"https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0\",\n    \"uri\": \"ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e\",\n    \"alternatives\": [\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      },\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      }\n    ]\n  },\n  {\n    \"id\": 65,\n    \"dateCreated\": 1631619193321,\n    \"lastUpdated\": 1631619193321,\n    \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n    \"walletCurrency\": \"EUR\",\n    \"displayCurrency\": \"JPY\",\n    \"payCurrency\": \"ETH\",\n    \"address\": \"string\",\n    \"tag\": \"string\",\n    \"protocol\": \"ETH\",\n    \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n    \"status\": \"OPEN\",\n    \"uuid\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n    \"redirectUrl\": \"https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0\",\n    \"uri\": \"ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e\",\n    \"alternatives\": [\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      },\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91f03a74-758d-44f1-bc40-e81260029801",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchantId",
+                      "value": "c02153ae-8ac8-4222-80e8-b2b2af85bd78"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorList\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "406212f0-94fc-4a00-9003-7286455dd9e1",
+              "name": "Unexpected Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchantId",
+                      "value": "c02153ae-8ac8-4222-80e8-b2b2af85bd78"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e1df9e1c-d9e8-4e15-9dc3-e4c973507bc0",
+          "name": "Create Channel",
+          "request": {
+            "name": "Create Channel",
+            "description": {
+              "content": "Creates a channel that your end users can openly send payments to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "channel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayCurrency\": \"EUR\",\n  \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n  \"payCurrency\": \"ETH\",\n  \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "89cfd461-8410-4c7f-b1e4-2eb1784bb1b7",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n  \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n  \"payCurrency\": \"ETH\",\n  \"displayCurrency\": \"EUR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 65,\n  \"dateCreated\": 1631619193321,\n  \"lastUpdated\": 1631619193321,\n  \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n  \"walletCurrency\": \"EUR\",\n  \"displayCurrency\": \"JPY\",\n  \"payCurrency\": \"ETH\",\n  \"address\": \"string\",\n  \"tag\": \"string\",\n  \"protocol\": \"ETH\",\n  \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n  \"status\": \"CLOSED\",\n  \"uuid\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n  \"redirectUrl\": \"https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0\",\n  \"uri\": \"ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e\",\n  \"alternatives\": [\n    {\n      \"protocol\": \"protocol\",\n      \"address\": \"address\",\n      \"tag\": \"tag\",\n      \"uri\": \"uri\"\n    },\n    {\n      \"protocol\": \"protocol\",\n      \"address\": \"address\",\n      \"tag\": \"tag\",\n      \"uri\": \"uri\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96a8f52e-88be-4abe-b1d2-e35a7dca0785",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n  \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n  \"payCurrency\": \"ETH\",\n  \"displayCurrency\": \"EUR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorList\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba307b5e-aa7e-4cea-a15e-a025f42d8158",
+              "name": "Unexpected Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n  \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n  \"payCurrency\": \"ETH\",\n  \"displayCurrency\": \"EUR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48a65b74-e0bb-4342-b77c-ed9e7cd77f46",
+          "name": "Get Channel",
+          "request": {
+            "name": "Get Channel",
+            "description": {
+              "content": "Retrieves a specific channel by UUID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "channel",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "9d1f67f2-a647-404b-9b02-247c77be81d0",
+                  "key": "uuid",
+                  "description": "(Required) The UUID of the channel you are querying"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "83a3b71d-0653-4947-835a-b05396e3a781",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "9d1f67f2-a647-404b-9b02-247c77be81d0",
+                      "key": "uuid",
+                      "description": "(Required) The UUID of the channel you are querying"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 65,\n  \"dateCreated\": 1631619193321,\n  \"lastUpdated\": 1631619193321,\n  \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n  \"walletCurrency\": \"EUR\",\n  \"displayCurrency\": \"JPY\",\n  \"payCurrency\": \"ETH\",\n  \"address\": \"string\",\n  \"tag\": \"string\",\n  \"protocol\": \"ETH\",\n  \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n  \"status\": \"CLOSED\",\n  \"uuid\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n  \"redirectUrl\": \"https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0\",\n  \"uri\": \"ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e\",\n  \"alternatives\": [\n    {\n      \"protocol\": \"protocol\",\n      \"address\": \"address\",\n      \"tag\": \"tag\",\n      \"uri\": \"uri\"\n    },\n    {\n      \"protocol\": \"protocol\",\n      \"address\": \"address\",\n      \"tag\": \"tag\",\n      \"uri\": \"uri\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7127e510-46b2-423a-9ea4-5aefa3ca78ab",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "9d1f67f2-a647-404b-9b02-247c77be81d0",
+                      "key": "uuid",
+                      "description": "(Required) The UUID of the channel you are querying"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "720105d3-7e19-40fb-97a9-d1072b92a7fc",
+          "name": "Get Channel Payment",
+          "request": {
+            "name": "Get Channel Payment",
+            "description": {
+              "content": "Retrieves a specific payment made into a channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "channel",
+                "payment",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4",
+                  "key": "uuid",
+                  "description": "(Required) The UUID of the payment you are querying."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "90bbc1a3-1763-4448-91f5-3d698328f273",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel",
+                    "payment",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4",
+                      "key": "uuid",
+                      "description": "(Required) The UUID of the payment you are querying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"channelId\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n  \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n  \"merchantDisplayName\": \"Merchant A\",\n  \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n  \"dateCreated\": 1631619489000,\n  \"lastUpdated\": 1631619562000,\n  \"status\": \"UNKNOWN\",\n  \"uuid\": \"c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4\",\n  \"hash\": \"string\",\n  \"address\": \"string\",\n  \"tag\": \"string\",\n  \"paidCurrency\": \"ETH\",\n  \"displayCurrency\": \"JPY\",\n  \"walletCurrency\": \"EUR\",\n  \"feeCurrency\": \"EUR\",\n  \"paidAmount\": 0.01,\n  \"displayAmount\": 3592.27,\n  \"walletAmount\": 27.62,\n  \"feeAmount\": 0.27,\n  \"exchangeRate\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"displayRate\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"risk\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"sources\": [\n    \"string\",\n    \"string\"\n  ],\n  \"networkFee\": {\n    \"displayAmount\": 6.027456183070403,\n    \"paidCurrency\": \"paidCurrency\",\n    \"displayCurrency\": \"displayCurrency\",\n    \"paidAmount\": 0.8008281904610115\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7af8677a-b50f-46df-b23a-dba2ea1afa5a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel",
+                    "payment",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4",
+                      "key": "uuid",
+                      "description": "(Required) The UUID of the payment you are querying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorList\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26e494f7-cbf7-46dc-b153-42ecaf4b480c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel",
+                    "payment",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4",
+                      "key": "uuid",
+                      "description": "(Required) The UUID of the payment you are querying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7718cad-bbe2-4f3e-9bca-7bb5b5a17cf6",
+          "name": "List Channel Payments",
+          "request": {
+            "name": "List Channel Payments",
+            "description": {
+              "content": "Retrieves a list of payments to a channel on a specific Merchant ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "channel",
+                "payment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "merchantId",
+                  "value": "c02153ae-8ac8-4222-80e8-b2b2af85bd78",
+                  "description": "(Required) The Merchant ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<string>",
+                  "description": "From which date to start searching."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<string>",
+                  "description": "At which date to stop searching."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Where to start fetching records."
+                },
+                {
+                  "disabled": false,
+                  "key": "max",
+                  "value": "<string>",
+                  "description": "Maximum number of items in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Ordering direction"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Can be UUID of the payment, reference, channel UUID, transaction hash, or wallet code."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "06f3999a-1554-468c-832e-19207b2ecad8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "channel",
+                    "payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchantId",
+                      "value": "c02153ae-8ac8-4222-80e8-b2b2af85bd78"
+                    },
+                    {
+                      "key": "status",
+                      "value": "COMPLETE"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2023-03-05"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2023-05-03"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"channelId\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n    \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n    \"merchantDisplayName\": \"Merchant A\",\n    \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n    \"dateCreated\": 1631619489000,\n    \"lastUpdated\": 1631619562000,\n    \"status\": \"UNKNOWN\",\n    \"uuid\": \"c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4\",\n    \"hash\": \"string\",\n    \"address\": \"string\",\n    \"tag\": \"string\",\n    \"paidCurrency\": \"ETH\",\n    \"displayCurrency\": \"JPY\",\n    \"walletCurrency\": \"EUR\",\n    \"feeCurrency\": \"EUR\",\n    \"paidAmount\": 0.01,\n    \"displayAmount\": 3592.27,\n    \"walletAmount\": 27.62,\n    \"feeAmount\": 0.27,\n    \"exchangeRate\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"displayRate\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"risk\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"sources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"networkFee\": {\n      \"displayAmount\": 6.027456183070403,\n      \"paidCurrency\": \"paidCurrency\",\n      \"displayCurrency\": \"displayCurrency\",\n      \"paidAmount\": 0.8008281904610115\n    }\n  },\n  {\n    \"channelId\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n    \"merchantId\": \"0a12a214-1619-43fa-9be1-0029f6a440a0\",\n    \"merchantDisplayName\": \"Merchant A\",\n    \"reference\": \"c1b933d5-3354-4f83-a05f-0b53f1be85f2\",\n    \"dateCreated\": 1631619489000,\n    \"lastUpdated\": 1631619562000,\n    \"status\": \"DETECTED\",\n    \"uuid\": \"c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4\",\n    \"hash\": \"string\",\n    \"address\": \"string\",\n    \"tag\": \"string\",\n    \"paidCurrency\": \"ETH\",\n    \"displayCurrency\": \"JPY\",\n    \"walletCurrency\": \"EUR\",\n    \"feeCurrency\": \"EUR\",\n    \"paidAmount\": 0.01,\n    \"displayAmount\": 3592.27,\n    \"walletAmount\": 27.62,\n    \"feeAmount\": 0.27,\n    \"exchangeRate\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"displayRate\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"risk\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"sources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"networkFee\": {\n      \"displayAmount\": 6.027456183070403,\n      \"paidCurrency\": \"paidCurrency\",\n      \"displayCurrency\": \"displayCurrency\",\n      \"paidAmount\": 0.8008281904610115\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.bvnk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "171c478f-a027-46c1-b60d-954e45f6b917",
+    "name": "BVNK API Endpoints Channels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.",
+      "type": "text/plain"
+    }
+  }
+}

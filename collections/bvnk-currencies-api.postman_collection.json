@@ -1,0 +1,468 @@
+{
+  "item": [
+    {
+      "id": "94e27fb0-076d-42d1-b8ec-28bccc6b116b",
+      "name": "Currencies",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e63572e0-31ea-4130-a0c2-73d416411510",
+          "name": "List Crypto Currencies",
+          "request": {
+            "name": "List Crypto Currencies",
+            "description": {
+              "content": "Retrieves a list of all cryptocurrencies available on the BVNK platform. This list represents cryptocurrencies that end users can select whilst making a payment.\n\nFor sandbox, only Ethereum (ETH) is fully functional.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "currency",
+                "crypto"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "max",
+                  "value": "200",
+                  "description": "Maximum number of items in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "allowDeposits",
+                  "value": "false",
+                  "description": "list currencies that only allow deposits"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26e16f90-3500-433c-838a-4ce32fc18796",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "currency",
+                    "crypto"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "200"
+                    },
+                    {
+                      "key": "allowDeposits",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1432,\n    \"merchantId\": \"b312436e-e477-49d4-be7f-9d027f9b9e34\",\n    \"displayName\": \"Test Merchant Name\",\n    \"secret\": \"MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM\",\n    \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\",\n    \"autoConvertInvalidPayments\": true,\n    \"defaultExpiryMinutes\": 1440,\n    \"webhookVersion\": 1,\n    \"wallet\": {\n      \"address\": \"string\",\n      \"approxAvailable\": \"0.59573928\",\n      \"approxBalance\": \"0.59573928\",\n      \"available\": 0.59573928,\n      \"balance\": 0.59573928,\n      \"convertedAvailable\": 20917.59,\n      \"currency\": {\n        \"quantityPrecision\": 6,\n        \"pricePrecision\": 0,\n        \"withdrawalFee\": 0.01,\n        \"code\": \"ETH\",\n        \"icon\": \"https://cdn.com/eth-icon.png\",\n        \"depositFee\": 0,\n        \"withdrawalParameters\": [\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          },\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          }\n        ],\n        \"name\": \"Ethereum\",\n        \"options\": {\n          \"address\": \"https://etherscan.io/address/{{address}}\",\n          \"explorer\": \"https://etherscan.io/\",\n          \"confirmations\": 12,\n          \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n        },\n        \"fiat\": false,\n        \"id\": 1432,\n        \"supportsDeposits\": false,\n        \"protocols\": [\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          },\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          }\n        ],\n        \"supportsWithdrawals\": false\n      },\n      \"custodianWallet\": false,\n      \"depositFee\": 0,\n      \"description\": \"ETH wallet\",\n      \"id\": 1432,\n      \"isEmoney\": false,\n      \"lookup\": \"string\",\n      \"protocol\": \"ETH\",\n      \"supportsDeposits\": true,\n      \"supportsThirdParty\": false,\n      \"supportsWithdrawals\": true,\n      \"withdrawalFee\": 0.001\n    },\n    \"emailRecipients\": \"string\"\n  },\n  {\n    \"id\": 1432,\n    \"merchantId\": \"b312436e-e477-49d4-be7f-9d027f9b9e34\",\n    \"displayName\": \"Test Merchant Name\",\n    \"secret\": \"MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM\",\n    \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\",\n    \"autoConvertInvalidPayments\": true,\n    \"defaultExpiryMinutes\": 1440,\n    \"webhookVersion\": 1,\n    \"wallet\": {\n      \"address\": \"string\",\n      \"approxAvailable\": \"0.59573928\",\n      \"approxBalance\": \"0.59573928\",\n      \"available\": 0.59573928,\n      \"balance\": 0.59573928,\n      \"convertedAvailable\": 20917.59,\n      \"currency\": {\n        \"quantityPrecision\": 6,\n        \"pricePrecision\": 0,\n        \"withdrawalFee\": 0.01,\n        \"code\": \"ETH\",\n        \"icon\": \"https://cdn.com/eth-icon.png\",\n        \"depositFee\": 0,\n        \"withdrawalParameters\": [\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          },\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          }\n        ],\n        \"name\": \"Ethereum\",\n        \"options\": {\n          \"address\": \"https://etherscan.io/address/{{address}}\",\n          \"explorer\": \"https://etherscan.io/\",\n          \"confirmations\": 12,\n          \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n        },\n        \"fiat\": false,\n        \"id\": 1432,\n        \"supportsDeposits\": false,\n        \"protocols\": [\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          },\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          }\n        ],\n        \"supportsWithdrawals\": false\n      },\n      \"custodianWallet\": false,\n      \"depositFee\": 0,\n      \"description\": \"ETH wallet\",\n      \"id\": 1432,\n      \"isEmoney\": false,\n      \"lookup\": \"string\",\n      \"protocol\": \"ETH\",\n      \"supportsDeposits\": true,\n      \"supportsThirdParty\": false,\n      \"supportsWithdrawals\": true,\n      \"withdrawalFee\": 0.001\n    },\n    \"emailRecipients\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5868bf4-60b4-45cc-a8a1-86cc57c3bf69",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "currency",
+                    "crypto"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "200"
+                    },
+                    {
+                      "key": "allowDeposits",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbc10835-f88c-4392-bbec-8bbadfe3834e",
+          "name": "List Fiat Currencies",
+          "request": {
+            "name": "List Fiat Currencies",
+            "description": {
+              "content": "Retrieves a list of all display fiat currencies available on BVNK's Crypto Payments API.\nThis list refers to currencies merchants can display on a payment page to an end user. It does not represent the list of currencies that can be held on the platform in wallets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "currency",
+                "fiat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "max",
+                  "value": "200",
+                  "description": "Maximum number of items in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "usable",
+                  "value": "false",
+                  "description": "list currencies that are usable"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fae1c24a-fd35-47ec-8906-e827b2d49339",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "currency",
+                    "fiat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "200"
+                    },
+                    {
+                      "key": "usable",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1432,\n    \"merchantId\": \"b312436e-e477-49d4-be7f-9d027f9b9e34\",\n    \"displayName\": \"Test Merchant Name\",\n    \"secret\": \"MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM\",\n    \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\",\n    \"autoConvertInvalidPayments\": true,\n    \"defaultExpiryMinutes\": 1440,\n    \"webhookVersion\": 1,\n    \"wallet\": {\n      \"address\": \"string\",\n      \"approxAvailable\": \"0.59573928\",\n      \"approxBalance\": \"0.59573928\",\n      \"available\": 0.59573928,\n      \"balance\": 0.59573928,\n      \"convertedAvailable\": 20917.59,\n      \"currency\": {\n        \"quantityPrecision\": 6,\n        \"pricePrecision\": 0,\n        \"withdrawalFee\": 0.01,\n        \"code\": \"ETH\",\n        \"icon\": \"https://cdn.com/eth-icon.png\",\n        \"depositFee\": 0,\n        \"withdrawalParameters\": [\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          },\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          }\n        ],\n        \"name\": \"Ethereum\",\n        \"options\": {\n          \"address\": \"https://etherscan.io/address/{{address}}\",\n          \"explorer\": \"https://etherscan.io/\",\n          \"confirmations\": 12,\n          \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n        },\n        \"fiat\": false,\n        \"id\": 1432,\n        \"supportsDeposits\": false,\n        \"protocols\": [\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          },\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          }\n        ],\n        \"supportsWithdrawals\": false\n      },\n      \"custodianWallet\": false,\n      \"depositFee\": 0,\n      \"description\": \"ETH wallet\",\n      \"id\": 1432,\n      \"isEmoney\": false,\n      \"lookup\": \"string\",\n      \"protocol\": \"ETH\",\n      \"supportsDeposits\": true,\n      \"supportsThirdParty\": false,\n      \"supportsWithdrawals\": true,\n      \"withdrawalFee\": 0.001\n    },\n    \"emailRecipients\": \"string\"\n  },\n  {\n    \"id\": 1432,\n    \"merchantId\": \"b312436e-e477-49d4-be7f-9d027f9b9e34\",\n    \"displayName\": \"Test Merchant Name\",\n    \"secret\": \"MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM\",\n    \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\",\n    \"autoConvertInvalidPayments\": true,\n    \"defaultExpiryMinutes\": 1440,\n    \"webhookVersion\": 1,\n    \"wallet\": {\n      \"address\": \"string\",\n      \"approxAvailable\": \"0.59573928\",\n      \"approxBalance\": \"0.59573928\",\n      \"available\": 0.59573928,\n      \"balance\": 0.59573928,\n      \"convertedAvailable\": 20917.59,\n      \"currency\": {\n        \"quantityPrecision\": 6,\n        \"pricePrecision\": 0,\n        \"withdrawalFee\": 0.01,\n        \"code\": \"ETH\",\n        \"icon\": \"https://cdn.com/eth-icon.png\",\n        \"depositFee\": 0,\n        \"withdrawalParameters\": [\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          },\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          }\n        ],\n        \"name\": \"Ethereum\",\n        \"options\": {\n          \"address\": \"https://etherscan.io/address/{{address}}\",\n          \"explorer\": \"https://etherscan.io/\",\n          \"confirmations\": 12,\n          \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n        },\n        \"fiat\": false,\n        \"id\": 1432,\n        \"supportsDeposits\": false,\n        \"protocols\": [\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          },\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          }\n        ],\n        \"supportsWithdrawals\": false\n      },\n      \"custodianWallet\": true,\n      \"depositFee\": 0,\n      \"description\": \"ETH wallet\",\n      \"id\": 1432,\n      \"isEmoney\": false,\n      \"lookup\": \"string\",\n      \"protocol\": \"ETH\",\n      \"supportsDeposits\": true,\n      \"supportsThirdParty\": false,\n      \"supportsWithdrawals\": true,\n      \"withdrawalFee\": 0.001\n    },\n    \"emailRecipients\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5822ac6-5a05-45d4-a347-f364edccdc4b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "currency",
+                    "fiat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "200"
+                    },
+                    {
+                      "key": "usable",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b56be20e-ce3a-4e61-a381-5559944bab37",
+          "name": "List Wallet Currencies",
+          "request": {
+            "name": "List Wallet Currencies",
+            "description": {
+              "content": "These are the currencies that can be used to create a new wallet.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "currency",
+                "deposit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "max",
+                  "value": "200",
+                  "description": "Maximum number of items in response"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "83c8ede7-177b-4c00-a61a-84f8f5dae03a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "currency",
+                    "deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "200"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1432,\n    \"merchantId\": \"b312436e-e477-49d4-be7f-9d027f9b9e34\",\n    \"displayName\": \"Test Merchant Name\",\n    \"secret\": \"MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM\",\n    \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\",\n    \"autoConvertInvalidPayments\": true,\n    \"defaultExpiryMinutes\": 1440,\n    \"webhookVersion\": 1,\n    \"wallet\": {\n      \"address\": \"string\",\n      \"approxAvailable\": \"0.59573928\",\n      \"approxBalance\": \"0.59573928\",\n      \"available\": 0.59573928,\n      \"balance\": 0.59573928,\n      \"convertedAvailable\": 20917.59,\n      \"currency\": {\n        \"quantityPrecision\": 6,\n        \"pricePrecision\": 0,\n        \"withdrawalFee\": 0.01,\n        \"code\": \"ETH\",\n        \"icon\": \"https://cdn.com/eth-icon.png\",\n        \"depositFee\": 0,\n        \"withdrawalParameters\": [\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          },\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          }\n        ],\n        \"name\": \"Ethereum\",\n        \"options\": {\n          \"address\": \"https://etherscan.io/address/{{address}}\",\n          \"explorer\": \"https://etherscan.io/\",\n          \"confirmations\": 12,\n          \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n        },\n        \"fiat\": false,\n        \"id\": 1432,\n        \"supportsDeposits\": false,\n        \"protocols\": [\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          },\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          }\n        ],\n        \"supportsWithdrawals\": false\n      },\n      \"custodianWallet\": false,\n      \"depositFee\": 0,\n      \"description\": \"ETH wallet\",\n      \"id\": 1432,\n      \"isEmoney\": false,\n      \"lookup\": \"string\",\n      \"protocol\": \"ETH\",\n      \"supportsDeposits\": true,\n      \"supportsThirdParty\": false,\n      \"supportsWithdrawals\": true,\n      \"withdrawalFee\": 0.001\n    },\n    \"emailRecipients\": \"string\"\n  },\n  {\n    \"id\": 1432,\n    \"merchantId\": \"b312436e-e477-49d4-be7f-9d027f9b9e34\",\n    \"displayName\": \"Test Merchant Name\",\n    \"secret\": \"MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM\",\n    \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\",\n    \"autoConvertInvalidPayments\": true,\n    \"defaultExpiryMinutes\": 1440,\n    \"webhookVersion\": 1,\n    \"wallet\": {\n      \"address\": \"string\",\n      \"approxAvailable\": \"0.59573928\",\n      \"approxBalance\": \"0.59573928\",\n      \"available\": 0.59573928,\n      \"balance\": 0.59573928,\n      \"convertedAvailable\": 20917.59,\n      \"currency\": {\n        \"quantityPrecision\": 6,\n        \"pricePrecision\": 0,\n        \"withdrawalFee\": 0.01,\n        \"code\": \"ETH\",\n        \"icon\": \"https://cdn.com/eth-icon.png\",\n        \"depositFee\": 0,\n        \"withdrawalParameters\": [\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          },\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          }\n        ],\n        \"name\": \"Ethereum\",\n        \"options\": {\n          \"address\": \"https://etherscan.io/address/{{address}}\",\n          \"explorer\": \"https://etherscan.io/\",\n          \"confirmations\": 12,\n          \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n        },\n        \"fiat\": false,\n        \"id\": 1432,\n        \"supportsDeposits\": false,\n        \"protocols\": [\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          },\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          }\n        ],\n        \"supportsWithdrawals\": false\n      },\n      \"custodianWallet\": true,\n      \"depositFee\": 0,\n      \"description\": \"ETH wallet\",\n      \"id\": 1432,\n      \"isEmoney\": false,\n      \"lookup\": \"string\",\n      \"protocol\": \"ETH\",\n      \"supportsDeposits\": true,\n      \"supportsThirdParty\": false,\n      \"supportsWithdrawals\": true,\n      \"withdrawalFee\": 0.001\n    },\n    \"emailRecipients\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23bc4f11-d119-4aef-9756-fcc6885779ee",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "currency",
+                    "deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "200"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.bvnk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "406e24c9-30fc-4389-9ce6-9f3bce8537e6",
+    "name": "BVNK API Endpoints Currencies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.",
+      "type": "text/plain"
+    }
+  }
+}

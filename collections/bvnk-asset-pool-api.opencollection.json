@@ -1,0 +1,253 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Digital Asset Asset Pool API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Asset Pool",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List asset pools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.staging.layer1.com/digital/v1/asset-pools",
+            "params": [
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve paginated list of asset pools"
+        },
+        {
+          "info": {
+            "name": "Create asset pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.staging.layer1.com/digital/v1/asset-pools",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a new asset pool which serves as a collection of assets"
+        },
+        {
+          "info": {
+            "name": "Get asset pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.staging.layer1.com/digital/v1/asset-pools/:assetPoolId",
+            "params": [
+              {
+                "name": "assetPoolId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve a specific asset pool given id"
+        },
+        {
+          "info": {
+            "name": "Update asset pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.staging.layer1.com/digital/v1/asset-pools/:assetPoolId",
+            "params": [
+              {
+                "name": "assetPoolId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update an asset pool"
+        },
+        {
+          "info": {
+            "name": "Delete asset pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.staging.layer1.com/digital/v1/asset-pools/:assetPoolId",
+            "params": [
+              {
+                "name": "assetPoolId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete asset pool with given id if it has not addresses nor transactions created"
+        },
+        {
+          "info": {
+            "name": "Get max asset pool withdrawable balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.staging.layer1.com/digital/v1/asset-pools/:assetPoolId/max-withdrawable-amount",
+            "params": [
+              {
+                "name": "assetPoolId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "network",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "asset",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve maximal approximate (does not take fees into account) amount withdrawable for specific network and asset"
+        },
+        {
+          "info": {
+            "name": "Get asset pool balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.staging.layer1.com/digital/v1/asset-pools/:assetPoolId/balances",
+            "params": [
+              {
+                "name": "assetPoolId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "network",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "asset",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve an asset pool balance for specific network and asset"
+        },
+        {
+          "info": {
+            "name": "Get asset pool summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.staging.layer1.com/digital/v1/asset-pools/summary",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve authenticated summary across all asset pools."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

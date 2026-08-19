@@ -1,0 +1,796 @@
+{
+  "item": [
+    {
+      "id": "2817c0e2-9639-44f2-9280-b0d448d16842",
+      "name": "Screening",
+      "description": {
+        "content": "Manage screening requests",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a9d97771-46a2-4cc3-8291-fbcfa447b8bf",
+          "name": "Approve or reject a held transfer. Deposits can be only approved.",
+          "request": {
+            "name": "Approve or reject a held transfer. Deposits can be only approved.",
+            "description": {
+              "content": "Approves or rejects a held transfer based on the provided transfer ID and the destination address ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "screenings",
+                "action"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"<string>\",\n  \"operation\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"transferId\": \"<uuid>\",\n  \"addressId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c6905625-c99e-494a-843f-3a6c620f8b15",
+              "name": "Transfer reviewed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Confirmed false positive\",\n  \"action\": \"APPROVE\",\n  \"transferId\": \"018f5bdd-ca48-70bd-9df1-daccba5e0dc0\",\n  \"operation\": \"DEPOSIT\",\n  \"addressId\": \"11e785c1-a31a-4de9-9585-351056bea639\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5c310e01-14a8-48d3-9fd8-e48fa04ba7ed",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Confirmed false positive\",\n  \"action\": \"APPROVE\",\n  \"transferId\": \"018f5bdd-ca48-70bd-9df1-daccba5e0dc0\",\n  \"operation\": \"DEPOSIT\",\n  \"addressId\": \"11e785c1-a31a-4de9-9585-351056bea639\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "907be354-f1d9-4d91-8597-3f133d25b35b",
+              "name": "Withdrawal not found or has already been completed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Confirmed false positive\",\n  \"action\": \"APPROVE\",\n  \"transferId\": \"018f5bdd-ca48-70bd-9df1-daccba5e0dc0\",\n  \"operation\": \"DEPOSIT\",\n  \"addressId\": \"11e785c1-a31a-4de9-9585-351056bea639\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e305f681-66bb-4345-9e7d-d17cb21145d7",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Confirmed false positive\",\n  \"action\": \"APPROVE\",\n  \"transferId\": \"018f5bdd-ca48-70bd-9df1-daccba5e0dc0\",\n  \"operation\": \"DEPOSIT\",\n  \"addressId\": \"11e785c1-a31a-4de9-9585-351056bea639\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a99622e-ab21-45d4-bf19-c941a7c56c7a",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Confirmed false positive\",\n  \"action\": \"APPROVE\",\n  \"transferId\": \"018f5bdd-ca48-70bd-9df1-daccba5e0dc0\",\n  \"operation\": \"DEPOSIT\",\n  \"addressId\": \"11e785c1-a31a-4de9-9585-351056bea639\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "531e6596-1e50-4035-8f6a-c4eb1276527a",
+          "name": "List screening results",
+          "request": {
+            "name": "List screening results",
+            "description": {
+              "content": "Retrieves a paginated list of the most recent transfers along with their screening results.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "screenings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "hash",
+                  "value": "<string>",
+                  "description": "Filter by transaction hash"
+                },
+                {
+                  "disabled": false,
+                  "key": "operation",
+                  "value": "<string>",
+                  "description": "Set of operations to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "operation",
+                  "value": "<string>",
+                  "description": "Set of operations to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Set of screening states to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Set of screening states to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "Start date for filtering by transfer creation date"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>",
+                  "description": "End date for filtering by transfer creation date"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "0",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "16",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "screeningId.transfer.id.createdAt,desc"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Query using Lucene-like syntax. Supported properties: notReasonCode, reasonCode, reason, hash, state, operation, from, to"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "12e3a3b9-1246-490e-8cc1-9f6873c60f62",
+              "name": "List screenings successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "16"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "screeningId.transfer.id.createdAt,desc"
+                    },
+                    {
+                      "key": "q",
+                      "value": "notReasonCode:DUST_AMOUNT"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalElements\": 1003,\n  \"content\": [\n    {\n      \"transactionId\": \"e7b67a42-ebb7-4f35-913b-29d89068e74c\",\n      \"transactionHash\": \"string\",\n      \"transactionStatus\": \"SCREENING_PASSED\",\n      \"network\": \"ETHEREUM\",\n      \"transactionMetadata\": {\n        \"failure\": {\n          \"reason\": \"INSUFFICIENT_FUNDS\",\n          \"message\": \"insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678\"\n        }\n      },\n      \"transactionCreatedAt\": \"1991-03-13T12:51:39.443Z\",\n      \"transactionUpdatedAt\": \"1968-12-22T09:28:52.813Z\",\n      \"screeningState\": \"PENDING_SCREENING\",\n      \"screeningReason\": \"Manual review required\",\n      \"screeningReasonCode\": \"DUST_AMOUNT\",\n      \"screeningCreatedAt\": \"1982-05-24T17:49:32.702Z\",\n      \"screeningUpdatedAt\": \"2005-05-22T08:15:42.291Z\",\n      \"screeningMetadata\": {\n        \"urls\": [\n          \"urls\",\n          \"urls\"\n        ],\n        \"ids\": [\n          \"ids\",\n          \"ids\"\n        ]\n      },\n      \"participants\": [\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        },\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"operation\": \"WITHDRAWAL\",\n      \"addressId\": \"fefc3e7b-743b-489f-9311-0921f4930dc7\"\n    },\n    {\n      \"transactionId\": \"e7b67a42-ebb7-4f35-913b-29d89068e74c\",\n      \"transactionHash\": \"string\",\n      \"transactionStatus\": \"SCREENING_PASSED\",\n      \"network\": \"ETHEREUM\",\n      \"transactionMetadata\": {\n        \"failure\": {\n          \"reason\": \"INSUFFICIENT_FUNDS\",\n          \"message\": \"insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678\"\n        }\n      },\n      \"transactionCreatedAt\": \"1996-05-22T18:37:37.909Z\",\n      \"transactionUpdatedAt\": \"1982-10-12T10:01:19.369Z\",\n      \"screeningState\": \"PENDING_SCREENING\",\n      \"screeningReason\": \"Manual review required\",\n      \"screeningReasonCode\": \"DUST_AMOUNT\",\n      \"screeningCreatedAt\": \"2024-05-08T17:27:03.577Z\",\n      \"screeningUpdatedAt\": \"2017-11-26T11:09:50.341Z\",\n      \"screeningMetadata\": {\n        \"urls\": [\n          \"urls\",\n          \"urls\"\n        ],\n        \"ids\": [\n          \"ids\",\n          \"ids\"\n        ]\n      },\n      \"participants\": [\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        },\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"operation\": \"WITHDRAWAL\",\n      \"addressId\": \"fefc3e7b-743b-489f-9311-0921f4930dc7\"\n    }\n  ],\n  \"pageable\": {\n    \"pageNumber\": 6,\n    \"pageSize\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ffb4d00-056f-40a6-91e2-7ca69c4bd592",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "16"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "screeningId.transfer.id.createdAt,desc"
+                    },
+                    {
+                      "key": "q",
+                      "value": "notReasonCode:DUST_AMOUNT"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85ce1797-85e8-4d1c-8230-d00b850082e1",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "16"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "screeningId.transfer.id.createdAt,desc"
+                    },
+                    {
+                      "key": "q",
+                      "value": "notReasonCode:DUST_AMOUNT"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2befd21c-f2d1-477f-87a9-997bf8fb3eae",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "screenings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "16"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "screeningId.transfer.id.createdAt,desc"
+                    },
+                    {
+                      "key": "q",
+                      "value": "notReasonCode:DUST_AMOUNT"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.staging.layer1.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "30f713cc-05dc-4eab-b684-ef7daff5db01",
+    "name": "Digital Asset Screening API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Layer1 API making management of crypto assets simple and easy",
+      "type": "text/plain"
+    }
+  }
+}

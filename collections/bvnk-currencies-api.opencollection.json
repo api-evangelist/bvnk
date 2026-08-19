@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BVNK API Endpoints Currencies API",
+    "version": "1.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Currencies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Crypto Currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.bvnk.com/api/currency/crypto",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset"
+              },
+              {
+                "name": "max",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items in response"
+              },
+              {
+                "name": "allowDeposits",
+                "value": "",
+                "type": "query",
+                "description": "list currencies that only allow deposits"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all cryptocurrencies available on the BVNK platform. This list represents cryptocurrencies that end users can select whilst making a payment.\n\nFor sandbox, only Ethereum (ETH) is fully functional."
+        },
+        {
+          "info": {
+            "name": "List Fiat Currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.bvnk.com/api/currency/fiat",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset"
+              },
+              {
+                "name": "max",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items in response"
+              },
+              {
+                "name": "usable",
+                "value": "",
+                "type": "query",
+                "description": "list currencies that are usable"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all display fiat currencies available on BVNK's Crypto Payments API.\nThis list refers to currencies merchants can display on a payment page to an end user. It does not represent the list of currencies that can be held on the platform in wallets."
+        },
+        {
+          "info": {
+            "name": "List Wallet Currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.bvnk.com/api/currency/deposit",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset"
+              },
+              {
+                "name": "max",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items in response"
+              }
+            ]
+          },
+          "docs": "These are the currencies that can be used to create a new wallet."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

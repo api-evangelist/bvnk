@@ -1,0 +1,288 @@
+{
+  "item": [
+    {
+      "id": "0c5b142e-97c3-4948-b83c-4554779466f0",
+      "name": "Network",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4096dad3-4af9-4b06-9f49-8f6d146920a5",
+          "name": "Get all networks",
+          "request": {
+            "name": "Get all networks",
+            "description": {
+              "content": "Get all supported networks and their assets. By default, only enabled networks are returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "networks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeDisabled",
+                  "value": "false",
+                  "description": "Include disabled networks in the response"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f3cdc3bb-0040-443c-b6ec-3ce8a16c0e3b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "networks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeDisabled",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"nativeAsset\": \"BTC\",\n    \"tagSupported\": false,\n    \"supportedAssets\": [\n      {\n        \"code\": \"BTC\",\n        \"model\": \"UTXO\",\n        \"decimalPrecision\": 0\n      },\n      {\n        \"code\": \"BTC\",\n        \"model\": \"UTXO\",\n        \"decimalPrecision\": 0\n      }\n    ],\n    \"network\": \"BITCOIN\"\n  },\n  {\n    \"nativeAsset\": \"BTC\",\n    \"tagSupported\": false,\n    \"supportedAssets\": [\n      {\n        \"code\": \"BTC\",\n        \"model\": \"UTXO\",\n        \"decimalPrecision\": 0\n      },\n      {\n        \"code\": \"BTC\",\n        \"model\": \"UTXO\",\n        \"decimalPrecision\": 0\n      }\n    ],\n    \"network\": \"BITCOIN\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21812297-1f43-40d0-8ac8-de0381a996eb",
+              "name": "Standard error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "networks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeDisabled",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8c9e8e4-c77a-4bb4-8db8-1cc2d0140787",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "networks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeDisabled",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1ee62d5-2804-4567-a5e3-66ccc0c35606",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "networks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeDisabled",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.staging.layer1.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a18a6467-9e7a-42a1-83be-c9edac27d95a",
+    "name": "Digital Asset Network API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Layer1 API making management of crypto assets simple and easy",
+      "type": "text/plain"
+    }
+  }
+}

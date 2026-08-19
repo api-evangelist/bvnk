@@ -1,0 +1,989 @@
+{
+  "item": [
+    {
+      "id": "70ae61f7-12d9-4821-8db6-4a1f8fdbb30d",
+      "name": "Export",
+      "description": {
+        "content": "Create and manage data exports",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "00eec3a2-9cd8-432f-a8c3-ec6dcb215eca",
+          "name": "List all exports",
+          "request": {
+            "name": "List all exports",
+            "description": {
+              "content": "Retrieves a paginated list of exports based on type and pagination settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "exports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) Filter exports by type"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) Filter exports by type"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "0",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "16",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0227bd4e-5376-48fa-a963-da8bb4ba69be",
+              "name": "Paginated list of exports",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "16"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"pageable\": {\n      \"pageNumber\": 6,\n      \"pageSize\": 1\n    },\n    \"content\": [\n      {\n        \"createdAt\": \"2020-01-01 00:00:00+00:00\",\n        \"filename\": \"transaction_2024_04_19T11_20_11_901Z.csv\",\n        \"type\": \"transaction\",\n        \"inputParameters\": {\n          \"from\": \"2020-01-01 00:00:00+00:00\",\n          \"to\": \"2020-01-31 23:59:59+00:00\"\n        },\n        \"url\": \"url\",\n        \"status\": \"PROCESSING\",\n        \"updatedAt\": \"2020-01-02 12:34:56+00:00\"\n      },\n      {\n        \"createdAt\": \"2020-01-01 00:00:00+00:00\",\n        \"filename\": \"transaction_2024_04_19T11_20_11_901Z.csv\",\n        \"type\": \"transaction\",\n        \"inputParameters\": {\n          \"from\": \"2020-01-01 00:00:00+00:00\",\n          \"to\": \"2020-01-31 23:59:59+00:00\"\n        },\n        \"url\": \"url\",\n        \"status\": \"PROCESSING\",\n        \"updatedAt\": \"2020-01-02 12:34:56+00:00\"\n      }\n    ],\n    \"totalElements\": 0\n  },\n  {\n    \"pageable\": {\n      \"pageNumber\": 6,\n      \"pageSize\": 1\n    },\n    \"content\": [\n      {\n        \"createdAt\": \"2020-01-01 00:00:00+00:00\",\n        \"filename\": \"transaction_2024_04_19T11_20_11_901Z.csv\",\n        \"type\": \"transaction\",\n        \"inputParameters\": {\n          \"from\": \"2020-01-01 00:00:00+00:00\",\n          \"to\": \"2020-01-31 23:59:59+00:00\"\n        },\n        \"url\": \"url\",\n        \"status\": \"PROCESSING\",\n        \"updatedAt\": \"2020-01-02 12:34:56+00:00\"\n      },\n      {\n        \"createdAt\": \"2020-01-01 00:00:00+00:00\",\n        \"filename\": \"transaction_2024_04_19T11_20_11_901Z.csv\",\n        \"type\": \"transaction\",\n        \"inputParameters\": {\n          \"from\": \"2020-01-01 00:00:00+00:00\",\n          \"to\": \"2020-01-31 23:59:59+00:00\"\n        },\n        \"url\": \"url\",\n        \"status\": \"PROCESSING\",\n        \"updatedAt\": \"2020-01-02 12:34:56+00:00\"\n      }\n    ],\n    \"totalElements\": 0\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a868960-a36b-4e22-883f-dbf2952b4aae",
+              "name": "Invalid input",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "16"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5008b4ac-df07-4f09-b0c9-b0da2cc9aadf",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "16"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f971f6c-b1fe-469b-b043-9aee11108d64",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "16"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "769294af-8449-4c8b-b0d6-7ceb005b2406",
+          "name": "Create a balance export",
+          "request": {
+            "name": "Create a balance export",
+            "description": {
+              "content": "Initiates a job to export balance data in the CSV format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "exports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"network\": \"<string>\",\n  \"asset\": \"<string>\",\n  \"networks\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assets\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assetPoolId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f4a8fc4-7162-4e3f-bb6c-b1961f4a791c",
+              "name": "Export job created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"network\": \"BITCOIN\",\n  \"asset\": \"BTC\",\n  \"networks\": [\n    \"<string>\"\n  ],\n  \"assets\": [\n    \"<string>\"\n  ],\n  \"assetPoolId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d33ae5d7-9245-4750-916c-c1c840324f4e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"network\": \"BITCOIN\",\n  \"asset\": \"BTC\",\n  \"networks\": [\n    \"<string>\"\n  ],\n  \"assets\": [\n    \"<string>\"\n  ],\n  \"assetPoolId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed6c8408-51c5-475d-a5f7-25f256ecb997",
+              "name": "Conflict: Export job is already running for the specified criteria",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"network\": \"BITCOIN\",\n  \"asset\": \"BTC\",\n  \"networks\": [\n    \"<string>\"\n  ],\n  \"assets\": [\n    \"<string>\"\n  ],\n  \"assetPoolId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47922b1b-898b-43af-b0c3-30e94f5f967c",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"network\": \"BITCOIN\",\n  \"asset\": \"BTC\",\n  \"networks\": [\n    \"<string>\"\n  ],\n  \"assets\": [\n    \"<string>\"\n  ],\n  \"assetPoolId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2d6a7fe-544d-4c83-b771-cf5426fcf2ce",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"network\": \"BITCOIN\",\n  \"asset\": \"BTC\",\n  \"networks\": [\n    \"<string>\"\n  ],\n  \"assets\": [\n    \"<string>\"\n  ],\n  \"assetPoolId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21a6dede-0a96-4054-9c99-521f12aba5a8",
+          "name": "Get export with a download link",
+          "request": {
+            "name": "Get export with a download link",
+            "description": {
+              "content": "Retrieves export details with a short-lived download link by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "exports",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The ID of the export to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "610b74e6-9d3d-4ef0-8501-6d427884cc0b",
+              "name": "Export details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The ID of the export to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2020-01-01 00:00:00+00:00\",\n  \"filename\": \"transaction_2024_04_19T11_20_11_901Z.csv\",\n  \"type\": \"transaction\",\n  \"inputParameters\": {\n    \"from\": \"2020-01-01 00:00:00+00:00\",\n    \"to\": \"2020-01-31 23:59:59+00:00\"\n  },\n  \"url\": \"url\",\n  \"status\": \"PROCESSING\",\n  \"updatedAt\": \"2020-01-02 12:34:56+00:00\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "595d39a5-893c-460a-b42e-c7e0c90ef527",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The ID of the export to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3a21d65-014c-4125-ae06-66e8376ef9a5",
+              "name": "Export not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The ID of the export to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcb6dc87-2dcb-43c6-9572-6c5dbf421eb6",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The ID of the export to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2ee5ccb-552d-41b2-88ec-971b0e80e54a",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "exports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The ID of the export to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.staging.layer1.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7533e91c-9b63-4953-9d7d-4cfd7f4cc517",
+    "name": "Digital Asset Export API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Layer1 API making management of crypto assets simple and easy",
+      "type": "text/plain"
+    }
+  }
+}

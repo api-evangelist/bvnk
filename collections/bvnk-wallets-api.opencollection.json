@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BVNK API Endpoints Wallets API",
+    "version": "1.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Wallets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.bvnk.com/api/wallet",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "start offset"
+              },
+              {
+                "name": "max",
+                "value": "",
+                "type": "query",
+                "description": "max number results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of wallets on your account."
+        },
+        {
+          "info": {
+            "name": "Create Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.bvnk.com/api/wallet",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a wallet on the BVNK platform."
+        },
+        {
+          "info": {
+            "name": "Get Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.bvnk.com/api/wallet/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "start offset"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a specific wallet."
+        },
+        {
+          "info": {
+            "name": "List Wallet Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.bvnk.com/api/wallet/balances",
+            "params": [
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "Date at to retrieve balances"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the balances of your wallets on platform."
+        },
+        {
+          "info": {
+            "name": "Transactions Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.bvnk.com/api/transaction/report",
+            "params": [
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "query",
+                "description": "Date at to retrieve balances"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Export range from date in format 'yyyy-MM-dd'"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "Export range to date in format 'yyyy-MM-dd'"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "'json' - json format, 'csv' - csv format"
+              },
+              {
+                "name": "transactionType",
+                "value": "",
+                "type": "query",
+                "description": "Transaction type code"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Report all transactions from wallet in specified format. Report will be generated and sent to main account email in the specified format"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

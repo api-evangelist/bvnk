@@ -1,0 +1,629 @@
+openapi: 3.2.0
+info:
+  description: The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.
+  title: BVNK API Endpoints Channels API
+  version: 1.0.1
+servers:
+- description: Sandbox
+  url: https://api.sandbox.bvnk.com
+- description: Production
+  url: https://api.bvnk.com
+tags:
+- name: Channels
+paths:
+  /api/v2/channel:
+    get:
+      description: Retrieves all channels related to a Merchant ID.
+      parameters:
+      - description: The merchant ID that the channels belong to
+        explode: true
+        in: query
+        name: merchantId
+        required: true
+        schema:
+          default: c02153ae-8ac8-4222-80e8-b2b2af85bd78
+          type: string
+        style: form
+      - description: Offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          example: '0'
+          type: string
+        style: form
+      - description: Maximum number of items in response
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          example: '10'
+          type: string
+        style: form
+      - description: The attribute used to sort the data
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          $ref: '#/components/schemas/PaymentStatusDto'
+        style: form
+      - description: Ordering direction
+        explode: true
+        in: query
+        name: order
+        required: false
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MerchantChannel'
+                type: array
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad Request
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - merchant
+      summary: List Channels
+      tags:
+      - Channels
+      x-accepts: application/json
+    post:
+      description: Creates a channel that your end users can openly send payments to.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantChannelRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantChannel'
+          description: Created
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad Request
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorDto'
+          description: Unexpected Error
+      security:
+      - Hawk:
+        - merchant
+      summary: Create Channel
+      tags:
+      - Channels
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v2/channel/{uuid}:
+    get:
+      description: Retrieves a specific channel by UUID.
+      parameters:
+      - description: The UUID of the channel you are querying
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantChannel'
+          description: OK
+        '404':
+          description: Not Found
+      security:
+      - Hawk:
+        - merchant
+      summary: Get Channel
+      tags:
+      - Channels
+      x-accepts: application/json
+  /api/v2/channel/payment/{uuid}:
+    get:
+      description: Retrieves a specific payment made into a channel.
+      parameters:
+      - description: The UUID of the payment you are querying.
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantChannelPayment'
+          description: '200'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientValidationErrorDto'
+          description: Bad Request
+        '404':
+          description: Not Found
+      security:
+      - Hawk:
+        - merchant
+      summary: Get Channel Payment
+      tags:
+      - Channels
+      x-accepts: application/json
+  /api/v2/channel/payment:
+    get:
+      description: Retrieves a list of payments to a channel on a specific Merchant ID.
+      parameters:
+      - description: The Merchant ID
+        explode: true
+        in: query
+        name: merchantId
+        required: true
+        schema:
+          default: c02153ae-8ac8-4222-80e8-b2b2af85bd78
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - DETECTED
+          - COMPLETE
+          - UNKNOWN
+          example: COMPLETE
+          type: string
+        style: form
+      - description: From which date to start searching.
+        explode: true
+        in: query
+        name: fromDate
+        required: false
+        schema:
+          example: 2023-03-05
+          type: string
+        style: form
+      - description: At which date to stop searching.
+        explode: true
+        in: query
+        name: toDate
+        required: false
+        schema:
+          example: 2023-05-03
+          type: string
+        style: form
+      - description: Where to start fetching records.
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          example: '0'
+          type: string
+        style: form
+      - description: Maximum number of items in response
+        explode: true
+        in: query
+        name: max
+        required: false
+        schema:
+          example: '10'
+          type: string
+        style: form
+      - description: Ordering direction
+        explode: true
+        in: query
+        name: order
+        required: false
+        schema:
+          enum:
+          - asc
+          - desc
+          example: asc
+          type: string
+        style: form
+      - description: Can be UUID of the payment, reference, channel UUID, transaction hash, or wallet code.
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MerchantChannelPayment'
+                type: array
+          description: OK
+      security:
+      - Hawk:
+        - merchant
+      summary: List Channel Payments
+      tags:
+      - Channels
+      x-accepts: application/json
+components:
+  schemas:
+    AlternativeAddress:
+      description: List of non-default addresses for other tokens
+      example:
+        protocol: protocol
+        address: address
+        tag: tag
+        uri: uri
+      properties:
+        protocol:
+          type: string
+        address:
+          type: string
+        tag:
+          type: string
+        uri:
+          type: string
+      type: object
+    PaymentStatusDto:
+      description: Payment status
+      enum:
+      - PENDING
+      - PROCESSING
+      - CANCELLED
+      - COMPLETE
+      - UNDERPAID
+      - OVERPAID
+      - EXPIRED
+      example: PENDING
+      type: string
+    ValidationErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        parameter:
+          description: input that is causing the error
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      - parameter
+    ExchangeRateDto:
+      description: contains exchange rate information to convert from base to counter currency
+      example:
+        rate: 1680.1
+        counter: EUR
+        base: ETH
+      properties:
+        base:
+          description: currency acronym
+          example: ETH
+          type: string
+        counter:
+          description: currency acronym
+          example: EUR
+          type: string
+        rate:
+          description: TBC
+          example: 1680.1
+          type: number
+      type: object
+    MerchantChannelRequest:
+      example:
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        payCurrency: ETH
+        displayCurrency: EUR
+      properties:
+        merchantId:
+          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          description: The merchant ID that you are creating the channel on.
+          type: string
+        payCurrency:
+          default: ETH
+          description: Cryptocurrency code that the channel will operate on.
+          type: string
+        displayCurrency:
+          default: EUR
+          description: The currency which pricing will be displayed to the end user in (can be the same as payCurrency, or can be different).
+          type: string
+        reference:
+          default: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          description: An external reference for the channel that your customer will see.
+          type: string
+      required:
+      - displayCurrency
+      - merchantId
+      - payCurrency
+      - reference
+      type: object
+    ClientValidationErrorDto:
+      description: List of validation errors
+      properties:
+        errorList:
+          items:
+            $ref: '#/components/schemas/ValidationErrorDto'
+          type: array
+    NetworkFee:
+      example:
+        displayAmount: 6.027456183070403
+        paidCurrency: paidCurrency
+        displayCurrency: displayCurrency
+        paidAmount: 0.8008281904610115
+      properties:
+        paidCurrency:
+          type: string
+        paidAmount:
+          type: number
+        displayCurrency:
+          type: string
+        displayAmount:
+          type: number
+      type: object
+    ServerErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    MerchantChannel:
+      example:
+        address: 1032808453727112588357558221434846992893758074638
+        redirectUrl: https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0
+        walletCurrency: EUR
+        uuid: 9d1f67f2-a647-404b-9b02-247c77be81d0
+        uri: ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        lastUpdated: 1631619193321
+        protocol: ETH
+        dateCreated: 1631619193321
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        payCurrency: ETH
+        alternatives:
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        id: 65
+        tag: tag
+        displayCurrency: JPY
+        status: OPEN
+      properties:
+        id:
+          default: 0
+          example: 65
+          type: integer
+        dateCreated:
+          default: 0
+          example: 1631619193321
+          type: integer
+        lastUpdated:
+          default: 0
+          example: 1631619193321
+          type: integer
+        merchantId:
+          example: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        walletCurrency:
+          example: EUR
+          type: string
+        displayCurrency:
+          example: JPY
+          type: string
+        payCurrency:
+          example: ETH
+          type: string
+        address:
+          example: 1032808453727112588357558221434846992893758074638
+          type: string
+        tag:
+          type: string
+          example: null
+        protocol:
+          example: ETH
+          type: string
+        reference:
+          example: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          type: string
+        status:
+          enum:
+          - OPEN
+          - CLOSED
+          type: string
+        uuid:
+          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        redirectUrl:
+          example: https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        uri:
+          example: ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+          type: string
+        alternatives:
+          items:
+            $ref: '#/components/schemas/AlternativeAddress'
+          type: array
+      type: object
+    MerchantChannelPayment:
+      example:
+        address: 1032808453727112588357558221434846992893758074638
+        sources:
+        - sources
+        - sources
+        networkFee:
+          displayAmount: 6.027456183070403
+          paidCurrency: paidCurrency
+          displayCurrency: displayCurrency
+          paidAmount: 0.8008281904610115
+        walletCurrency: EUR
+        feeCurrency: EUR
+        uuid: c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4
+        walletAmount: 27.62
+        displayRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        merchantDisplayName: Merchant A
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        lastUpdated: 1631619562000
+        displayAmount: 3592.27
+        feeAmount: 0.27
+        dateCreated: 1631619489000
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        exchangeRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        risk:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        tag: tag
+        paidCurrency: ETH
+        displayCurrency: JPY
+        paidAmount: 0.01
+        channelId: 9d1f67f2-a647-404b-9b02-247c77be81d0
+        hash: 9581909976783034104606746016743168663810199983873345841209770249154012118378
+        status: DETECTED
+      properties:
+        channelId:
+          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        merchantId:
+          example: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        merchantDisplayName:
+          example: Merchant A
+          type: string
+        reference:
+          example: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          type: string
+        dateCreated:
+          default: 0
+          example: 1631619489000
+          format: int64
+          type: integer
+        lastUpdated:
+          default: 0
+          example: 1631619562000
+          format: int64
+          type: integer
+        status:
+          enum:
+          - DETECTED
+          - COMPLETE
+          - UNKNOWN
+          type: string
+        uuid:
+          example: c0dc9c14-0312-4a6b-a1a3-a6dcebdcc8a4
+          type: string
+        hash:
+          example: 9581909976783034104606746016743168663810199983873345841209770249154012118378
+          type: string
+        address:
+          example: 1032808453727112588357558221434846992893758074638
+          type: string
+        tag:
+          type: string
+          example: null
+        paidCurrency:
+          example: ETH
+          type: string
+        displayCurrency:
+          example: JPY
+          type: string
+        walletCurrency:
+          example: EUR
+          type: string
+        feeCurrency:
+          example: EUR
+          type: string
+        paidAmount:
+          default: 0
+          example: 0.01
+          type: number
+        displayAmount:
+          default: 0
+          example: 3592.27
+          type: number
+        walletAmount:
+          default: 0
+          example: 27.62
+          type: number
+        feeAmount:
+          default: 0
+          example: 0.27
+          type: number
+        exchangeRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        displayRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        risk:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        sources:
+          items:
+            type: string
+          type: array
+        networkFee:
+          $ref: '#/components/schemas/NetworkFee'
+      type: object
+  securitySchemes:
+    Hawk:
+      description: 'Hawk Payload (see: https://github.com/hueniverse/hawk)'
+      in: header
+      name: Authorization
+      type: apiKey

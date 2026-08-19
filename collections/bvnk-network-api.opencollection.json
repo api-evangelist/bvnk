@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Digital Asset Network API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Network",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all networks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.staging.layer1.com/digital/v1/networks",
+            "params": [
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include disabled networks in the response"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get all supported networks and their assets. By default, only enabled networks are returned."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

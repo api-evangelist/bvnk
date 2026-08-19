@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Digital Asset Screening API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Screening",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Approve or reject a held transfer. Deposits can be only approved.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.staging.layer1.com/digital/v1/screenings/action",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Approves or rejects a held transfer based on the provided transfer ID and the destination address ID."
+        },
+        {
+          "info": {
+            "name": "List screening results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.staging.layer1.com/digital/v1/screenings",
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transaction hash"
+              },
+              {
+                "name": "operation",
+                "value": "",
+                "type": "query",
+                "description": "Set of operations to filter by"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Set of screening states to filter by"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for filtering by transfer creation date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for filtering by transfer creation date"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "screeningId.transfer.id.createdAt,desc",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "notReasonCode:DUST_AMOUNT",
+                "type": "query",
+                "description": "Query using Lucene-like syntax. Supported properties: notReasonCode, reasonCode, reason, hash, state, operation, from, to"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves a paginated list of the most recent transfers along with their screening results."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

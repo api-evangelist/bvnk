@@ -1,0 +1,740 @@
+openapi: 3.2.0
+info:
+  description: Layer1 API making management of crypto assets simple and easy
+  title: Digital Asset Transaction API
+  version: 1.0.0
+servers:
+- description: Staging
+  url: https://api.staging.layer1.com
+tags:
+- description: Create and manage transactions
+  name: Transaction
+paths:
+  /digital/v1/transaction-claims:
+    post:
+      description: Claim an existing blockchain transaction
+      operationId: claimTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionClaimRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          description: OK
+      security:
+      - oauth2:
+        - transactions:edit
+      - httpSignature: []
+      summary: Claim blockchain transaction
+      tags:
+      - Transaction
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/transactions:
+    get:
+      description: Retrieve paginated list of transactions
+      operationId: listTransactions
+      parameters:
+      - description: 'Query in lucene like format, e.g. hash:0x012a1. Supported properties: hash, reference, customerId, from, to. If time bounds are not provided default are applied'
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: asset pool id
+        explode: true
+        in: query
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: current page number
+        explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - description: number of items in a page
+        explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 50
+          format: int32
+          maximum: 500
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultTransaction'
+          description: OK
+      security:
+      - oauth2:
+        - transactions:view
+      - httpSignature: []
+      summary: List transactions
+      tags:
+      - Transaction
+      x-accepts:
+      - application/json
+  /digital/v1/transactions/{transactionId}:
+    get:
+      description: Get transaction by id
+      operationId: getTransactionById
+      parameters:
+      - explode: false
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: OK
+      security:
+      - oauth2:
+        - transactions:view
+      - httpSignature: []
+      summary: Get transaction
+      tags:
+      - Transaction
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    Address:
+      example:
+        address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+        aliases:
+        - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+        supportedAssets:
+        - BTC
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        network: BITCOIN
+        master: true
+        reference: reference
+        balances:
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        supportedNetworks:
+        - ETHEREUM
+        customerId: cust123456789
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tag: 123456789
+      properties:
+        id:
+          description: internal id
+          format: uuid
+          type: string
+        address:
+          description: blockchain address
+          example: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          type: string
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        keyPairId:
+          description: key pair id
+          format: uuid
+          type: string
+        reference:
+          description: key pair reference
+          type: string
+        supportedAssets:
+          description: list of assets supported by network
+          example:
+          - BTC
+          items:
+            type: string
+          type: array
+        aliases:
+          description: alternative address (e.g. BTC has segwitt and legacy format)
+          example:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          items:
+            type: string
+          type: array
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
+        balances:
+          description: address balances
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+        customerId:
+          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer
+          example: cust123456789
+          type: string
+        master:
+          description: flag indicating whether this address is asset pool master address
+          type: boolean
+        supportedNetworks:
+          description: list of networks supporting given asset. mutually exclusive with network and supportedAssets
+          example:
+          - ETHEREUM
+          items:
+            type: string
+          type: array
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    BlockDetail:
+      example:
+        number: 123456
+        timestamp: 2021-01-01 00:00:00+00:00
+      properties:
+        number:
+          description: blockchain number
+          example: 123456
+          format: int64
+          type: integer
+        timestamp:
+          description: timestamp of the block
+          example: 2021-01-01 00:00:00+00:00
+          format: date-time
+          type: string
+    Failure:
+      example:
+        reason: INSUFFICIENT_FUNDS
+        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        reason:
+          description: reason for failure
+          example: INSUFFICIENT_FUNDS
+          type: string
+        message:
+          description: error message
+          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+    Participant:
+      example:
+        amount: ''
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        asset: ETH
+      properties:
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
+    TransactionMetadata:
+      example:
+        failure:
+          reason: INSUFFICIENT_FUNDS
+          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        failure:
+          $ref: '#/components/schemas/Failure'
+    AssetValue:
+      example:
+        amount: ''
+        asset: BTC
+      properties:
+        amount: {}
+        asset:
+          description: currency
+          example: BTC
+          type: string
+    PaginatedResultTransaction:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - amount: ''
+          metadata:
+            failure:
+              reason: INSUFFICIENT_FUNDS
+              message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          address:
+            address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+            aliases:
+            - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+            supportedAssets:
+            - BTC
+            assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            network: BITCOIN
+            master: true
+            reference: reference
+            balances:
+            - reserved: ''
+              blockchain: ''
+              available: ''
+              asset: BTC
+              network: BITCOIN
+            - reserved: ''
+              blockchain: ''
+              available: ''
+              asset: BTC
+              network: BITCOIN
+            supportedNetworks:
+            - ETHEREUM
+            customerId: cust123456789
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tag: 123456789
+          sources:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          destinations:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          type: DEPOSIT
+          reference: myUniqueRef333
+          createdAt: 2000-01-23 04:56:07+00:00
+          id: id
+          asset: USDT
+          networkDetail:
+            fee:
+              amount: ''
+              asset: BTC
+            block:
+              number: 123456
+              timestamp: 2021-01-01 00:00:00+00:00
+          hash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          status: BLOCKED
+          updatedAt: 2000-01-23 04:56:07+00:00
+        - amount: ''
+          metadata:
+            failure:
+              reason: INSUFFICIENT_FUNDS
+              message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          address:
+            address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+            aliases:
+            - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+            supportedAssets:
+            - BTC
+            assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            network: BITCOIN
+            master: true
+            reference: reference
+            balances:
+            - reserved: ''
+              blockchain: ''
+              available: ''
+              asset: BTC
+              network: BITCOIN
+            - reserved: ''
+              blockchain: ''
+              available: ''
+              asset: BTC
+              network: BITCOIN
+            supportedNetworks:
+            - ETHEREUM
+            customerId: cust123456789
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tag: 123456789
+          sources:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          destinations:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          type: DEPOSIT
+          reference: myUniqueRef333
+          createdAt: 2000-01-23 04:56:07+00:00
+          id: id
+          asset: USDT
+          networkDetail:
+            fee:
+              amount: ''
+              asset: BTC
+            block:
+              number: 123456
+              timestamp: 2021-01-01 00:00:00+00:00
+          hash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          status: BLOCKED
+          updatedAt: 2000-01-23 04:56:07+00:00
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Transaction'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    Transaction:
+      example:
+        amount: ''
+        metadata:
+          failure:
+            reason: INSUFFICIENT_FUNDS
+            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+        address:
+          address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          aliases:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          supportedAssets:
+          - BTC
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          network: BITCOIN
+          master: true
+          reference: reference
+          balances:
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          supportedNetworks:
+          - ETHEREUM
+          customerId: cust123456789
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tag: 123456789
+        sources:
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        destinations:
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        type: DEPOSIT
+        reference: myUniqueRef333
+        createdAt: 2000-01-23 04:56:07+00:00
+        id: id
+        asset: USDT
+        networkDetail:
+          fee:
+            amount: ''
+            asset: BTC
+          block:
+            number: 123456
+            timestamp: 2021-01-01 00:00:00+00:00
+        hash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+        status: BLOCKED
+        updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        id:
+          description: transaction id
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        reference:
+          description: custom identifier supplied for transaction that is used to link transaction to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        status:
+          description: transaction status
+          enum:
+          - BLOCKED
+          - CONFIRMED
+          - CREATED
+          - DETECTED
+          - FAILED
+          - FUNDS_RESERVED
+          - HELD
+          - REJECTED
+          - SCREENING_PASSED
+          - SCREENING_REQUESTED
+          - SIGNED
+          - SUCCESS
+          - UNCONFIRMED
+          - REPLACED
+          type: string
+        sources:
+          description: list of addresses and amounts that fund the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        destinations:
+          description: list of recipient addresses and amounts that benefit from the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        type:
+          description: transaction type
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          - CONSOLIDATION
+          - RETURN
+          - STAKE
+          - UNSTAKE
+          - DELEGATE
+          - UNDELEGATE
+          - RELEASE
+          type: string
+        asset:
+          description: currency
+          example: USDT
+          type: string
+        amount: {}
+        hash:
+          description: blockchain transaction hash
+          example: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          type: string
+        networkDetail:
+          $ref: '#/components/schemas/NetworkDetail'
+        metadata:
+          $ref: '#/components/schemas/TransactionMetadata'
+        createdAt:
+          description: timestamp when transaction was created
+          format: date-time
+          type: string
+        updatedAt:
+          description: timestamp when transaction was updated
+          format: date-time
+          type: string
+    TransactionClaimRequest:
+      example:
+        hash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+        network: ETHEREUM
+      properties:
+        hash:
+          description: blockchain transaction hash
+          example: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+    NetworkDetail:
+      example:
+        fee:
+          amount: ''
+          asset: BTC
+        block:
+          number: 123456
+          timestamp: 2021-01-01 00:00:00+00:00
+      properties:
+        block:
+          $ref: '#/components/schemas/BlockDetail'
+        fee:
+          $ref: '#/components/schemas/AssetValue'
+    Balance:
+      example:
+        reserved: ''
+        blockchain: ''
+        available: ''
+        asset: BTC
+        network: BITCOIN
+      properties:
+        network:
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          description: asset
+          example: BTC
+          type: string
+        available: {}
+        reserved: {}
+        blockchain: {}
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+  securitySchemes:
+    openId:
+      openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+      type: openIdConnect
+    httpSignature:
+      scheme: signature
+      type: http
+    oauth2:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+      type: oauth2

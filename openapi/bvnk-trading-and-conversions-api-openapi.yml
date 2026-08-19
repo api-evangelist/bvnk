@@ -1,0 +1,679 @@
+openapi: 3.2.0
+info:
+  description: The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.
+  title: BVNK API Endpoints Trading and Conversions API
+  version: 1.0.1
+servers:
+- description: Sandbox
+  url: https://api.sandbox.bvnk.com
+- description: Production
+  url: https://api.bvnk.com
+tags:
+- name: Trading and Conversions
+paths:
+  /api/v1/quote:
+    post:
+      description: Creates a quote to convert between wallets.
+      operationId: quoteCreate
+      parameters:
+      - description: Create estimate quote
+        explode: true
+        in: query
+        name: estimate
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: OK
+        '400':
+          description: Bad Request
+      security:
+      - Hawk:
+        - merchant
+      summary: Create Quote
+      tags:
+      - Trading and Conversions
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v1/quote/accept/{uuid}:
+    put:
+      description: Executes a quote.
+      operationId: quoteAccept
+      parameters:
+      - description: The quote UUID you are accepting.
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: 5dc4e061-31c6-4b96-8c4d-0ea984aece0b
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedQuote'
+          description: OK
+        '400':
+          description: Bad Request
+      security:
+      - Hawk:
+        - merchant
+      summary: Accept Quote
+      tags:
+      - Trading and Conversions
+      x-accepts: application/json
+  /api/v1/quote/{uuid}:
+    get:
+      description: Retrieves a specific quote.
+      operationId: quoteRead
+      parameters:
+      - description: UUID of the quote you are retrieving.
+        explode: false
+        in: path
+        name: uuid
+        required: true
+        schema:
+          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      security:
+      - Hawk:
+        - merchant
+      summary: Read Quote
+      tags:
+      - Trading and Conversions
+      x-accepts: application/json
+  /api/v1/quote/{merchantId}:
+    get:
+      description: Retrieves all quotes on a specific Merchant ID.
+      operationId: quoteList
+      parameters:
+      - description: Merchant ID you are retrieving quotes from.
+        explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Quote'
+                type: array
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      security:
+      - Hawk:
+        - x-example
+      summary: List Quotes
+      tags:
+      - Trading and Conversions
+      x-accepts: application/json
+components:
+  schemas:
+    PayInMethod:
+      example:
+        code: wallet
+        settlementCurrency: USD
+        estimatedExchangeRate: 0.923
+        id: 1432
+        accountMethods:
+        - display: Visa xxxx-090
+          id: 1432
+        - display: Visa xxxx-090
+          id: 1432
+        requestedCurrency: EUR
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: wallet
+          type: string
+        settlementCurrency:
+          example: USD
+          type: string
+        requestedCurrency:
+          example: EUR
+          type: string
+        estimatedExchangeRate:
+          example: 0.923
+          type: number
+        accountMethods:
+          items:
+            $ref: '#/components/schemas/AccountMethod'
+          type: array
+      type: object
+    PayInInstruction:
+      example:
+        redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+        form:
+          action: action
+          parameters:
+            key: parameters
+        action: REDIRECT
+        displayParameters: '{}'
+      properties:
+        action:
+          enum:
+          - REDIRECT
+          - FORM
+          - DISPLAY
+          - NONE
+          type: string
+        form:
+          $ref: '#/components/schemas/Form'
+        redirectUrl:
+          example: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          type: string
+        displayParameters:
+          example: '{}'
+          type: object
+      type: object
+    Quote:
+      example:
+        acceptanceDate: 1566198657000
+        fees:
+          percentage:
+            service: 0.8008281904610115
+            processing: 6.027456183070403
+          value:
+            service: 0.8008281904610115
+            processing: 6.027456183070403
+        fee: 1.02
+        netPrice: 1234.02
+        grossPrice: 1134.02
+        amountInGross: 102.0
+        type: FIXED
+        uuid: B6670497-D139-47E8-9F4A-F97A5D977057
+        quoteStatus: ESTIMATE
+        processingFee: 1.02
+        lastUpdated: 1566198657000
+        paymentReceiptDate: 1566198657000
+        dateCreated: 1566198657000
+        price: 446.43
+        from: EUR
+        amountOut: 1.12
+        amountInNet: 104.0
+        id: 1432
+        payOutMethod:
+          code: gateway
+          currency: EUR
+          id: 1432
+          accountMethods:
+          - display: Visa xxxx-090
+            id: 1432
+          - display: Visa xxxx-090
+            id: 1432
+        paymentStatus: PENDING
+        paymentExpiryDate: 1566198657000
+        payInMethod:
+          code: wallet
+          settlementCurrency: USD
+          estimatedExchangeRate: 0.923
+          id: 1432
+          accountMethods:
+          - display: Visa xxxx-090
+            id: 1432
+          - display: Visa xxxx-090
+            id: 1432
+          requestedCurrency: EUR
+        usePayInMethod:
+          display: Visa xxxx-090
+          id: 1432
+        payOutInstruction:
+          code: gateway
+          currency: ETH
+        payInLegs:
+        - reference: 36836129
+          amount: 100.32
+          dateCreated: 1566198657000
+          currency: ETH
+          id: 1432
+        - reference: 36836129
+          amount: 100.32
+          dateCreated: 1566198657000
+          currency: ETH
+          id: 1432
+        usePayOutMethod:
+          display: Visa xxxx-090
+          id: 1432
+        amountDue: 500.0
+        acceptanceExpiryDate: 1566198657000
+        amountIn: 500.0
+        to: ETH
+        payInInstruction:
+          redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          form:
+            action: action
+            parameters:
+              key: parameters
+          action: REDIRECT
+          displayParameters: '{}'
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        from:
+          example: EUR
+          type: string
+        to:
+          example: ETH
+          type: string
+        amountIn:
+          example: 500.0
+          type: number
+        amountDue:
+          example: 500.0
+          type: number
+        amountOut:
+          example: 1.12
+          type: number
+        price:
+          example: 446.43
+          type: number
+        quoteStatus:
+          enum:
+          - ESTIMATE
+          - TEMPLATE
+          - PENDING
+          - ACCEPTED
+          - PAYMENT_IN_RECEIVED
+          - PAYMENT_IN_SEEN
+          - PAYMENT_IN_FAILED
+          - FRAUD_CHECK_PENDING
+          - FRAUD_CHECK_FAILED
+          - PAYMENT_OUT_PENDING
+          - PAYMENT_OUT_PROCESSED
+          - PAYMENT_OUT_USED
+          - COMPLETED
+          - CONVERSION_FAILED
+          - PAYMENT_OUT_FAILED
+          - LOCKED
+          - REFUNDED
+          type: string
+        paymentStatus:
+          enum:
+          - PENDING
+          - SEEN
+          - SUCCESS
+          - CANCELLED
+          - FAILED
+          - FRAUD_PENDING
+          - FRAUD_PENDING_MANUAL_REVIEW
+          - FRAUD_FAILED
+          - REFUND_PENDING
+          - REFUNDED
+          - MANUAL_SUCCESS
+          - REFUND_FAILED
+          type: string
+        acceptanceExpiryDate:
+          example: 1566198657000
+          format: int64
+          type: integer
+        acceptanceDate:
+          example: 1566198657000
+          format: int64
+          type: integer
+        paymentExpiryDate:
+          example: 1566198657000
+          format: int64
+          type: integer
+        paymentReceiptDate:
+          example: 1566198657000
+          format: int64
+          type: integer
+        payInLegs:
+          items:
+            $ref: '#/components/schemas/PaymentLeg'
+          type: array
+        payInMethod:
+          $ref: '#/components/schemas/PayInMethod'
+        payOutMethod:
+          $ref: '#/components/schemas/PayOutMethod'
+        uuid:
+          example: B6670497-D139-47E8-9F4A-F97A5D977057
+          type: string
+        payOutInstruction:
+          $ref: '#/components/schemas/PayOutInstruction'
+        payInInstruction:
+          $ref: '#/components/schemas/PayInInstruction'
+        usePayInMethod:
+          $ref: '#/components/schemas/AccountMethod'
+        usePayOutMethod:
+          $ref: '#/components/schemas/AccountMethod'
+        fee:
+          example: 1.02
+          type: number
+        processingFee:
+          example: 1.02
+          type: number
+        type:
+          enum:
+          - FIXED
+          - MARKET
+          type: string
+        netPrice:
+          example: 1234.02
+          type: number
+        grossPrice:
+          example: 1134.02
+          type: number
+        amountInGross:
+          example: 102.0
+          type: number
+        amountInNet:
+          example: 104.0
+          type: number
+        fees:
+          $ref: '#/components/schemas/Fees'
+        dateCreated:
+          example: 1566198657000
+          format: int64
+          type: integer
+        lastUpdated:
+          example: 1566198657000
+          format: int64
+          type: integer
+      type: object
+    Form:
+      example:
+        action: action
+        parameters:
+          key: parameters
+      properties:
+        action:
+          type: string
+        parameters:
+          additionalProperties:
+            type: string
+          type: object
+      type: object
+    QuoteRequest:
+      example:
+        fromWallet: 0.8008281904610115
+        useMinimum: false
+        payInMethod: wallet
+        from: EUR
+        amountIn: 1.4658129805029452
+        to: USDC
+        payOutMethod: wallet
+        useMaximum: false
+        toWallet: 6.027456183070403
+      properties:
+        from:
+          default: EUR
+          type: string
+        to:
+          default: USDC
+          type: string
+        fromWallet:
+          default: 3598236
+          type: number
+        useMinimum:
+          default: false
+          type: boolean
+        useMaximum:
+          default: false
+          type: boolean
+        toWallet:
+          default: 3598514
+          type: number
+        amountIn:
+          default: 10
+          type: number
+        payInMethod:
+          default: wallet
+          type: string
+        payOutMethod:
+          default: wallet
+          type: string
+      required:
+      - amountIn
+      - from
+      - fromWallet
+      - payInMethod
+      - payOutMethod
+      - to
+      - toWallet
+      - useMaximum
+      - useMinimum
+      type: object
+    PayOutInstruction:
+      example:
+        code: gateway
+        currency: ETH
+      properties:
+        code:
+          example: gateway
+          type: string
+        currency:
+          example: ETH
+          type: string
+      type: object
+    PayOutMethod:
+      example:
+        code: gateway
+        currency: EUR
+        id: 1432
+        accountMethods:
+        - display: Visa xxxx-090
+          id: 1432
+        - display: Visa xxxx-090
+          id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: gateway
+          type: string
+        currency:
+          example: EUR
+          type: string
+        accountMethods:
+          items:
+            $ref: '#/components/schemas/AccountMethod'
+          type: array
+      type: object
+    Fees:
+      example:
+        percentage:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+        value:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+      properties:
+        percentage:
+          $ref: '#/components/schemas/Fee'
+        value:
+          $ref: '#/components/schemas/Fee'
+      type: object
+    PaymentLeg:
+      example:
+        reference: 36836129
+        amount: 100.32
+        dateCreated: 1566198657000
+        currency: ETH
+        id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        amount:
+          example: 100.32
+          type: number
+        dateCreated:
+          example: 1566198657000
+          format: int64
+          type: integer
+        reference:
+          example: 36836129
+          type: string
+        currency:
+          example: ETH
+          type: string
+      type: object
+    AcceptedQuote:
+      example:
+        quote:
+          acceptanceDate: 1566198657000
+          fees:
+            percentage:
+              service: 0.8008281904610115
+              processing: 6.027456183070403
+            value:
+              service: 0.8008281904610115
+              processing: 6.027456183070403
+          fee: 1.02
+          netPrice: 1234.02
+          grossPrice: 1134.02
+          amountInGross: 102.0
+          type: FIXED
+          uuid: B6670497-D139-47E8-9F4A-F97A5D977057
+          quoteStatus: ESTIMATE
+          processingFee: 1.02
+          lastUpdated: 1566198657000
+          paymentReceiptDate: 1566198657000
+          dateCreated: 1566198657000
+          price: 446.43
+          from: EUR
+          amountOut: 1.12
+          amountInNet: 104.0
+          id: 1432
+          payOutMethod:
+            code: gateway
+            currency: EUR
+            id: 1432
+            accountMethods:
+            - display: Visa xxxx-090
+              id: 1432
+            - display: Visa xxxx-090
+              id: 1432
+          paymentStatus: PENDING
+          paymentExpiryDate: 1566198657000
+          payInMethod:
+            code: wallet
+            settlementCurrency: USD
+            estimatedExchangeRate: 0.923
+            id: 1432
+            accountMethods:
+            - display: Visa xxxx-090
+              id: 1432
+            - display: Visa xxxx-090
+              id: 1432
+            requestedCurrency: EUR
+          usePayInMethod:
+            display: Visa xxxx-090
+            id: 1432
+          payOutInstruction:
+            code: gateway
+            currency: ETH
+          payInLegs:
+          - reference: 36836129
+            amount: 100.32
+            dateCreated: 1566198657000
+            currency: ETH
+            id: 1432
+          - reference: 36836129
+            amount: 100.32
+            dateCreated: 1566198657000
+            currency: ETH
+            id: 1432
+          usePayOutMethod:
+            display: Visa xxxx-090
+            id: 1432
+          amountDue: 500.0
+          acceptanceExpiryDate: 1566198657000
+          amountIn: 500.0
+          to: ETH
+          payInInstruction:
+            redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+            form:
+              action: action
+              parameters:
+                key: parameters
+            action: REDIRECT
+            displayParameters: '{}'
+        payInInstruction:
+          redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          form:
+            action: action
+            parameters:
+              key: parameters
+          action: REDIRECT
+          displayParameters: '{}'
+      properties:
+        quote:
+          $ref: '#/components/schemas/Quote'
+        payInInstruction:
+          $ref: '#/components/schemas/PayInInstruction'
+      type: object
+    AccountMethod:
+      example:
+        display: Visa xxxx-090
+        id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        display:
+          example: Visa xxxx-090
+          type: string
+      type: object
+    Fee:
+      example:
+        service: 0.8008281904610115
+        processing: 6.027456183070403
+      properties:
+        service:
+          type: number
+        processing:
+          type: number
+      type: object
+  securitySchemes:
+    Hawk:
+      description: 'Hawk Payload (see: https://github.com/hueniverse/hawk)'
+      in: header
+      name: Authorization
+      type: apiKey

@@ -1,0 +1,1029 @@
+{
+  "item": [
+    {
+      "id": "ec0a57b8-8392-47b0-8ec0-c9807a06b362",
+      "name": "Payments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eafa6127-846b-4363-9f7c-2c08de852a5c",
+          "name": "List Payments",
+          "request": {
+            "name": "List Payments",
+            "description": {
+              "content": "Retrieves a list of payments on a specific Merchant ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "pay",
+                "summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "merchantId",
+                  "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB",
+                  "description": "(Required) Merchant identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "customerReference",
+                  "value": "<string>",
+                  "description": "Customer reference"
+                },
+                {
+                  "disabled": false,
+                  "key": "paymentExternalId",
+                  "value": "<string>",
+                  "description": "Merchant payment uuid"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<string>",
+                  "description": "Start date"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<string>",
+                  "description": "End date"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<number>",
+                  "description": "Offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "max",
+                  "value": "<number>",
+                  "description": "Maximum number of items in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Ordering direction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "63106432-3d0e-4154-84e0-25e43fcc0ce8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchantId",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB"
+                    },
+                    {
+                      "key": "customerReference",
+                      "value": "REF123"
+                    },
+                    {
+                      "key": "paymentExternalId",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2023-03-30"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2023-03-30"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "20"
+                    },
+                    {
+                      "key": "status",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "order",
+                      "value": "asc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"uuid\": \"3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n    \"merchantDisplayName\": \"Test Merchant Name\",\n    \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n    \"dateCreated\": 1566203005000,\n    \"expiryDate\": 1566203005000,\n    \"quoteExpiryDate\": 1566203005000,\n    \"acceptanceExpiryDate\": 1566203005000,\n    \"quoteStatus\": \"string\",\n    \"reference\": \"myUniqueRef333\",\n    \"type\": \"OUT\",\n    \"subType\": \"merchantPayIn\",\n    \"status\": \"PENDING\",\n    \"displayCurrency\": {\n      \"actual\": 76.45,\n      \"amount\": 0,\n      \"currency\": \"ETH\"\n    },\n    \"walletCurrency\": {\n      \"actual\": 76.45,\n      \"amount\": 0,\n      \"currency\": \"ETH\"\n    },\n    \"paidCurrency\": {\n      \"actual\": 76.45,\n      \"amount\": 0,\n      \"currency\": \"ETH\"\n    },\n    \"feeCurrency\": {\n      \"actual\": 76.45,\n      \"amount\": 0,\n      \"currency\": \"ETH\"\n    },\n    \"displayRate\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"exchangeRate\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"address\": {\n      \"address\": \"string\",\n      \"tag\": \"\",\n      \"protocol\": \"ERC20\",\n      \"uri\": \"ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18\",\n      \"alternatives\": [\n        {\n          \"protocol\": \"protocol\",\n          \"address\": \"address\",\n          \"tag\": \"tag\",\n          \"uri\": \"uri\"\n        },\n        {\n          \"protocol\": \"protocol\",\n          \"address\": \"address\",\n          \"tag\": \"tag\",\n          \"uri\": \"uri\"\n        }\n      ]\n    },\n    \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n    \"redirectUrl\": \"https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n    \"transactions\": [\n      {\n        \"dateCreated\": 1566203005000,\n        \"dateConfirmed\": 1566203005000,\n        \"hash\": \"string\",\n        \"amount\": 100,\n        \"risk\": {},\n        \"networkFeeCurrency\": \"BTC\",\n        \"networkFeeAmount\": 1.05,\n        \"sources\": [\n          \"string\",\n          \"string\"\n        ],\n        \"displayRate\": {\n          \"rate\": 1680.1,\n          \"counter\": \"EUR\",\n          \"base\": \"ETH\"\n        },\n        \"exchangeRate\": {\n          \"rate\": 1680.1,\n          \"counter\": \"EUR\",\n          \"base\": \"ETH\"\n        }\n      },\n      {\n        \"dateCreated\": 1566203005000,\n        \"dateConfirmed\": 1566203005000,\n        \"hash\": \"string\",\n        \"amount\": 100,\n        \"risk\": {},\n        \"networkFeeCurrency\": \"BTC\",\n        \"networkFeeAmount\": 1.05,\n        \"sources\": [\n          \"string\",\n          \"string\"\n        ],\n        \"displayRate\": {\n          \"rate\": 1680.1,\n          \"counter\": \"EUR\",\n          \"base\": \"ETH\"\n        },\n        \"exchangeRate\": {\n          \"rate\": 1680.1,\n          \"counter\": \"EUR\",\n          \"base\": \"ETH\"\n        }\n      }\n    ],\n    \"refund\": {}\n  },\n  {\n    \"uuid\": \"3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n    \"merchantDisplayName\": \"Test Merchant Name\",\n    \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n    \"dateCreated\": 1566203005000,\n    \"expiryDate\": 1566203005000,\n    \"quoteExpiryDate\": 1566203005000,\n    \"acceptanceExpiryDate\": 1566203005000,\n    \"quoteStatus\": \"string\",\n    \"reference\": \"myUniqueRef333\",\n    \"type\": \"OUT\",\n    \"subType\": \"merchantPayIn\",\n    \"status\": \"PENDING\",\n    \"displayCurrency\": {\n      \"actual\": 76.45,\n      \"amount\": 0,\n      \"currency\": \"ETH\"\n    },\n    \"walletCurrency\": {\n      \"actual\": 76.45,\n      \"amount\": 0,\n      \"currency\": \"ETH\"\n    },\n    \"paidCurrency\": {\n      \"actual\": 76.45,\n      \"amount\": 0,\n      \"currency\": \"ETH\"\n    },\n    \"feeCurrency\": {\n      \"actual\": 76.45,\n      \"amount\": 0,\n      \"currency\": \"ETH\"\n    },\n    \"displayRate\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"exchangeRate\": {\n      \"rate\": 1680.1,\n      \"counter\": \"EUR\",\n      \"base\": \"ETH\"\n    },\n    \"address\": {\n      \"address\": \"string\",\n      \"tag\": \"\",\n      \"protocol\": \"ERC20\",\n      \"uri\": \"ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18\",\n      \"alternatives\": [\n        {\n          \"protocol\": \"protocol\",\n          \"address\": \"address\",\n          \"tag\": \"tag\",\n          \"uri\": \"uri\"\n        },\n        {\n          \"protocol\": \"protocol\",\n          \"address\": \"address\",\n          \"tag\": \"tag\",\n          \"uri\": \"uri\"\n        }\n      ]\n    },\n    \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n    \"redirectUrl\": \"https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n    \"transactions\": [\n      {\n        \"dateCreated\": 1566203005000,\n        \"dateConfirmed\": 1566203005000,\n        \"hash\": \"string\",\n        \"amount\": 100,\n        \"risk\": {},\n        \"networkFeeCurrency\": \"BTC\",\n        \"networkFeeAmount\": 1.05,\n        \"sources\": [\n          \"string\",\n          \"string\"\n        ],\n        \"displayRate\": {\n          \"rate\": 1680.1,\n          \"counter\": \"EUR\",\n          \"base\": \"ETH\"\n        },\n        \"exchangeRate\": {\n          \"rate\": 1680.1,\n          \"counter\": \"EUR\",\n          \"base\": \"ETH\"\n        }\n      },\n      {\n        \"dateCreated\": 1566203005000,\n        \"dateConfirmed\": 1566203005000,\n        \"hash\": \"string\",\n        \"amount\": 100,\n        \"risk\": {},\n        \"networkFeeCurrency\": \"BTC\",\n        \"networkFeeAmount\": 1.05,\n        \"sources\": [\n          \"string\",\n          \"string\"\n        ],\n        \"displayRate\": {\n          \"rate\": 1680.1,\n          \"counter\": \"EUR\",\n          \"base\": \"ETH\"\n        },\n        \"exchangeRate\": {\n          \"rate\": 1680.1,\n          \"counter\": \"EUR\",\n          \"base\": \"ETH\"\n        }\n      }\n    ],\n    \"refund\": {}\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7757c69c-239f-451e-89e4-4e9d6e1d3b2b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchantId",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB"
+                    },
+                    {
+                      "key": "customerReference",
+                      "value": "REF123"
+                    },
+                    {
+                      "key": "paymentExternalId",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2023-03-30"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2023-03-30"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "20"
+                    },
+                    {
+                      "key": "status",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "order",
+                      "value": "asc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorList\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0f7229f-8680-477c-b183-bf4694c8b956",
+              "name": "Unexpected Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchantId",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB"
+                    },
+                    {
+                      "key": "customerReference",
+                      "value": "REF123"
+                    },
+                    {
+                      "key": "paymentExternalId",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2023-03-30"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2023-03-30"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "max",
+                      "value": "20"
+                    },
+                    {
+                      "key": "status",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "order",
+                      "value": "asc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "15412cb7-7697-4d46-ab0d-1d5dacd3ee85",
+          "name": "Create payment",
+          "request": {
+            "name": "Create payment",
+            "description": {
+              "content": "Creates a payment, either type IN or type OUT.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "pay",
+                "summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 223.05,\n  \"currency\": \"EUR\",\n  \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n  \"reference\": \"myUniqueRef333\",\n  \"type\": \"<string>\",\n  \"expiryMinutes\": 20,\n  \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n  \"payInDetails\": {\n    \"currency\": \"<string>\"\n  },\n  \"payOutDetails\": {\n    \"address\": \"<string>\",\n    \"code\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"tag\": \"<string>\",\n    \"protocol\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "020950c2-1046-4857-b367-c3fa50210b49",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 223.05,\n  \"currency\": \"EUR\",\n  \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n  \"reference\": \"myUniqueRef333\",\n  \"type\": \"<string>\",\n  \"expiryMinutes\": 20,\n  \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n  \"payInDetails\": {\n    \"currency\": \"ETH\"\n  },\n  \"payOutDetails\": {\n    \"address\": \"<string>\",\n    \"code\": \"crypto\",\n    \"currency\": \"ETH\",\n    \"tag\": \"\",\n    \"protocol\": \"ERC20\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n  \"merchantDisplayName\": \"Test Merchant Name\",\n  \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n  \"dateCreated\": 1566203005000,\n  \"expiryDate\": 1566203005000,\n  \"quoteExpiryDate\": 1566203005000,\n  \"acceptanceExpiryDate\": 1566203005000,\n  \"quoteStatus\": \"string\",\n  \"reference\": \"myUniqueRef333\",\n  \"type\": \"<string>\",\n  \"subType\": \"merchantPayIn\",\n  \"status\": \"PENDING\",\n  \"displayCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"walletCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"paidCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"feeCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"displayRate\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"exchangeRate\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"address\": {\n    \"address\": \"string\",\n    \"tag\": \"\",\n    \"protocol\": \"ERC20\",\n    \"uri\": \"ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18\",\n    \"alternatives\": [\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      },\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      }\n    ]\n  },\n  \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n  \"redirectUrl\": \"https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n  \"transactions\": [\n    {\n      \"dateCreated\": 1566203005000,\n      \"dateConfirmed\": 1566203005000,\n      \"hash\": \"string\",\n      \"amount\": 100,\n      \"risk\": {},\n      \"networkFeeCurrency\": \"BTC\",\n      \"networkFeeAmount\": 1.05,\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"displayRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      },\n      \"exchangeRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      }\n    },\n    {\n      \"dateCreated\": 1566203005000,\n      \"dateConfirmed\": 1566203005000,\n      \"hash\": \"string\",\n      \"amount\": 100,\n      \"risk\": {},\n      \"networkFeeCurrency\": \"BTC\",\n      \"networkFeeAmount\": 1.05,\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"displayRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      },\n      \"exchangeRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      }\n    }\n  ],\n  \"refund\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64053c79-6214-4c47-8b6f-45a88d80bae5",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 223.05,\n  \"currency\": \"EUR\",\n  \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n  \"reference\": \"myUniqueRef333\",\n  \"type\": \"<string>\",\n  \"expiryMinutes\": 20,\n  \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n  \"payInDetails\": {\n    \"currency\": \"ETH\"\n  },\n  \"payOutDetails\": {\n    \"address\": \"<string>\",\n    \"code\": \"crypto\",\n    \"currency\": \"ETH\",\n    \"tag\": \"\",\n    \"protocol\": \"ERC20\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorList\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5abc952b-dce2-4a99-9cf3-c7ebc841206f",
+              "name": "Unexpected Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 223.05,\n  \"currency\": \"EUR\",\n  \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n  \"reference\": \"myUniqueRef333\",\n  \"type\": \"<string>\",\n  \"expiryMinutes\": 20,\n  \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n  \"payInDetails\": {\n    \"currency\": \"ETH\"\n  },\n  \"payOutDetails\": {\n    \"address\": \"<string>\",\n    \"code\": \"crypto\",\n    \"currency\": \"ETH\",\n    \"tag\": \"\",\n    \"protocol\": \"ERC20\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec594a17-7b7d-40a9-8699-f814f28182fc",
+          "name": "Get Payment",
+          "request": {
+            "name": "Get Payment",
+            "description": {
+              "content": "Retrieves details of a specific payment using the UUID of the payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "pay",
+                ":uuid",
+                "summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB",
+                  "key": "uuid",
+                  "description": "(Required) merchant payment uuid"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8c6f7485-7264-4c21-b9a7-a3d7d5016376",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    ":uuid",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB",
+                      "key": "uuid",
+                      "description": "(Required) merchant payment uuid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n  \"merchantDisplayName\": \"Test Merchant Name\",\n  \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n  \"dateCreated\": 1566203005000,\n  \"expiryDate\": 1566203005000,\n  \"quoteExpiryDate\": 1566203005000,\n  \"acceptanceExpiryDate\": 1566203005000,\n  \"quoteStatus\": \"string\",\n  \"reference\": \"myUniqueRef333\",\n  \"type\": \"<string>\",\n  \"subType\": \"merchantPayIn\",\n  \"status\": \"PENDING\",\n  \"displayCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"walletCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"paidCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"feeCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"displayRate\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"exchangeRate\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"address\": {\n    \"address\": \"string\",\n    \"tag\": \"\",\n    \"protocol\": \"ERC20\",\n    \"uri\": \"ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18\",\n    \"alternatives\": [\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      },\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      }\n    ]\n  },\n  \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n  \"redirectUrl\": \"https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n  \"transactions\": [\n    {\n      \"dateCreated\": 1566203005000,\n      \"dateConfirmed\": 1566203005000,\n      \"hash\": \"string\",\n      \"amount\": 100,\n      \"risk\": {},\n      \"networkFeeCurrency\": \"BTC\",\n      \"networkFeeAmount\": 1.05,\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"displayRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      },\n      \"exchangeRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      }\n    },\n    {\n      \"dateCreated\": 1566203005000,\n      \"dateConfirmed\": 1566203005000,\n      \"hash\": \"string\",\n      \"amount\": 100,\n      \"risk\": {},\n      \"networkFeeCurrency\": \"BTC\",\n      \"networkFeeAmount\": 1.05,\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"displayRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      },\n      \"exchangeRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      }\n    }\n  ],\n  \"refund\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b0d76d7-bb0a-4686-9ab2-6151c4dffb03",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    ":uuid",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB",
+                      "key": "uuid",
+                      "description": "(Required) merchant payment uuid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorList\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49ce8fe6-6250-4d44-922e-92d71f6190e8",
+              "name": "Unexpected Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    ":uuid",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "5C8D8D78-366A-4AFB-B658-A64CE543C5DB",
+                      "key": "uuid",
+                      "description": "(Required) merchant payment uuid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5bbca78-e4be-47d3-a9d9-a8e607c02299",
+          "name": "Validate Address",
+          "request": {
+            "name": "Validate Address",
+            "description": {
+              "content": "Validates that a crypto address is correct.\n\nUse this endpoint to validate that an address exists, is correctly formatted, and includes all the required data. This endpoint can help prevent your end users losing funds when submitting a payout.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "pay",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"code\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"protocol\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8081572a-050b-455f-8de7-4d5ce4b2e87c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"code\": \"crypto\",\n  \"currency\": \"ETH\",\n  \"tag\": \"\",\n  \"protocol\": \"ERC20\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "65d0571f-cb84-48a2-bf3c-60eedaa8224e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"code\": \"crypto\",\n  \"currency\": \"ETH\",\n  \"tag\": \"\",\n  \"protocol\": \"ERC20\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorList\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"parameter\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e35caf5-a68c-45b3-b289-2913df20c099",
+              "name": "Unexpected Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "pay",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"code\": \"crypto\",\n  \"currency\": \"ETH\",\n  \"tag\": \"\",\n  \"protocol\": \"ERC20\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.bvnk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f462c3e5-05ec-4e0e-a63d-372c04dea404",
+    "name": "BVNK API Endpoints Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,808 @@
+openapi: 3.2.0
+info:
+  description: The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.
+  title: BVNK API Endpoints Merchant IDs API
+  version: 1.0.1
+servers:
+- description: Sandbox
+  url: https://api.sandbox.bvnk.com
+- description: Production
+  url: https://api.bvnk.com
+tags:
+- name: Merchant IDs
+paths:
+  /api/v1/merchant:
+    get:
+      description: Retrieves merchant IDs setup on your account.
+      operationId: merchantIdList
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Merchant'
+                type: array
+          description: OK
+        '400':
+          description: Bad Request
+      security:
+      - Hawk:
+        - merchant
+      summary: List Merchant IDs
+      tags:
+      - Merchant IDs
+      x-accepts: application/json
+    post:
+      description: 'Generate a Merchant ID for your account to process pay-ins and pay-outs through our API.
+
+
+        A Merchant ID is essential as it designates the account wallet where incoming pay-ins will be settled. For instance, if a Merchant ID is associated with a EUR wallet ID, any incoming USDT payment will be automatically converted to EUR and deposited in the designated EUR wallet.
+
+
+        Vice versa, any outgoing USDT payment will be automatically converted and withdrawn from the designated EUR wallet.
+
+
+        For further information, please visit https://docs.bvnk.com/docs/creating-your-first-merchant to learn more about creating your first Merchant ID.'
+      operationId: merchantIdCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/merchantIdCreate_request'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryPaymentDto'
+          description: OK
+        '400':
+          description: Bad Request
+      security:
+      - Hawk:
+        - merchant
+      summary: Create Merchant ID
+      tags:
+      - Merchant IDs
+      x-content-type: application/json
+      x-accepts: application/json
+components:
+  schemas:
+    SummaryPaymentDto:
+      description: Contains all the information about a summary payment object
+      example:
+        address:
+          protocol: ERC20
+          address: 1048067243501743171847519123319628402502707679848
+          alternatives:
+          - protocol: protocol
+            address: address
+            tag: tag
+            uri: uri
+          - protocol: protocol
+            address: address
+            tag: tag
+            uri: uri
+          tag: ''
+          uri: ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18
+        redirectUrl: https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+        walletCurrency:
+          actual: 76.45
+          amount: 0.0
+          currency: ETH
+        feeCurrency:
+          actual: 76.45
+          amount: 0.0
+          currency: ETH
+        type: null
+        transactions:
+        - amount: 100.0
+          dateCreated: 1566203005000
+          sources:
+          - 1048067243501743171847519123319628402502707679848
+          - 1048067243501743171847519123319628402502707679848
+          exchangeRate:
+            rate: 1680.1
+            counter: EUR
+            base: ETH
+          networkFeeAmount: 1.05
+          risk: ETH wallet
+          dateConfirmed: 1566203005000
+          hash: hash
+          networkFeeCurrency: BTC
+          displayRate:
+            rate: 1680.1
+            counter: EUR
+            base: ETH
+        - amount: 100.0
+          dateCreated: 1566203005000
+          sources:
+          - 1048067243501743171847519123319628402502707679848
+          - 1048067243501743171847519123319628402502707679848
+          exchangeRate:
+            rate: 1680.1
+            counter: EUR
+            base: ETH
+          networkFeeAmount: 1.05
+          risk: ETH wallet
+          dateConfirmed: 1566203005000
+          hash: hash
+          networkFeeCurrency: BTC
+          displayRate:
+            rate: 1680.1
+            counter: EUR
+            base: ETH
+        uuid: 3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+        quoteStatus: quoteStatus
+        displayRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        refunds:
+        - '{}'
+        - '{}'
+        merchantDisplayName: Test Merchant Name
+        expiryDate: 1566203005000
+        reference: myUniqueRef333
+        acceptanceExpiryDate: 1566203005000
+        dateCreated: 1566203005000
+        merchantId: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+        exchangeRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        subType: merchantPayIn
+        displayCurrency:
+          actual: 76.45
+          amount: 0.0
+          currency: ETH
+        paidCurrency:
+          actual: 76.45
+          amount: 0.0
+          currency: ETH
+        returnUrl: https://my-shop.com/payment-complete?ref=xyz
+        quoteExpiryDate: 1566203005000
+        status: PENDING
+        refund: '{}'
+      properties:
+        uuid:
+          description: unique identifier for the merchant payment
+          example: 3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          type: string
+        merchantDisplayName:
+          description: display name for the merchant payment
+          example: Test Merchant Name
+          type: string
+        merchantId:
+          description: Your Merchant ID. You can find it on the Merchant Details page in your account
+          example: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+          type: string
+        dateCreated:
+          description: Currently this is a long - can it be changed? Date and times are encoded into UNIX epoch timestamps
+          example: 1566203005000
+          format: int64
+          type: integer
+        expiryDate:
+          description: Date and times are encoded into UNIX epoch timestamps
+          example: 1566203005000
+          format: int64
+          type: integer
+        quoteExpiryDate:
+          description: Date and times are encoded into UNIX epoch timestamps
+          example: 1566203005000
+          format: int64
+          type: integer
+        acceptanceExpiryDate:
+          description: Date and times are encoded into UNIX epoch timestamps
+          example: 1566203005000
+          format: int64
+          type: integer
+        quoteStatus:
+          type: string
+        reference:
+          description: Your payment reference ID. Feel free to submit any ID to tie the payment to your customer
+          example: myUniqueRef333
+          type: string
+        type:
+          $ref: '#/components/schemas/DirectionDto'
+        subType:
+          default: merchantPayIn
+          description: Payment sub type
+          enum:
+          - merchantPayIn
+          - merchantPayOut
+          - merchantRefund
+          type: string
+        status:
+          $ref: '#/components/schemas/PaymentStatusDto'
+        displayCurrency:
+          $ref: '#/components/schemas/PayAmountsDto'
+        walletCurrency:
+          $ref: '#/components/schemas/PayAmountsDto'
+        paidCurrency:
+          $ref: '#/components/schemas/PayAmountsDto'
+        feeCurrency:
+          $ref: '#/components/schemas/PayAmountsDto'
+        displayRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        exchangeRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        address:
+          $ref: '#/components/schemas/CryptoAddressDto'
+        returnUrl:
+          description: URL that the customer will be redirected to if they click a "Back to Merchant" button on the payment web page
+          example: https://my-shop.com/payment-complete?ref=xyz
+          type: string
+        redirectUrl:
+          description: URL to the payment page that you can redirect your customers to
+          example: https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          type: string
+        transactions:
+          items:
+            $ref: '#/components/schemas/GatewayTransactionDto'
+          type: array
+        refund:
+          description: The payment this object is a refund of. This should reference the pay in that this refund was created for
+          type: object
+        refunds:
+          description: Refunds that have been requested for this payment. This should reference the refund payout for this pay in
+          items:
+            type: object
+          type: array
+      type: object
+    AlternativeAddress:
+      description: List of non-default addresses for other tokens
+      example:
+        protocol: protocol
+        address: address
+        tag: tag
+        uri: uri
+      properties:
+        protocol:
+          type: string
+        address:
+          type: string
+        tag:
+          type: string
+        uri:
+          type: string
+      type: object
+    Merchant:
+      example:
+        autoConvertInvalidPayments: true
+        webhookVersion: 1
+        wallet:
+          lookup: lookup
+          withdrawalFee: 0.001
+          address: 707390250188898007213214622985268615627297025014
+          available: 0.59573928
+          description: ETH wallet
+          depositFee: 0.0
+          approxAvailable: '0.59573928'
+          convertedAvailable: 20917.59
+          protocol: ETH
+          balance: 0.59573928
+          approxBalance: '0.59573928'
+          alternatives: []
+          supportsThirdParty: false
+          currency:
+            quantityPrecision: 6
+            pricePrecision: 0
+            withdrawalFee: 0.01
+            code: ETH
+            icon: https://cdn.com/eth-icon.png
+            depositFee: 0.0
+            withdrawalParameters:
+            - code: destinationTag
+              name: Destination Tag
+              id: 1432
+              required: false
+              example: '123432312'
+            - code: destinationTag
+              name: Destination Tag
+              id: 1432
+              required: false
+              example: '123432312'
+            name: Ethereum
+            options:
+              address: https://etherscan.io/address/{{address}}
+              explorer: https://etherscan.io/
+              confirmations: 12
+              transaction: https://etherscan.io/tx/{{hash}}
+            fiat: false
+            id: 1432
+            supportsDeposits: false
+            protocols:
+            - code: ERC20
+              network: Ethereum
+            - code: ERC20
+              network: Ethereum
+            supportsWithdrawals: false
+          custodianWallet: true
+          id: 1432
+          supportsDeposits: true
+          supportsWithdrawals: true
+          isEmoney: false
+        merchantId: b312436e-e477-49d4-be7f-9d027f9b9e34
+        displayName: Test Merchant Name
+        emailRecipients: emailRecipients
+        id: 1432
+        secret: MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM
+        webhookUrl: https://www.URL.com/to/send/webhooks/to
+        defaultExpiryMinutes: 1440
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        merchantId:
+          example: b312436e-e477-49d4-be7f-9d027f9b9e34
+          type: string
+        displayName:
+          example: Test Merchant Name
+          type: string
+        secret:
+          example: MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM
+          type: string
+        webhookUrl:
+          example: https://www.URL.com/to/send/webhooks/to
+          type: string
+        autoConvertInvalidPayments:
+          default: true
+          type: boolean
+        defaultExpiryMinutes:
+          example: 1440
+          format: int32
+          type: integer
+        webhookVersion:
+          example: 1
+          format: int32
+          type: integer
+        wallet:
+          $ref: '#/components/schemas/Wallet'
+        emailRecipients:
+          type: string
+          example: null
+      type: object
+    PayAmountsDto:
+      description: Contains the type of currency, and amount to be paid and received
+      example:
+        actual: 76.45
+        amount: 0.0
+        currency: ETH
+      properties:
+        currency:
+          description: currency acronym
+          example: ETH
+          type: string
+        amount:
+          description: amount to be paid
+          example: 0.0
+          type: number
+        actual:
+          description: actual amount paid/ received
+          example: 76.45
+          type: number
+      type: object
+    PaymentStatusDto:
+      description: Payment status
+      enum:
+      - PENDING
+      - PROCESSING
+      - CANCELLED
+      - COMPLETE
+      - UNDERPAID
+      - OVERPAID
+      - EXPIRED
+      example: PENDING
+      type: string
+    Currency:
+      example:
+        quantityPrecision: 6
+        pricePrecision: 0
+        withdrawalFee: 0.01
+        code: ETH
+        icon: https://cdn.com/eth-icon.png
+        depositFee: 0.0
+        withdrawalParameters:
+        - code: destinationTag
+          name: Destination Tag
+          id: 1432
+          required: false
+          example: '123432312'
+        - code: destinationTag
+          name: Destination Tag
+          id: 1432
+          required: false
+          example: '123432312'
+        name: Ethereum
+        options:
+          address: https://etherscan.io/address/{{address}}
+          explorer: https://etherscan.io/
+          confirmations: 12
+          transaction: https://etherscan.io/tx/{{hash}}
+        fiat: false
+        id: 1432
+        supportsDeposits: false
+        protocols:
+        - code: ERC20
+          network: Ethereum
+        - code: ERC20
+          network: Ethereum
+        supportsWithdrawals: false
+      properties:
+        code:
+          example: ETH
+          type: string
+        depositFee:
+          example: 0.0
+          type: number
+        fiat:
+          default: false
+          type: boolean
+        icon:
+          example: https://cdn.com/eth-icon.png
+          type: string
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        name:
+          example: Ethereum
+          type: string
+        options:
+          $ref: '#/components/schemas/CurrencyOptions'
+        pricePrecision:
+          default: 5
+          format: int32
+          type: integer
+        protocols:
+          items:
+            $ref: '#/components/schemas/CurrencyProtocol'
+          type: array
+        quantityPrecision:
+          default: 5
+          format: int32
+          type: integer
+        supportsDeposits:
+          default: false
+          type: boolean
+        supportsWithdrawals:
+          default: false
+          type: boolean
+        withdrawalFee:
+          example: 0.01
+          type: number
+        withdrawalParameters:
+          items:
+            $ref: '#/components/schemas/ExternalCurrencyWithdrawalParameter'
+          type: array
+      type: object
+    CurrencyProtocol:
+      example:
+        code: ERC20
+        network: Ethereum
+      properties:
+        code:
+          example: ERC20
+          type: string
+        network:
+          example: Ethereum
+          type: string
+      type: object
+    DirectionDto:
+      description: Payment in or payment out
+      enum:
+      - IN
+      - OUT
+      type: string
+    ExchangeRateDto:
+      description: contains exchange rate information to convert from base to counter currency
+      example:
+        rate: 1680.1
+        counter: EUR
+        base: ETH
+      properties:
+        base:
+          description: currency acronym
+          example: ETH
+          type: string
+        counter:
+          description: currency acronym
+          example: EUR
+          type: string
+        rate:
+          description: TBC
+          example: 1680.1
+          type: number
+      type: object
+    CurrencyOptions:
+      example:
+        address: https://etherscan.io/address/{{address}}
+        explorer: https://etherscan.io/
+        confirmations: 12
+        transaction: https://etherscan.io/tx/{{hash}}
+      properties:
+        transaction:
+          example: https://etherscan.io/tx/{{hash}}
+          type: string
+        explorer:
+          example: https://etherscan.io/
+          type: string
+        address:
+          example: https://etherscan.io/address/{{address}}
+          type: string
+        confirmations:
+          example: 12
+          type: integer
+      type: object
+    Wallet:
+      example:
+        lookup: lookup
+        withdrawalFee: 0.001
+        address: 707390250188898007213214622985268615627297025014
+        available: 0.59573928
+        description: ETH wallet
+        depositFee: 0.0
+        approxAvailable: '0.59573928'
+        convertedAvailable: 20917.59
+        protocol: ETH
+        balance: 0.59573928
+        approxBalance: '0.59573928'
+        alternatives: []
+        supportsThirdParty: false
+        currency:
+          quantityPrecision: 6
+          pricePrecision: 0
+          withdrawalFee: 0.01
+          code: ETH
+          icon: https://cdn.com/eth-icon.png
+          depositFee: 0.0
+          withdrawalParameters:
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: '123432312'
+          - code: destinationTag
+            name: Destination Tag
+            id: 1432
+            required: false
+            example: '123432312'
+          name: Ethereum
+          options:
+            address: https://etherscan.io/address/{{address}}
+            explorer: https://etherscan.io/
+            confirmations: 12
+            transaction: https://etherscan.io/tx/{{hash}}
+          fiat: false
+          id: 1432
+          supportsDeposits: false
+          protocols:
+          - code: ERC20
+            network: Ethereum
+          - code: ERC20
+            network: Ethereum
+          supportsWithdrawals: false
+        custodianWallet: true
+        id: 1432
+        supportsDeposits: true
+        supportsWithdrawals: true
+        isEmoney: false
+      properties:
+        address:
+          example: 707390250188898007213214622985268615627297025014
+          type: string
+        alternatives:
+          example: []
+          items: {}
+          type: array
+        approxAvailable:
+          example: '0.59573928'
+          type: string
+        approxBalance:
+          example: '0.59573928'
+          type: string
+        available:
+          example: 0.59573928
+          format: float
+          type: number
+        balance:
+          example: 0.59573928
+          format: float
+          type: number
+        convertedAvailable:
+          example: 20917.59
+          format: float
+          type: number
+        currency:
+          $ref: '#/components/schemas/Currency'
+        custodianWallet:
+          type: boolean
+        depositFee:
+          example: 0.0
+          format: float
+          type: number
+        description:
+          example: ETH wallet
+          type: string
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        isEmoney:
+          default: false
+          type: boolean
+        lookup:
+          type: string
+          example: null
+        protocol:
+          example: ETH
+          type: string
+        supportsDeposits:
+          default: true
+          type: boolean
+        supportsThirdParty:
+          default: false
+          type: boolean
+        supportsWithdrawals:
+          default: true
+          type: boolean
+        withdrawalFee:
+          example: 0.001
+          format: float
+          type: number
+      type: object
+    GatewayTransactionDto:
+      description: Specify details about transaction (onchain or offchain) linked to the payment
+      example:
+        amount: 100.0
+        dateCreated: 1566203005000
+        sources:
+        - 1048067243501743171847519123319628402502707679848
+        - 1048067243501743171847519123319628402502707679848
+        exchangeRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        networkFeeAmount: 1.05
+        risk: ETH wallet
+        dateConfirmed: 1566203005000
+        hash: hash
+        networkFeeCurrency: BTC
+        displayRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+      properties:
+        dateCreated:
+          example: 1566203005000
+          format: int64
+          type: integer
+        dateConfirmed:
+          example: 1566203005000
+          format: int64
+          type: integer
+        hash:
+          description: Transaction hash
+          type: string
+        amount:
+          description: payment amount
+          example: 100.0
+          type: number
+        risk:
+          example: ETH wallet
+          type: object
+        networkFeeCurrency:
+          description: currency acronym
+          example: BTC
+          type: string
+        networkFeeAmount:
+          description: payment amount
+          example: 1.05
+          type: number
+        sources:
+          description: list of source addresses (only applicable if payment in)
+          items:
+            example: 1048067243501743171847519123319628402502707679848
+            type: string
+          type: array
+        displayRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        exchangeRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+      type: object
+    ExternalCurrencyWithdrawalParameter:
+      example:
+        code: destinationTag
+        name: Destination Tag
+        id: 1432
+        required: false
+        example: '123432312'
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: destinationTag
+          type: string
+        name:
+          example: Destination Tag
+          type: string
+        required:
+          default: false
+          type: boolean
+        example:
+          example: '123432312'
+          type: string
+      type: object
+    CryptoAddressDto:
+      description: Payment address details
+      example:
+        protocol: ERC20
+        address: 1048067243501743171847519123319628402502707679848
+        alternatives:
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        tag: ''
+        uri: ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18
+      properties:
+        address:
+          description: Address to withdrawal funds to
+          example: 1048067243501743171847519123319628402502707679848
+          type: string
+        tag:
+          description: This is a payment destination tag. This fields isn't null when the paidCurrency.currency value is XRP
+          example: ''
+          type: string
+        protocol:
+          description: protocol behind a currency (ERC20 or TRC20)
+          example: ERC20
+          type: string
+        uri:
+          description: The destination address URI for QR code
+          example: ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18
+          type: string
+        alternatives:
+          description: List of non-default addresses for other tokens
+          items:
+            $ref: '#/components/schemas/AlternativeAddress'
+          type: array
+      type: object
+    merchantIdCreate_request_wallet:
+      properties:
+        id:
+          default: '501098'
+          description: The ID of the wallet to link to the merchant ID
+          type: string
+      type: object
+    merchantIdCreate_request:
+      properties:
+        displayName:
+          default: Test Merchant Name
+          description: The name of the merchant that will be displayed on the payments page
+          type: string
+        webhookUrl:
+          default: https://www.URL.com/to/send/webhooks/to
+          description: The URL that will recieve the webhooks
+          type: string
+        wallet:
+          $ref: '#/components/schemas/merchantIdCreate_request_wallet'
+      required:
+      - displayName
+      - wallet
+      type: object
+  securitySchemes:
+    Hawk:
+      description: 'Hawk Payload (see: https://github.com/hueniverse/hawk)'
+      in: header
+      name: Authorization
+      type: apiKey

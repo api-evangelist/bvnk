@@ -1,0 +1,306 @@
+{
+  "item": [
+    {
+      "id": "f55f0a06-38bd-4e21-bf33-048016fea6e4",
+      "name": "Fee",
+      "description": {
+        "content": "Network fee estimation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "27656c88-fd0a-411f-af06-34ff7adbc782",
+          "name": "Estimate transaction fee",
+          "request": {
+            "name": "Estimate transaction fee",
+            "description": {
+              "content": "Estimate fee to send blockchain transaction",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "fee-estimate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"asset\": \"<string>\",\n  \"network\": \"<string>\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"<string>\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"<string>\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"<string>\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"<string>\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d554169-eb0e-44aa-8169-a0cd5b759059",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "fee-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset\": \"USDT\",\n  \"network\": \"ETHEREUM\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": \"\",\n  \"asset\": \"BTC\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f957c1c7-634f-47b1-95f7-aeb48b342031",
+              "name": "Standard error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "fee-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset\": \"USDT\",\n  \"network\": \"ETHEREUM\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a1c552e-c682-4e29-b24d-aef21f1b3991",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "fee-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset\": \"USDT\",\n  \"network\": \"ETHEREUM\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d8d5ceb-53e4-40ba-b2ba-636199806325",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "fee-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asset\": \"USDT\",\n  \"network\": \"ETHEREUM\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.staging.layer1.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d169cb39-38e6-43eb-b563-e9142dbffe60",
+    "name": "Digital Asset Fee API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Layer1 API making management of crypto assets simple and easy",
+      "type": "text/plain"
+    }
+  }
+}

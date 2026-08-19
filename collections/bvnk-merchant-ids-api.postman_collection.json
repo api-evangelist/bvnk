@@ -1,0 +1,339 @@
+{
+  "item": [
+    {
+      "id": "5d37234a-3ff0-462b-a2c5-a7c92c4de330",
+      "name": "Merchant IDs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "941dbc90-dc0e-489c-95aa-b69fd36c3235",
+          "name": "List Merchant IDs",
+          "request": {
+            "name": "List Merchant IDs",
+            "description": {
+              "content": "Retrieves merchant IDs setup on your account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "merchant"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "631963a9-dd0b-4df1-b6f5-bec047618c23",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "merchant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1432,\n    \"merchantId\": \"b312436e-e477-49d4-be7f-9d027f9b9e34\",\n    \"displayName\": \"Test Merchant Name\",\n    \"secret\": \"MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM\",\n    \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\",\n    \"autoConvertInvalidPayments\": true,\n    \"defaultExpiryMinutes\": 1440,\n    \"webhookVersion\": 1,\n    \"wallet\": {\n      \"address\": \"string\",\n      \"approxAvailable\": \"0.59573928\",\n      \"approxBalance\": \"0.59573928\",\n      \"available\": 0.59573928,\n      \"balance\": 0.59573928,\n      \"convertedAvailable\": 20917.59,\n      \"currency\": {\n        \"quantityPrecision\": 6,\n        \"pricePrecision\": 0,\n        \"withdrawalFee\": 0.01,\n        \"code\": \"ETH\",\n        \"icon\": \"https://cdn.com/eth-icon.png\",\n        \"depositFee\": 0,\n        \"withdrawalParameters\": [\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          },\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          }\n        ],\n        \"name\": \"Ethereum\",\n        \"options\": {\n          \"address\": \"https://etherscan.io/address/{{address}}\",\n          \"explorer\": \"https://etherscan.io/\",\n          \"confirmations\": 12,\n          \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n        },\n        \"fiat\": false,\n        \"id\": 1432,\n        \"supportsDeposits\": false,\n        \"protocols\": [\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          },\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          }\n        ],\n        \"supportsWithdrawals\": false\n      },\n      \"custodianWallet\": false,\n      \"depositFee\": 0,\n      \"description\": \"ETH wallet\",\n      \"id\": 1432,\n      \"isEmoney\": false,\n      \"lookup\": \"string\",\n      \"protocol\": \"ETH\",\n      \"supportsDeposits\": true,\n      \"supportsThirdParty\": false,\n      \"supportsWithdrawals\": true,\n      \"withdrawalFee\": 0.001\n    },\n    \"emailRecipients\": \"string\"\n  },\n  {\n    \"id\": 1432,\n    \"merchantId\": \"b312436e-e477-49d4-be7f-9d027f9b9e34\",\n    \"displayName\": \"Test Merchant Name\",\n    \"secret\": \"MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM\",\n    \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\",\n    \"autoConvertInvalidPayments\": true,\n    \"defaultExpiryMinutes\": 1440,\n    \"webhookVersion\": 1,\n    \"wallet\": {\n      \"address\": \"string\",\n      \"approxAvailable\": \"0.59573928\",\n      \"approxBalance\": \"0.59573928\",\n      \"available\": 0.59573928,\n      \"balance\": 0.59573928,\n      \"convertedAvailable\": 20917.59,\n      \"currency\": {\n        \"quantityPrecision\": 6,\n        \"pricePrecision\": 0,\n        \"withdrawalFee\": 0.01,\n        \"code\": \"ETH\",\n        \"icon\": \"https://cdn.com/eth-icon.png\",\n        \"depositFee\": 0,\n        \"withdrawalParameters\": [\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          },\n          {\n            \"code\": \"destinationTag\",\n            \"name\": \"Destination Tag\",\n            \"id\": 1432,\n            \"required\": false,\n            \"example\": \"123432312\"\n          }\n        ],\n        \"name\": \"Ethereum\",\n        \"options\": {\n          \"address\": \"https://etherscan.io/address/{{address}}\",\n          \"explorer\": \"https://etherscan.io/\",\n          \"confirmations\": 12,\n          \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n        },\n        \"fiat\": false,\n        \"id\": 1432,\n        \"supportsDeposits\": false,\n        \"protocols\": [\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          },\n          {\n            \"code\": \"ERC20\",\n            \"network\": \"Ethereum\"\n          }\n        ],\n        \"supportsWithdrawals\": false\n      },\n      \"custodianWallet\": true,\n      \"depositFee\": 0,\n      \"description\": \"ETH wallet\",\n      \"id\": 1432,\n      \"isEmoney\": false,\n      \"lookup\": \"string\",\n      \"protocol\": \"ETH\",\n      \"supportsDeposits\": true,\n      \"supportsThirdParty\": false,\n      \"supportsWithdrawals\": true,\n      \"withdrawalFee\": 0.001\n    },\n    \"emailRecipients\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "338a73fa-ac83-41ab-8e3d-af67f036471d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "merchant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48014c0a-a1dd-4a68-8537-4f6321a1b5cf",
+          "name": "Create Merchant ID",
+          "request": {
+            "name": "Create Merchant ID",
+            "description": {
+              "content": "Generate a Merchant ID for your account to process pay-ins and pay-outs through our API.\n\nA Merchant ID is essential as it designates the account wallet where incoming pay-ins will be settled. For instance, if a Merchant ID is associated with a EUR wallet ID, any incoming USDT payment will be automatically converted to EUR and deposited in the designated EUR wallet.\n\nVice versa, any outgoing USDT payment will be automatically converted and withdrawn from the designated EUR wallet.\n\nFor further information, please visit https://docs.bvnk.com/docs/creating-your-first-merchant to learn more about creating your first Merchant ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "merchant"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"Test Merchant Name\",\n  \"wallet\": {\n    \"id\": \"501098\"\n  },\n  \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e2d6727-b3d3-44cc-a39e-ee1606262f75",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "merchant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"Test Merchant Name\",\n  \"wallet\": {\n    \"id\": \"501098\"\n  },\n  \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n  \"merchantDisplayName\": \"Test Merchant Name\",\n  \"merchantId\": \"5C8D8D78-366A-4AFB-B658-A64CE543C5DB\",\n  \"dateCreated\": 1566203005000,\n  \"expiryDate\": 1566203005000,\n  \"quoteExpiryDate\": 1566203005000,\n  \"acceptanceExpiryDate\": 1566203005000,\n  \"quoteStatus\": \"string\",\n  \"reference\": \"myUniqueRef333\",\n  \"type\": \"IN\",\n  \"subType\": \"merchantPayIn\",\n  \"status\": \"PENDING\",\n  \"displayCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"walletCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"paidCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"feeCurrency\": {\n    \"actual\": 76.45,\n    \"amount\": 0,\n    \"currency\": \"ETH\"\n  },\n  \"displayRate\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"exchangeRate\": {\n    \"rate\": 1680.1,\n    \"counter\": \"EUR\",\n    \"base\": \"ETH\"\n  },\n  \"address\": {\n    \"address\": \"string\",\n    \"tag\": \"\",\n    \"protocol\": \"ERC20\",\n    \"uri\": \"ethereum:0xABCDabcdABcDabcDaBCDAbcdABcdAbCdABcDABCd?value=1.1e18\",\n    \"alternatives\": [\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      },\n      {\n        \"protocol\": \"protocol\",\n        \"address\": \"address\",\n        \"tag\": \"tag\",\n        \"uri\": \"uri\"\n      }\n    ]\n  },\n  \"returnUrl\": \"https://my-shop.com/payment-complete?ref=xyz\",\n  \"redirectUrl\": \"https://pay.bvnk.com/payin?uuid=3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n  \"transactions\": [\n    {\n      \"dateCreated\": 1566203005000,\n      \"dateConfirmed\": 1566203005000,\n      \"hash\": \"string\",\n      \"amount\": 100,\n      \"risk\": {},\n      \"networkFeeCurrency\": \"BTC\",\n      \"networkFeeAmount\": 1.05,\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"displayRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      },\n      \"exchangeRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      }\n    },\n    {\n      \"dateCreated\": 1566203005000,\n      \"dateConfirmed\": 1566203005000,\n      \"hash\": \"string\",\n      \"amount\": 100,\n      \"risk\": {},\n      \"networkFeeCurrency\": \"BTC\",\n      \"networkFeeAmount\": 1.05,\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"displayRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      },\n      \"exchangeRate\": {\n        \"rate\": 1680.1,\n        \"counter\": \"EUR\",\n        \"base\": \"ETH\"\n      }\n    }\n  ],\n  \"refund\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ee447f8-72cb-427d-937a-56fa1ec2008b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "merchant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"Test Merchant Name\",\n  \"wallet\": {\n    \"id\": \"501098\"\n  },\n  \"webhookUrl\": \"https://www.URL.com/to/send/webhooks/to\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.bvnk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "de328db6-3a44-4672-b69a-c50009b0c0b1",
+    "name": "BVNK API Endpoints Merchant IDs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.",
+      "type": "text/plain"
+    }
+  }
+}

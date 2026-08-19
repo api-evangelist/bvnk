@@ -1,0 +1,299 @@
+openapi: 3.2.0
+info:
+  description: Layer1 API making management of crypto assets simple and easy
+  title: Digital Asset Key Pair API
+  version: 1.0.0
+servers:
+- description: Staging
+  url: https://api.staging.layer1.com
+tags:
+- description: Create and manage key-pairs
+  name: Key Pair
+paths:
+  /digital/v1/key-pairs:
+    get:
+      description: Retrieve paginated list of key-pairs belonging to a asset pool
+      operationId: listKeyPairs
+      parameters:
+      - explode: true
+        in: query
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 64
+          format: int32
+          maximum: 100
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultKeyPair'
+          description: Created
+      security:
+      - oauth2:
+        - keypairs:view
+      - httpSignature: []
+      summary: List key pairs
+      tags:
+      - Key Pair
+      x-accepts:
+      - application/json
+    post:
+      description: Creates a new key pair from which different addresses can be created
+      operationId: createKeyPair
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateKeyPairRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyPair'
+          description: Created
+      security:
+      - oauth2:
+        - keypairs:edit
+      - httpSignature: []
+      summary: Create key pair
+      tags:
+      - Key Pair
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/key-pairs/{keyPairId}:
+    get:
+      description: Retrieve a key pair given id
+      operationId: getKeyPair
+      parameters:
+      - explode: false
+        in: path
+        name: keyPairId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyPair'
+          description: Created
+      security:
+      - oauth2:
+        - keypairs:view
+      - httpSignature: []
+      summary: Get key pair
+      tags:
+      - Key Pair
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    PaginatedResultKeyPair:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - reference: myUniqueRef333
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          master: true
+        - reference: myUniqueRef333
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          master: true
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/KeyPair'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
+    CreateKeyPairRequest:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        master: true
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        reference:
+          description: custom identifier supplied for key pair that is used to link key pair to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        master:
+          description: whether this is a master key for the asset pool
+          type: boolean
+    KeyPair:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        master: true
+      properties:
+        id:
+          description: key pair id
+          format: uuid
+          type: string
+        reference:
+          description: custom identifier supplied for key pair that is used to link key pair to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        master:
+          description: whether this is a master key for the asset pool
+          type: boolean
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+  securitySchemes:
+    openId:
+      openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+      type: openIdConnect
+    httpSignature:
+      scheme: signature
+      type: http
+    oauth2:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+      type: oauth2

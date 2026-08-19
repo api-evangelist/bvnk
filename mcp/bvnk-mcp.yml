@@ -3,11 +3,11 @@ method: searched
 source: https://github.com/bvnk/layer1-mcp-digital
 status: published
 hosted: false
-note: 'BVNK publishes a first-party MCP server from its own GitHub organization: layer1-mcp-digital, an MCP server
-  for the Layer1 Digital Asset API. It is described by BVNK as a prototype. It is self-hosted and stdio-transport
-  — there is no hosted/remote MCP endpoint to probe, so tools/list could not be called over the wire; the tool list
-  below is read verbatim from the published index.js ListToolsRequestSchema handler, including its real inputSchema
-  definitions.'
+note: 'BVNK publishes a first-party MCP server from its own GitHub organization: layer1-mcp-digital, an
+  MCP server for the Layer1 Digital Asset API. It is described by BVNK as a prototype. It is self-hosted
+  and stdio-transport — there is no hosted/remote MCP endpoint to probe, so tools/list could not be called
+  over the wire; the tool list below is read verbatim from the published index.js ListToolsRequestSchema
+  handler, including its real inputSchema definitions.'
 server:
   name: layer1-digital-mcp
   package_name: layer1-mcp-digital
@@ -40,8 +40,8 @@ tools:
   required: []
   source_operation: openapi/bvnk-layer1-digital-asset-openapi-original.yml#listTransactions
   rest: GET /digital/v1/transactions
-  defect: inputSchema declares the property transactionHash twice; the second declaration (address reference) shadows
-    the first.
+  defect: inputSchema declares the property transactionHash twice; the second declaration (address reference)
+    shadows the first.
 - name: get_asset_pool_balance
   description: Get the balance of the asset pool
   required: []
@@ -65,3 +65,9 @@ other_agent_surfaces:
 - name: n8n-nodes-bvnk
   repository: https://github.com/bvnk/bvnk-n8n
   description: n8n node for BVNK payment operations.
+deployment:
+  mode: local-stdio
+  verified: searched
+  tools: 4
+  checked: '2026-08-12'
+  source: catalog MCP census

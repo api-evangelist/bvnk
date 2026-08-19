@@ -1,0 +1,617 @@
+openapi: 3.2.0
+info:
+  description: Layer1 API making management of crypto assets simple and easy
+  title: Digital Asset Address API
+  version: 1.0.0
+servers:
+- description: Staging
+  url: https://api.staging.layer1.com
+tags:
+- description: Create and manage addresses
+  name: Address
+paths:
+  /digital/v1/addresses:
+    get:
+      description: Retrieve paginated list of addresses
+      operationId: listAddresses
+      parameters:
+      - explode: true
+        in: query
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: 'Query in lucene format. Supported fields: reference, customerId'
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 64
+          format: int32
+          maximum: 100
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultAddress'
+          description: OK
+      security:
+      - oauth2:
+        - addresses:view
+      - httpSignature: []
+      summary: List addresses
+      tags:
+      - Address
+      x-accepts:
+      - application/json
+    post:
+      description: Creates a new address
+      operationId: createAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAddressRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: OK
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: Accepted for asynchronous creation
+      security:
+      - oauth2:
+        - addresses:edit
+      - httpSignature: []
+      summary: Create a new address
+      tags:
+      - Address
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/addresses/validate:
+    post:
+      description: Validate a blockchain address
+      operationId: validateAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateAddressRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateAddressResponse'
+          description: OK
+      security:
+      - oauth2:
+        - addresses:edit
+      - httpSignature: []
+      summary: Validate address
+      tags:
+      - Address
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/addresses/{addressId}:
+    get:
+      description: Retrieve select address details
+      operationId: getAddress
+      parameters:
+      - explode: false
+        in: path
+        name: addressId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Address'
+                type: array
+          description: OK
+      security:
+      - oauth2:
+        - addresses:view
+      - httpSignature: []
+      summary: Get address
+      tags:
+      - Address
+      x-accepts:
+      - application/json
+  /digital/v1/addresses/{addressId}/tags:
+    get:
+      description: Retrieve paginated list of address tags
+      operationId: listTags
+      parameters:
+      - explode: false
+        in: path
+        name: addressId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 64
+          format: int32
+          maximum: 100
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultAddress'
+          description: OK
+      security:
+      - oauth2:
+        - addresses:view
+      - httpSignature: []
+      summary: List address tags
+      tags:
+      - Address
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    Address:
+      example:
+        address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+        aliases:
+        - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+        supportedAssets:
+        - BTC
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        network: BITCOIN
+        master: true
+        reference: reference
+        balances:
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        supportedNetworks:
+        - ETHEREUM
+        customerId: cust123456789
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tag: 123456789
+      properties:
+        id:
+          description: internal id
+          format: uuid
+          type: string
+        address:
+          description: blockchain address
+          example: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          type: string
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        keyPairId:
+          description: key pair id
+          format: uuid
+          type: string
+        reference:
+          description: key pair reference
+          type: string
+        supportedAssets:
+          description: list of assets supported by network
+          example:
+          - BTC
+          items:
+            type: string
+          type: array
+        aliases:
+          description: alternative address (e.g. BTC has segwitt and legacy format)
+          example:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          items:
+            type: string
+          type: array
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
+        balances:
+          description: address balances
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+        customerId:
+          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer
+          example: cust123456789
+          type: string
+        master:
+          description: flag indicating whether this address is asset pool master address
+          type: boolean
+        supportedNetworks:
+          description: list of networks supporting given asset. mutually exclusive with network and supportedAssets
+          example:
+          - ETHEREUM
+          items:
+            type: string
+          type: array
+    PaginatedResultAddress:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          aliases:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          supportedAssets:
+          - BTC
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          network: BITCOIN
+          master: true
+          reference: reference
+          balances:
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          supportedNetworks:
+          - ETHEREUM
+          customerId: cust123456789
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tag: 123456789
+        - address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          aliases:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          supportedAssets:
+          - BTC
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          network: BITCOIN
+          master: true
+          reference: reference
+          balances:
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          supportedNetworks:
+          - ETHEREUM
+          customerId: cust123456789
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tag: 123456789
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Address'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    ValidateAddressResponse:
+      example:
+        valid: true
+        errors:
+        - invalid format
+        - should be 32 characters
+      properties:
+        valid:
+          description: whether the address is valid
+          type: boolean
+        errors:
+          description: list of error messages if the address is invalid
+          example:
+          - invalid format
+          - should be 32 characters
+          items:
+            type: string
+          type: array
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
+    ValidateAddressRequest:
+      example:
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        network: ETHEREUM
+      properties:
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
+    CreateAddressRequest:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        customerId: customer123
+        asset: BTC
+        network: BITCOIN
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        asset:
+          description: crypto currency for which address(es) should be created. if network is not given will create addreses in all networks supporting given asset
+          example: BTC
+          type: string
+        reference:
+          description: unique identifier for each destination that is receiving funds (whether tag or address). Similar to banking reference it is used to link deposit to a specific invoice
+          example: myUniqueRef333
+          type: string
+        customerId:
+          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer, merchant, company, etc.
+          example: customer123
+          type: string
+    Balance:
+      example:
+        reserved: ''
+        blockchain: ''
+        available: ''
+        asset: BTC
+        network: BITCOIN
+      properties:
+        network:
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          description: asset
+          example: BTC
+          type: string
+        available: {}
+        reserved: {}
+        blockchain: {}
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+  securitySchemes:
+    openId:
+      openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+      type: openIdConnect
+    httpSignature:
+      scheme: signature
+      type: http
+    oauth2:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+      type: oauth2

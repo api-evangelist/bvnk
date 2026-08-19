@@ -1,0 +1,571 @@
+openapi: 3.2.0
+info:
+  description: Layer1 API making management of crypto assets simple and easy
+  title: Digital Asset Screening API
+  version: 1.0.0
+servers:
+- description: Staging
+  url: https://api.staging.layer1.com
+tags:
+- description: Manage screening requests
+  name: Screening
+paths:
+  /digital/v1/screenings/action:
+    put:
+      description: Approves or rejects a held transfer based on the provided transfer ID and the destination address ID.
+      operationId: manuallyActionHeldTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualActionRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          description: Invalid request
+        '200':
+          description: Transfer reviewed successfully
+        '410':
+          description: Withdrawal not found or has already been completed
+      security:
+      - oauth2:
+        - screenings:edit
+      - httpSignature: []
+      summary: Approve or reject a held transfer. Deposits can be only approved.
+      tags:
+      - Screening
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/screenings:
+    get:
+      description: Retrieves a paginated list of the most recent transfers along with their screening results.
+      operationId: listScreenings
+      parameters:
+      - deprecated: true
+        description: Filter by transaction hash
+        explode: true
+        in: query
+        name: hash
+        required: false
+        schema:
+          type: string
+        style: form
+      - deprecated: true
+        description: Set of operations to filter by
+        explode: true
+        in: query
+        name: operation
+        required: false
+        schema:
+          items:
+            enum:
+            - DEPOSIT
+            - WITHDRAWAL
+            - CONSOLIDATION
+            - RETURN
+            - STAKE
+            - UNSTAKE
+            - DELEGATE
+            - UNDELEGATE
+            - RELEASE
+            type: string
+          type: array
+          uniqueItems: true
+        style: form
+      - deprecated: true
+        description: Set of screening states to filter by
+        explode: true
+        in: query
+        name: state
+        required: false
+        schema:
+          items:
+            enum:
+            - APPROVED
+            - REJECTED
+            - PENDING_SCREENING
+            type: string
+          type: array
+          uniqueItems: true
+        style: form
+      - deprecated: true
+        description: Start date for filtering by transfer creation date
+        explode: true
+        in: query
+        name: startDate
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - deprecated: true
+        description: End date for filtering by transfer creation date
+        explode: true
+        in: query
+        name: endDate
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 16
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - example: screeningId.transfer.id.createdAt,desc
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          default: screeningId.transfer.id.createdAt,desc
+          type: string
+        style: form
+      - description: 'Query using Lucene-like syntax. Supported properties: notReasonCode, reasonCode, reason, hash, state, operation, from, to'
+        example: notReasonCode:DUST_AMOUNT
+        explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad Request
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedScreenings'
+          description: List screenings successfully
+      security:
+      - oauth2:
+        - screenings:view
+      - httpSignature: []
+      summary: List screening results
+      tags:
+      - Screening
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    Participant:
+      example:
+        amount: ''
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        asset: ETH
+      properties:
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
+    Failure:
+      example:
+        reason: INSUFFICIENT_FUNDS
+        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        reason:
+          description: reason for failure
+          example: INSUFFICIENT_FUNDS
+          type: string
+        message:
+          description: error message
+          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+    PaginatedScreenings:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - transactionMetadata:
+            failure:
+              reason: INSUFFICIENT_FUNDS
+              message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          screeningState: PENDING_SCREENING
+          transactionStatus: SCREENING_PASSED
+          transactionCreatedAt: 2000-01-23 04:56:07+00:00
+          screeningMetadata:
+            urls:
+            - urls
+            - urls
+            ids:
+            - ids
+            - ids
+          screeningUpdatedAt: 2000-01-23 04:56:07+00:00
+          transactionId: e7b67a42-ebb7-4f35-913b-29d89068e74c
+          transactionHash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          network: ETHEREUM
+          transactionUpdatedAt: 2000-01-23 04:56:07+00:00
+          addressId: fefc3e7b-743b-489f-9311-0921f4930dc7
+          screeningReasonCode: DUST_AMOUNT
+          screeningCreatedAt: 2000-01-23 04:56:07+00:00
+          screeningReason: Manual review required
+          operation: WITHDRAWAL
+          participants:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+        - transactionMetadata:
+            failure:
+              reason: INSUFFICIENT_FUNDS
+              message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          screeningState: PENDING_SCREENING
+          transactionStatus: SCREENING_PASSED
+          transactionCreatedAt: 2000-01-23 04:56:07+00:00
+          screeningMetadata:
+            urls:
+            - urls
+            - urls
+            ids:
+            - ids
+            - ids
+          screeningUpdatedAt: 2000-01-23 04:56:07+00:00
+          transactionId: e7b67a42-ebb7-4f35-913b-29d89068e74c
+          transactionHash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          network: ETHEREUM
+          transactionUpdatedAt: 2000-01-23 04:56:07+00:00
+          addressId: fefc3e7b-743b-489f-9311-0921f4930dc7
+          screeningReasonCode: DUST_AMOUNT
+          screeningCreatedAt: 2000-01-23 04:56:07+00:00
+          screeningReason: Manual review required
+          operation: WITHDRAWAL
+          participants:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/ScreeningView'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    ManualActionRequest:
+      example:
+        reason: Confirmed false positive
+        action: APPROVE
+        transferId: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
+        operation: DEPOSIT
+        addressId: 11e785c1-a31a-4de9-9585-351056bea639
+      properties:
+        action:
+          description: Screening action to execute on the transfer
+          enum:
+          - APPROVE
+          - REJECT
+          example: APPROVE
+          type: string
+        operation:
+          description: Transaction type
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          example: DEPOSIT
+          type: string
+        reason:
+          description: Reason for approving or rejecting the suspended transfer
+          example: Confirmed false positive
+          type: string
+        transferId:
+          description: Transfer identifier for which screening is performed
+          example: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
+          format: uuid
+          type: string
+        addressId:
+          description: Specific destination address identifier for which screening is performed. Required only for deposits.
+          example: 11e785c1-a31a-4de9-9585-351056bea639
+          format: uuid
+          type: string
+      required:
+      - action
+      - operation
+      - reason
+      - transferId
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
+    TransactionMetadata:
+      example:
+        failure:
+          reason: INSUFFICIENT_FUNDS
+          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        failure:
+          $ref: '#/components/schemas/Failure'
+    ScreeningView:
+      example:
+        transactionMetadata:
+          failure:
+            reason: INSUFFICIENT_FUNDS
+            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+        screeningState: PENDING_SCREENING
+        transactionStatus: SCREENING_PASSED
+        transactionCreatedAt: 2000-01-23 04:56:07+00:00
+        screeningMetadata:
+          urls:
+          - urls
+          - urls
+          ids:
+          - ids
+          - ids
+        screeningUpdatedAt: 2000-01-23 04:56:07+00:00
+        transactionId: e7b67a42-ebb7-4f35-913b-29d89068e74c
+        transactionHash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+        network: ETHEREUM
+        transactionUpdatedAt: 2000-01-23 04:56:07+00:00
+        addressId: fefc3e7b-743b-489f-9311-0921f4930dc7
+        screeningReasonCode: DUST_AMOUNT
+        screeningCreatedAt: 2000-01-23 04:56:07+00:00
+        screeningReason: Manual review required
+        operation: WITHDRAWAL
+        participants:
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+      properties:
+        transactionId:
+          description: Unique identifier of the transaction
+          example: e7b67a42-ebb7-4f35-913b-29d89068e74c
+          type: string
+        transactionHash:
+          description: Blockchain transaction hash
+          example: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          type: string
+        transactionStatus:
+          description: Current status of the transaction
+          enum:
+          - BLOCKED
+          - CONFIRMED
+          - CREATED
+          - DETECTED
+          - FAILED
+          - FUNDS_RESERVED
+          - HELD
+          - REJECTED
+          - SCREENING_PASSED
+          - SCREENING_REQUESTED
+          - SIGNED
+          - SUCCESS
+          - UNCONFIRMED
+          - REPLACED
+          example: SCREENING_PASSED
+          type: string
+        network:
+          description: Network code used for the transaction
+          example: ETHEREUM
+          type: string
+        transactionMetadata:
+          $ref: '#/components/schemas/TransactionMetadata'
+        transactionCreatedAt:
+          description: Timestamp when the transaction was created
+          format: date-time
+          type: string
+        transactionUpdatedAt:
+          description: Timestamp when the transaction was last updated
+          format: date-time
+          type: string
+        screeningState:
+          description: Screening state of the transaction
+          enum:
+          - APPROVED
+          - REJECTED
+          - PENDING_SCREENING
+          example: PENDING_SCREENING
+          type: string
+        screeningReason:
+          description: Reason for the screening result
+          example: Manual review required
+          type: string
+        screeningReasonCode:
+          description: Reason code for the screening result
+          example: DUST_AMOUNT
+          type: string
+        screeningCreatedAt:
+          description: Timestamp when the screening was created
+          format: date-time
+          type: string
+        screeningUpdatedAt:
+          description: Timestamp when the screening was last updated
+          format: date-time
+          type: string
+        screeningMetadata:
+          $ref: '#/components/schemas/ScreeningMetadata'
+        participants:
+          description: List of participants involved in the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        operation:
+          description: Operation type for the screening
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          - CONSOLIDATION
+          - RETURN
+          - STAKE
+          - UNSTAKE
+          - DELEGATE
+          - UNDELEGATE
+          - RELEASE
+          example: WITHDRAWAL
+          type: string
+        addressId:
+          description: Unique identifier of the address involved in the screening
+          example: fefc3e7b-743b-489f-9311-0921f4930dc7
+          format: uuid
+          type: string
+    ScreeningMetadata:
+      example:
+        urls:
+        - urls
+        - urls
+        ids:
+        - ids
+        - ids
+      properties:
+        urls:
+          description: URLs to external screening providers relevant to the deposit
+          items:
+            type: string
+          type: array
+        ids:
+          description: Deposit screening identifiers within external screening providers
+          items:
+            type: string
+          type: array
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+  securitySchemes:
+    openId:
+      openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+      type: openIdConnect
+    httpSignature:
+      scheme: signature
+      type: http
+    oauth2:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+      type: oauth2

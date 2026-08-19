@@ -1,0 +1,578 @@
+openapi: 3.2.0
+info:
+  description: Layer1 API making management of crypto assets simple and easy
+  title: Digital Asset Asset Pool API
+  version: 1.0.0
+servers:
+- description: Staging
+  url: https://api.staging.layer1.com
+tags:
+- description: Create and manage asset pools
+  name: Asset Pool
+paths:
+  /digital/v1/asset-pools:
+    get:
+      description: Retrieve paginated list of asset pools
+      operationId: listAssetPools
+      parameters:
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 64
+          format: int32
+          maximum: 100
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content: {}
+          description: OK
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: List asset pools
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+    post:
+      description: Creates a new asset pool which serves as a collection of assets
+      operationId: createAssetPool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssetPoolRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad Request
+        '201':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Created
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Tenant doesn't exist
+      security:
+      - oauth2:
+        - asset-pools:edit
+      - httpSignature: []
+      summary: Create asset pool
+      tags:
+      - Asset Pool
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools/{assetPoolId}:
+    delete:
+      description: Delete asset pool with given id if it has not addresses nor transactions created
+      operationId: deleteAssetPool
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad Request
+        '200':
+          description: OK
+        '412':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: If pool is not empty
+      security:
+      - oauth2:
+        - asset-pools:edit
+      - httpSignature: []
+      summary: Delete asset pool
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+    get:
+      description: Retrieve a specific asset pool given id
+      operationId: getAssetPool
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Created
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: Get asset pool
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+    patch:
+      description: Update an asset pool
+      operationId: updateAssetPool
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssetPoolRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+      security:
+      - oauth2:
+        - asset-pools:edit
+      - httpSignature: []
+      summary: Update asset pool
+      tags:
+      - Asset Pool
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools/{assetPoolId}/max-withdrawable-amount:
+    get:
+      description: Retrieve maximal approximate (does not take fees into account) amount withdrawable for specific network and asset
+      operationId: getAssetPoolMaxWithdrawableAmount
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: network
+        required: true
+        schema:
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: asset
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+          description: Created
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: Get max asset pool withdrawable balance
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools/{assetPoolId}/balances:
+    get:
+      description: Retrieve an asset pool balance for specific network and asset
+      operationId: getAssetPoolBalance
+      parameters:
+      - explode: false
+        in: path
+        name: assetPoolId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: network
+        required: true
+        schema:
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: asset
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+          description: Created
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: Get asset pool balance
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+  /digital/v1/asset-pools/summary:
+    get:
+      description: Retrieve authenticated summary across all asset pools.
+      operationId: getAssetPoolSummary
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Standard error response
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetPoolSummary'
+          description: OK
+      security:
+      - oauth2:
+        - asset-pools:view
+      - httpSignature: []
+      summary: Get asset pool summary
+      tags:
+      - Asset Pool
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    UpdateAssetPoolRequest:
+      example:
+        property: masterKeyPairId
+        value: value
+      properties:
+        property:
+          description: name of asset pool property
+          enum:
+          - masterKeyPairId
+          - reference
+          example: masterKeyPairId
+          type: string
+        value:
+          description: value for the property
+          type: string
+    AssetPoolSummary:
+      example:
+        balances:
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+      properties:
+        balances:
+          description: balances summary
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    Balance:
+      example:
+        reserved: ''
+        blockchain: ''
+        available: ''
+        asset: BTC
+        network: BITCOIN
+      properties:
+        network:
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          description: asset
+          example: BTC
+          type: string
+        available: {}
+        reserved: {}
+        blockchain: {}
+    CreateAssetPoolRequest:
+      example:
+        reference: myUniqueRef333
+        name: Payment Processing Spanish VASP
+      properties:
+        name:
+          description: name of asset pool
+          example: Payment Processing Spanish VASP
+          type: string
+        reference:
+          description: custom supplied identifier for asset pool. Also used to initialise master key pair
+          example: myUniqueRef333
+          type: string
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+  securitySchemes:
+    openId:
+      openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+      type: openIdConnect
+    httpSignature:
+      scheme: signature
+      type: http
+    oauth2:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+      type: oauth2

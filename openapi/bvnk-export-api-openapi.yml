@@ -1,0 +1,400 @@
+openapi: 3.2.0
+info:
+  description: Layer1 API making management of crypto assets simple and easy
+  title: Digital Asset Export API
+  version: 1.0.0
+servers:
+- description: Staging
+  url: https://api.staging.layer1.com
+tags:
+- description: Create and manage data exports
+  name: Export
+paths:
+  /digital/v1/exports:
+    get:
+      description: Retrieves a paginated list of exports based on type and pagination settings.
+      operationId: getExports
+      parameters:
+      - description: Filter exports by type
+        explode: true
+        in: query
+        name: type
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        style: form
+      - explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: true
+        schema:
+          default: 16
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Invalid input
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PaginatedExports'
+                type: array
+          description: Paginated list of exports
+      security:
+      - oauth2:
+        - ${exports.read-scope:exports:view}
+      - httpSignature: []
+      summary: List all exports
+      tags:
+      - Export
+      x-accepts:
+      - application/json
+    post:
+      description: Initiates a job to export balance data in the CSV format.
+      operationId: createBalanceExport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBalanceExportRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 'Conflict: Export job is already running for the specified criteria'
+        '201':
+          description: Export job created successfully
+      security:
+      - oauth2:
+        - exports:edit
+      - httpSignature: []
+      summary: Create a balance export
+      tags:
+      - Export
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /digital/v1/exports/{id}:
+    get:
+      description: Retrieves export details with a short-lived download link by its ID.
+      operationId: getExport
+      parameters:
+      - description: The ID of the export to retrieve
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Request invalid
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service Unavailable
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad Request
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Export'
+          description: Export details
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Export not found
+      security:
+      - oauth2:
+        - ${exports.read-scope:exports:view}
+      - httpSignature: []
+      summary: Get export with a download link
+      tags:
+      - Export
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    PaginatedExports:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - createdAt: 2020-01-01 00:00:00+00:00
+          filename: transaction_2024_04_19T11_20_11_901Z.csv
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          type: transaction
+          inputParameters:
+            from: 2020-01-01 00:00:00+00:00
+            to: 2020-01-31 23:59:59+00:00
+          url: url
+          status: PROCESSING
+          updatedAt: 2020-01-02 12:34:56+00:00
+        - createdAt: 2020-01-01 00:00:00+00:00
+          filename: transaction_2024_04_19T11_20_11_901Z.csv
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          type: transaction
+          inputParameters:
+            from: 2020-01-01 00:00:00+00:00
+            to: 2020-01-31 23:59:59+00:00
+          url: url
+          status: PROCESSING
+          updatedAt: 2020-01-02 12:34:56+00:00
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Export'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    CreateBalanceExportRequest:
+      example:
+        assets: '[BTC]'
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        asset: BTC
+        networks: '[BITCOIN]'
+        network: BITCOIN
+      properties:
+        network:
+          deprecated: true
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          deprecated: true
+          description: asset
+          example: BTC
+          type: string
+        networks:
+          description: networks
+          example: '[BITCOIN]'
+          items:
+            enum:
+            - BASE
+            - BINANCE
+            - BITCOIN
+            - BITCOIN_CASH
+            - DOGECOIN
+            - ETHEREUM
+            - LITECOIN
+            - POLYGON
+            - RIPPLE
+            - SOLANA
+            - TRON
+            type: string
+          type: array
+          uniqueItems: true
+        assets:
+          description: assets
+          example: '[BTC]'
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        assetPoolId:
+          description: The ID of the asset pool for which the report will be generated.
+          format: uuid
+          type: string
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
+    Export:
+      example:
+        createdAt: 2020-01-01 00:00:00+00:00
+        filename: transaction_2024_04_19T11_20_11_901Z.csv
+        id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        type: transaction
+        inputParameters:
+          from: 2020-01-01 00:00:00+00:00
+          to: 2020-01-31 23:59:59+00:00
+        url: url
+        status: PROCESSING
+        updatedAt: 2020-01-02 12:34:56+00:00
+      properties:
+        id:
+          description: Unique identifier of the export
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          format: uuid
+          type: string
+        status:
+          description: Current status of the export job
+          enum:
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: PROCESSING
+          type: string
+        type:
+          description: Export type name
+          example: transaction
+          type: string
+        inputParameters:
+          additionalProperties:
+            type: string
+          description: JSON string containing input parameters for the job
+          example:
+            from: 2020-01-01 00:00:00+00:00
+            to: 2020-01-31 23:59:59+00:00
+        filename:
+          description: Filename of the resulting export
+          example: transaction_2024_04_19T11_20_11_901Z.csv
+          type: string
+        url:
+          description: URL for file download
+          type: string
+        createdAt:
+          description: Timestamp when the export was created
+          example: 2020-01-01 00:00:00+00:00
+          format: date-time
+          type: string
+        updatedAt:
+          description: Timestamp when the export was last updated
+          example: 2020-01-02 12:34:56+00:00
+          format: date-time
+          type: string
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+  securitySchemes:
+    openId:
+      openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
+      type: openIdConnect
+    httpSignature:
+      scheme: signature
+      type: http
+    oauth2:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token
+      type: oauth2

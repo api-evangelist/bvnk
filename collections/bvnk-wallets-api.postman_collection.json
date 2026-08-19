@@ -1,0 +1,741 @@
+{
+  "item": [
+    {
+      "id": "91086ec7-dbcb-482d-a63d-7571d209e15b",
+      "name": "Wallets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bdfced8a-9699-41ee-90b3-3f8b66b0f410",
+          "name": "List Wallets",
+          "request": {
+            "name": "List Wallets",
+            "description": {
+              "content": "Retrieves a list of wallets on your account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "wallet"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "start offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "max",
+                  "value": "10",
+                  "description": "max number results"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a8a7d016-9bbb-40fc-a3c1-d3757495989a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wallet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "max",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"address\": \"string\",\n    \"approxAvailable\": \"0.59573928\",\n    \"approxBalance\": \"0.59573928\",\n    \"available\": 0.59573928,\n    \"balance\": 0.59573928,\n    \"convertedAvailable\": 20917.59,\n    \"currency\": {\n      \"quantityPrecision\": 6,\n      \"pricePrecision\": 0,\n      \"withdrawalFee\": 0.01,\n      \"code\": \"ETH\",\n      \"icon\": \"https://cdn.com/eth-icon.png\",\n      \"depositFee\": 0,\n      \"withdrawalParameters\": [\n        {\n          \"code\": \"destinationTag\",\n          \"name\": \"Destination Tag\",\n          \"id\": 1432,\n          \"required\": false,\n          \"example\": \"123432312\"\n        },\n        {\n          \"code\": \"destinationTag\",\n          \"name\": \"Destination Tag\",\n          \"id\": 1432,\n          \"required\": false,\n          \"example\": \"123432312\"\n        }\n      ],\n      \"name\": \"Ethereum\",\n      \"options\": {\n        \"address\": \"https://etherscan.io/address/{{address}}\",\n        \"explorer\": \"https://etherscan.io/\",\n        \"confirmations\": 12,\n        \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n      },\n      \"fiat\": false,\n      \"id\": 1432,\n      \"supportsDeposits\": false,\n      \"protocols\": [\n        {\n          \"code\": \"ERC20\",\n          \"network\": \"Ethereum\"\n        },\n        {\n          \"code\": \"ERC20\",\n          \"network\": \"Ethereum\"\n        }\n      ],\n      \"supportsWithdrawals\": false\n    },\n    \"custodianWallet\": true,\n    \"depositFee\": 0,\n    \"description\": \"ETH wallet\",\n    \"id\": 1432,\n    \"isEmoney\": false,\n    \"lookup\": \"string\",\n    \"protocol\": \"ETH\",\n    \"supportsDeposits\": true,\n    \"supportsThirdParty\": false,\n    \"supportsWithdrawals\": true,\n    \"withdrawalFee\": 0.001\n  },\n  {\n    \"address\": \"string\",\n    \"approxAvailable\": \"0.59573928\",\n    \"approxBalance\": \"0.59573928\",\n    \"available\": 0.59573928,\n    \"balance\": 0.59573928,\n    \"convertedAvailable\": 20917.59,\n    \"currency\": {\n      \"quantityPrecision\": 6,\n      \"pricePrecision\": 0,\n      \"withdrawalFee\": 0.01,\n      \"code\": \"ETH\",\n      \"icon\": \"https://cdn.com/eth-icon.png\",\n      \"depositFee\": 0,\n      \"withdrawalParameters\": [\n        {\n          \"code\": \"destinationTag\",\n          \"name\": \"Destination Tag\",\n          \"id\": 1432,\n          \"required\": false,\n          \"example\": \"123432312\"\n        },\n        {\n          \"code\": \"destinationTag\",\n          \"name\": \"Destination Tag\",\n          \"id\": 1432,\n          \"required\": false,\n          \"example\": \"123432312\"\n        }\n      ],\n      \"name\": \"Ethereum\",\n      \"options\": {\n        \"address\": \"https://etherscan.io/address/{{address}}\",\n        \"explorer\": \"https://etherscan.io/\",\n        \"confirmations\": 12,\n        \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n      },\n      \"fiat\": false,\n      \"id\": 1432,\n      \"supportsDeposits\": false,\n      \"protocols\": [\n        {\n          \"code\": \"ERC20\",\n          \"network\": \"Ethereum\"\n        },\n        {\n          \"code\": \"ERC20\",\n          \"network\": \"Ethereum\"\n        }\n      ],\n      \"supportsWithdrawals\": false\n    },\n    \"custodianWallet\": true,\n    \"depositFee\": 0,\n    \"description\": \"ETH wallet\",\n    \"id\": 1432,\n    \"isEmoney\": false,\n    \"lookup\": \"string\",\n    \"protocol\": \"ETH\",\n    \"supportsDeposits\": true,\n    \"supportsThirdParty\": false,\n    \"supportsWithdrawals\": true,\n    \"withdrawalFee\": 0.001\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "787fa5f6-4ed9-4863-972d-74c1fca86a6a",
+          "name": "Create Wallet",
+          "request": {
+            "name": "Create Wallet",
+            "description": {
+              "content": "Creates a wallet on the BVNK platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "wallet"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency\": \"ETH\",\n  \"description\": \"My 2nd EUR Wallet\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c31a98c1-00e6-431c-b9c5-210c56f095c4",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wallet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"My 2nd EUR Wallet\",\n  \"currency\": \"ETH\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"string\",\n  \"approxAvailable\": \"0.59573928\",\n  \"approxBalance\": \"0.59573928\",\n  \"available\": 0.59573928,\n  \"balance\": 0.59573928,\n  \"convertedAvailable\": 20917.59,\n  \"currency\": {\n    \"quantityPrecision\": 6,\n    \"pricePrecision\": 0,\n    \"withdrawalFee\": 0.01,\n    \"code\": \"ETH\",\n    \"icon\": \"https://cdn.com/eth-icon.png\",\n    \"depositFee\": 0,\n    \"withdrawalParameters\": [\n      {\n        \"code\": \"destinationTag\",\n        \"name\": \"Destination Tag\",\n        \"id\": 1432,\n        \"required\": false,\n        \"example\": \"123432312\"\n      },\n      {\n        \"code\": \"destinationTag\",\n        \"name\": \"Destination Tag\",\n        \"id\": 1432,\n        \"required\": false,\n        \"example\": \"123432312\"\n      }\n    ],\n    \"name\": \"Ethereum\",\n    \"options\": {\n      \"address\": \"https://etherscan.io/address/{{address}}\",\n      \"explorer\": \"https://etherscan.io/\",\n      \"confirmations\": 12,\n      \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n    },\n    \"fiat\": false,\n    \"id\": 1432,\n    \"supportsDeposits\": false,\n    \"protocols\": [\n      {\n        \"code\": \"ERC20\",\n        \"network\": \"Ethereum\"\n      },\n      {\n        \"code\": \"ERC20\",\n        \"network\": \"Ethereum\"\n      }\n    ],\n    \"supportsWithdrawals\": false\n  },\n  \"custodianWallet\": false,\n  \"depositFee\": 0,\n  \"description\": \"ETH wallet\",\n  \"id\": 1432,\n  \"isEmoney\": false,\n  \"lookup\": \"string\",\n  \"protocol\": \"ETH\",\n  \"supportsDeposits\": true,\n  \"supportsThirdParty\": false,\n  \"supportsWithdrawals\": true,\n  \"withdrawalFee\": 0.001\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b416ab2d-5f4b-4858-a0f7-7d32e6118b4f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wallet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"My 2nd EUR Wallet\",\n  \"currency\": \"ETH\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6998e455-915c-41aa-a43a-36bfb36b9706",
+              "name": "Unexpected Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wallet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"My 2nd EUR Wallet\",\n  \"currency\": \"ETH\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c46023d1-bcfc-463e-98f1-a20b2dd1b225",
+          "name": "Get Wallet",
+          "request": {
+            "name": "Get Wallet",
+            "description": {
+              "content": "Retrieves a specific wallet.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "wallet",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "255861",
+                  "key": "id",
+                  "description": "(Required) start offset"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "569887af-1a0b-4cfc-954c-b7a8ae351f9f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wallet",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "255861",
+                      "key": "id",
+                      "description": "(Required) start offset"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"string\",\n  \"approxAvailable\": \"0.59573928\",\n  \"approxBalance\": \"0.59573928\",\n  \"available\": 0.59573928,\n  \"balance\": 0.59573928,\n  \"convertedAvailable\": 20917.59,\n  \"currency\": {\n    \"quantityPrecision\": 6,\n    \"pricePrecision\": 0,\n    \"withdrawalFee\": 0.01,\n    \"code\": \"ETH\",\n    \"icon\": \"https://cdn.com/eth-icon.png\",\n    \"depositFee\": 0,\n    \"withdrawalParameters\": [\n      {\n        \"code\": \"destinationTag\",\n        \"name\": \"Destination Tag\",\n        \"id\": 1432,\n        \"required\": false,\n        \"example\": \"123432312\"\n      },\n      {\n        \"code\": \"destinationTag\",\n        \"name\": \"Destination Tag\",\n        \"id\": 1432,\n        \"required\": false,\n        \"example\": \"123432312\"\n      }\n    ],\n    \"name\": \"Ethereum\",\n    \"options\": {\n      \"address\": \"https://etherscan.io/address/{{address}}\",\n      \"explorer\": \"https://etherscan.io/\",\n      \"confirmations\": 12,\n      \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n    },\n    \"fiat\": false,\n    \"id\": 1432,\n    \"supportsDeposits\": false,\n    \"protocols\": [\n      {\n        \"code\": \"ERC20\",\n        \"network\": \"Ethereum\"\n      },\n      {\n        \"code\": \"ERC20\",\n        \"network\": \"Ethereum\"\n      }\n    ],\n    \"supportsWithdrawals\": false\n  },\n  \"custodianWallet\": false,\n  \"depositFee\": 0,\n  \"description\": \"ETH wallet\",\n  \"id\": 1432,\n  \"isEmoney\": false,\n  \"lookup\": \"string\",\n  \"protocol\": \"ETH\",\n  \"supportsDeposits\": true,\n  \"supportsThirdParty\": false,\n  \"supportsWithdrawals\": true,\n  \"withdrawalFee\": 0.001\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aca2a8ed-137c-4f60-8f69-e5abddec2a71",
+          "name": "List Wallet Balances",
+          "request": {
+            "name": "List Wallet Balances",
+            "description": {
+              "content": "Retrieves the balances of your wallets on platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "wallet",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<string>",
+                  "description": "Date at to retrieve balances"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a46c2e8f-fdce-4abd-bcc1-1caf09436caa",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wallet",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2020-03-17"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"walletId\": 255861,\n    \"total\": 101.03,\n    \"reserved\": 1,\n    \"convertedReserved\": 104,\n    \"available\": 100.03,\n    \"currency\": {\n      \"quantityPrecision\": 6,\n      \"pricePrecision\": 0,\n      \"withdrawalFee\": 0.01,\n      \"code\": \"ETH\",\n      \"icon\": \"https://cdn.com/eth-icon.png\",\n      \"depositFee\": 0,\n      \"withdrawalParameters\": [\n        {\n          \"code\": \"destinationTag\",\n          \"name\": \"Destination Tag\",\n          \"id\": 1432,\n          \"required\": false,\n          \"example\": \"123432312\"\n        },\n        {\n          \"code\": \"destinationTag\",\n          \"name\": \"Destination Tag\",\n          \"id\": 1432,\n          \"required\": false,\n          \"example\": \"123432312\"\n        }\n      ],\n      \"name\": \"Ethereum\",\n      \"options\": {\n        \"address\": \"https://etherscan.io/address/{{address}}\",\n        \"explorer\": \"https://etherscan.io/\",\n        \"confirmations\": 12,\n        \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n      },\n      \"fiat\": false,\n      \"id\": 1432,\n      \"supportsDeposits\": false,\n      \"protocols\": [\n        {\n          \"code\": \"ERC20\",\n          \"network\": \"Ethereum\"\n        },\n        {\n          \"code\": \"ERC20\",\n          \"network\": \"Ethereum\"\n        }\n      ],\n      \"supportsWithdrawals\": false\n    },\n    \"convertedAvailable\": 100\n  },\n  {\n    \"walletId\": 255861,\n    \"total\": 101.03,\n    \"reserved\": 1,\n    \"convertedReserved\": 104,\n    \"available\": 100.03,\n    \"currency\": {\n      \"quantityPrecision\": 6,\n      \"pricePrecision\": 0,\n      \"withdrawalFee\": 0.01,\n      \"code\": \"ETH\",\n      \"icon\": \"https://cdn.com/eth-icon.png\",\n      \"depositFee\": 0,\n      \"withdrawalParameters\": [\n        {\n          \"code\": \"destinationTag\",\n          \"name\": \"Destination Tag\",\n          \"id\": 1432,\n          \"required\": false,\n          \"example\": \"123432312\"\n        },\n        {\n          \"code\": \"destinationTag\",\n          \"name\": \"Destination Tag\",\n          \"id\": 1432,\n          \"required\": false,\n          \"example\": \"123432312\"\n        }\n      ],\n      \"name\": \"Ethereum\",\n      \"options\": {\n        \"address\": \"https://etherscan.io/address/{{address}}\",\n        \"explorer\": \"https://etherscan.io/\",\n        \"confirmations\": 12,\n        \"transaction\": \"https://etherscan.io/tx/{{hash}}\"\n      },\n      \"fiat\": false,\n      \"id\": 1432,\n      \"supportsDeposits\": false,\n      \"protocols\": [\n        {\n          \"code\": \"ERC20\",\n          \"network\": \"Ethereum\"\n        },\n        {\n          \"code\": \"ERC20\",\n          \"network\": \"Ethereum\"\n        }\n      ],\n      \"supportsWithdrawals\": false\n    },\n    \"convertedAvailable\": 100\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5718965-fed8-4eb2-80f5-4088ba1f89d0",
+          "name": "Transactions Report",
+          "request": {
+            "name": "Transactions Report",
+            "description": {
+              "content": "Report all transactions from wallet in specified format. Report will be generated and sent to main account email in the specified format",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "transaction",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "walletId",
+                  "value": "255861",
+                  "description": "Date at to retrieve balances"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "2022-09-17",
+                  "description": "Export range from date in format 'yyyy-MM-dd'"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "2023-03-17",
+                  "description": "Export range to date in format 'yyyy-MM-dd'"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "csv",
+                  "description": "'json' - json format, 'csv' - csv format"
+                },
+                {
+                  "disabled": false,
+                  "key": "transactionType",
+                  "value": "<string>",
+                  "description": "Transaction type code"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f6de45fd-5bcc-4565-813f-0244e493effe",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "transaction",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "walletId",
+                      "value": "255861"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2022-09-17"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2023-03-17"
+                    },
+                    {
+                      "key": "format",
+                      "value": "csv"
+                    },
+                    {
+                      "key": "transactionType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"expiryDate\": 1631619489000,\n    \"lastUpdated\": 1631619489000,\n    \"dateCreated\": 1631619489000,\n    \"id\": 594,\n    \"type\": \"transactions\",\n    \"requestData\": {\n      \"transactionType\": \"null\",\n      \"fromDate\": \"2023-03-01\",\n      \"externalProcessing\": \"null\",\n      \"walletId\": 504841,\n      \"include\": \"include\",\n      \"accountName\": \"null\",\n      \"toDate\": \"2023-06-30\",\n      \"format\": \"CSV\",\n      \"exclude\": \"exclude\",\n      \"languageTag\": \"en-US\",\n      \"type\": \"transactions\",\n      \"category\": 0\n    },\n    \"uuid\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n    \"status\": \"PENDING\"\n  },\n  {\n    \"expiryDate\": 1631619489000,\n    \"lastUpdated\": 1631619489000,\n    \"dateCreated\": 1631619489000,\n    \"id\": 594,\n    \"type\": \"transactions\",\n    \"requestData\": {\n      \"transactionType\": \"null\",\n      \"fromDate\": \"2023-03-01\",\n      \"externalProcessing\": \"null\",\n      \"walletId\": 504841,\n      \"include\": \"include\",\n      \"accountName\": \"null\",\n      \"toDate\": \"2023-06-30\",\n      \"format\": \"CSV\",\n      \"exclude\": \"exclude\",\n      \"languageTag\": \"en-US\",\n      \"type\": \"transactions\",\n      \"category\": 0\n    },\n    \"uuid\": \"9d1f67f2-a647-404b-9b02-247c77be81d0\",\n    \"status\": \"PENDING\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.bvnk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0b14ec3b-2baf-4bed-b2b7-4d7853a2c19a",
+    "name": "BVNK API Endpoints Wallets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.",
+      "type": "text/plain"
+    }
+  }
+}

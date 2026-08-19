@@ -1,0 +1,1176 @@
+{
+  "item": [
+    {
+      "id": "6cf97263-f6a1-424c-870f-7fa0fb1ecda8",
+      "name": "Transaction Request",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a816ed9b-76a7-4601-870e-d446f45fda1d",
+          "name": "List transaction requests",
+          "request": {
+            "name": "List transaction requests",
+            "description": {
+              "content": "Retrieve paginated list of transaction requests",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "transaction-requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Query in lucene like format, e.g. reference:REF-12a1. Supported properties: reference, type"
+                },
+                {
+                  "disabled": false,
+                  "key": "assetPoolId",
+                  "value": "<uuid>",
+                  "description": "(Required) asset pool id"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "0",
+                  "description": "(Required) current page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "50",
+                  "description": "(Required) number of items in a page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26d7c34a-c4cb-473f-825e-ac2f0fddbd86",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetPoolId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalElements\": 2325,\n  \"content\": [\n    {\n      \"requestId\": \"25a0c7da-6d49-ef2e-4cdf-b2ed85b7d9e1\",\n      \"asset\": \"USDT\",\n      \"assetPoolId\": \"1751469c-b5cd-f465-2a8c-33a857fc7583\",\n      \"network\": \"ETHEREUM\",\n      \"reference\": \"myUniqueRef333\",\n      \"status\": \"HELD\",\n      \"sources\": [\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        },\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"destinations\": [\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        },\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"type\": \"UNDELEGATE\",\n      \"createdAt\": \"1980-02-12T06:36:34.182Z\",\n      \"updatedAt\": \"1986-03-30T13:39:11.211Z\",\n      \"failure\": {\n        \"reason\": \"INSUFFICIENT_FUNDS\",\n        \"message\": \"insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678\"\n      }\n    },\n    {\n      \"requestId\": \"b0ddc4ff-f995-fd74-bdc4-790a6cf25622\",\n      \"asset\": \"USDT\",\n      \"assetPoolId\": \"ca382733-6103-3e2f-1aa5-0e421f1c0990\",\n      \"network\": \"ETHEREUM\",\n      \"reference\": \"myUniqueRef333\",\n      \"status\": \"SIGNED\",\n      \"sources\": [\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        },\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"destinations\": [\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        },\n        {\n          \"address\": \"string\",\n          \"amount\": \"\",\n          \"asset\": \"ETH\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"type\": \"UNSTAKE\",\n      \"createdAt\": \"1964-05-11T14:07:07.468Z\",\n      \"updatedAt\": \"1947-03-17T20:17:58.252Z\",\n      \"failure\": {\n        \"reason\": \"INSUFFICIENT_FUNDS\",\n        \"message\": \"insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678\"\n      }\n    }\n  ],\n  \"pageable\": {\n    \"pageNumber\": 6,\n    \"pageSize\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddce245f-13d4-48fd-9f78-7faf9928f97a",
+              "name": "Standard error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetPoolId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9b10880-7f38-4aee-8750-f5abd0dc17a6",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetPoolId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d837202-e6c2-4c1a-b78d-ab803683f8c8",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetPoolId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "470612a1-6fa9-4564-a186-49ee8d9d0387",
+          "name": "Create transaction request",
+          "request": {
+            "name": "Create transaction request",
+            "description": {
+              "content": "Create a new blockchain transaction",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "transaction-requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assetPoolId\": \"<uuid>\",\n  \"asset\": \"<string>\",\n  \"network\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"<string>\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"<string>\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"<string>\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"<string>\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "21ca0583-8daa-4699-8f8e-8ec0fa6f3631",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assetPoolId\": \"<uuid>\",\n  \"asset\": \"USDT\",\n  \"network\": \"ETHEREUM\",\n  \"reference\": \"myUniqueRef333\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"e0881ab1-7bb7-a9c6-854a-411af85fd1f1\",\n  \"asset\": \"USDT\",\n  \"assetPoolId\": \"136f021e-5332-6af0-d974-cc7cde16a626\",\n  \"network\": \"ETHEREUM\",\n  \"reference\": \"myUniqueRef333\",\n  \"status\": \"CREATED\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"type\": \"WITHDRAWAL\",\n  \"createdAt\": \"1958-12-20T06:21:24.174Z\",\n  \"updatedAt\": \"2006-03-30T12:32:29.294Z\",\n  \"failure\": {\n    \"reason\": \"INSUFFICIENT_FUNDS\",\n    \"message\": \"insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fa68fda-b2d7-437c-8684-df7d4cd49d31",
+              "name": "Standard error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assetPoolId\": \"<uuid>\",\n  \"asset\": \"USDT\",\n  \"network\": \"ETHEREUM\",\n  \"reference\": \"myUniqueRef333\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae10de41-e7ae-428c-9ef9-2accc21d212a",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assetPoolId\": \"<uuid>\",\n  \"asset\": \"USDT\",\n  \"network\": \"ETHEREUM\",\n  \"reference\": \"myUniqueRef333\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3c2da9e-2f13-48ca-a8f0-e696ed6fefb3",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assetPoolId\": \"<uuid>\",\n  \"asset\": \"USDT\",\n  \"network\": \"ETHEREUM\",\n  \"reference\": \"myUniqueRef333\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5cdbbdf3-345f-4f3d-a925-fc911f3148a3",
+          "name": "Create staking transaction request",
+          "request": {
+            "name": "Create staking transaction request",
+            "description": {
+              "content": "Create a new blockchain staking transaction",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "staking-requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assetPoolId\": \"<uuid>\",\n  \"asset\": \"<string>\",\n  \"network\": \"<string>\",\n  \"type\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"address\": \"<string>\",\n  \"amount\": \"\",\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1989654d-df18-4526-9d44-ac1b3e6aa246",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "staking-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"myUniqueRef333\",\n  \"amount\": \"\",\n  \"metadata\": {\n    \"key\": \"metadata\"\n  },\n  \"address\": \"TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe\",\n  \"assetPoolId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n  \"asset\": \"TRX\",\n  \"type\": \"STAKE\",\n  \"network\": \"TRON\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"e0881ab1-7bb7-a9c6-854a-411af85fd1f1\",\n  \"asset\": \"USDT\",\n  \"assetPoolId\": \"136f021e-5332-6af0-d974-cc7cde16a626\",\n  \"network\": \"ETHEREUM\",\n  \"reference\": \"myUniqueRef333\",\n  \"status\": \"CREATED\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"type\": \"WITHDRAWAL\",\n  \"createdAt\": \"1958-12-20T06:21:24.174Z\",\n  \"updatedAt\": \"2006-03-30T12:32:29.294Z\",\n  \"failure\": {\n    \"reason\": \"INSUFFICIENT_FUNDS\",\n    \"message\": \"insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1943902-7025-4f96-bd1a-6a3eaf542b57",
+              "name": "Standard error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "staking-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"myUniqueRef333\",\n  \"amount\": \"\",\n  \"metadata\": {\n    \"key\": \"metadata\"\n  },\n  \"address\": \"TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe\",\n  \"assetPoolId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n  \"asset\": \"TRX\",\n  \"type\": \"STAKE\",\n  \"network\": \"TRON\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6b1b67d-96a9-4b04-8c20-63802dd41c0b",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "staking-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"myUniqueRef333\",\n  \"amount\": \"\",\n  \"metadata\": {\n    \"key\": \"metadata\"\n  },\n  \"address\": \"TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe\",\n  \"assetPoolId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n  \"asset\": \"TRX\",\n  \"type\": \"STAKE\",\n  \"network\": \"TRON\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffa71c2b-6832-43c1-98a9-772c10636312",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "staking-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"myUniqueRef333\",\n  \"amount\": \"\",\n  \"metadata\": {\n    \"key\": \"metadata\"\n  },\n  \"address\": \"TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe\",\n  \"assetPoolId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n  \"asset\": \"TRX\",\n  \"type\": \"STAKE\",\n  \"network\": \"TRON\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0db48c62-5a7a-4999-b838-acb46989ade0",
+          "name": "Get transaction request",
+          "request": {
+            "name": "Get transaction request",
+            "description": {
+              "content": "Get transaction request by id",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital",
+                "v1",
+                "transaction-requests",
+                ":requestId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "requestId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.sandbox.layer1.com/auth/realms/bvnk/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9639e382-f320-47e7-a1f3-832bd50ac840",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"e0881ab1-7bb7-a9c6-854a-411af85fd1f1\",\n  \"asset\": \"USDT\",\n  \"assetPoolId\": \"136f021e-5332-6af0-d974-cc7cde16a626\",\n  \"network\": \"ETHEREUM\",\n  \"reference\": \"myUniqueRef333\",\n  \"status\": \"CREATED\",\n  \"sources\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"destinations\": [\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"amount\": \"\",\n      \"asset\": \"ETH\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"type\": \"WITHDRAWAL\",\n  \"createdAt\": \"1958-12-20T06:21:24.174Z\",\n  \"updatedAt\": \"2006-03-30T12:32:29.294Z\",\n  \"failure\": {\n    \"reason\": \"INSUFFICIENT_FUNDS\",\n    \"message\": \"insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ac4ece8-f7c9-4d81-a610-746bb85beec7",
+              "name": "Standard error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "819556c2-a161-4fc9-ad4a-2b91199a2c96",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3b824c8-cb4d-4b59-964a-c03bbedb76c9",
+              "name": "Request invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital",
+                    "v1",
+                    "transaction-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"details\": {\n    \"documentLink\": \"string\",\n    \"errors\": {\n      \"key_0\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.staging.layer1.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "06a433de-7979-4480-b408-85fa348e0f31",
+    "name": "Digital Asset Transaction Request API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Layer1 API making management of crypto assets simple and easy",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,818 @@
+{
+  "item": [
+    {
+      "id": "88fb3b10-ccb4-4206-b948-7576d05e9e4a",
+      "name": "Trading and Conversions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "34b39e2b-fd22-4e99-95f9-cc6a32079237",
+          "name": "Create Quote",
+          "request": {
+            "name": "Create Quote",
+            "description": {
+              "content": "Creates a quote to convert between wallets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "estimate",
+                  "value": "false",
+                  "description": "Create estimate quote"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amountIn\": 10,\n  \"from\": \"EUR\",\n  \"fromWallet\": 3598236,\n  \"payInMethod\": \"wallet\",\n  \"payOutMethod\": \"wallet\",\n  \"to\": \"USDC\",\n  \"toWallet\": 3598514,\n  \"useMaximum\": false,\n  \"useMinimum\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "688ae25f-6b60-457e-a183-ffa35667f741",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "estimate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fromWallet\": 0.8008281904610115,\n  \"useMinimum\": false,\n  \"payInMethod\": \"wallet\",\n  \"from\": \"EUR\",\n  \"amountIn\": 1.4658129805029452,\n  \"to\": \"USDC\",\n  \"payOutMethod\": \"wallet\",\n  \"useMaximum\": false,\n  \"toWallet\": 6.027456183070403\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1432,\n  \"from\": \"EUR\",\n  \"to\": \"ETH\",\n  \"amountIn\": 500,\n  \"amountDue\": 500,\n  \"amountOut\": 1.12,\n  \"price\": 446.43,\n  \"quoteStatus\": \"PENDING\",\n  \"paymentStatus\": \"CANCELLED\",\n  \"acceptanceExpiryDate\": 1566198657000,\n  \"acceptanceDate\": 1566198657000,\n  \"paymentExpiryDate\": 1566198657000,\n  \"paymentReceiptDate\": 1566198657000,\n  \"payInLegs\": [\n    {\n      \"id\": 1432,\n      \"amount\": 100.32,\n      \"dateCreated\": 1566198657000,\n      \"reference\": \"string\",\n      \"currency\": \"ETH\"\n    },\n    {\n      \"id\": 1432,\n      \"amount\": 100.32,\n      \"dateCreated\": 1566198657000,\n      \"reference\": \"string\",\n      \"currency\": \"ETH\"\n    }\n  ],\n  \"payInMethod\": {\n    \"code\": \"wallet\",\n    \"settlementCurrency\": \"USD\",\n    \"estimatedExchangeRate\": 0.923,\n    \"id\": 1432,\n    \"accountMethods\": [\n      {\n        \"display\": \"Visa xxxx-090\",\n        \"id\": 1432\n      },\n      {\n        \"display\": \"Visa xxxx-090\",\n        \"id\": 1432\n      }\n    ],\n    \"requestedCurrency\": \"EUR\"\n  },\n  \"payOutMethod\": {\n    \"code\": \"gateway\",\n    \"currency\": \"EUR\",\n    \"id\": 1432,\n    \"accountMethods\": [\n      {\n        \"display\": \"Visa xxxx-090\",\n        \"id\": 1432\n      },\n      {\n        \"display\": \"Visa xxxx-090\",\n        \"id\": 1432\n      }\n    ]\n  },\n  \"uuid\": \"B6670497-D139-47E8-9F4A-F97A5D977057\",\n  \"payOutInstruction\": {\n    \"code\": \"gateway\",\n    \"currency\": \"ETH\"\n  },\n  \"payInInstruction\": {\n    \"action\": \"DISPLAY\",\n    \"form\": {\n      \"action\": \"action\",\n      \"parameters\": {\n        \"key\": \"parameters\"\n      }\n    },\n    \"redirectUrl\": \"https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n    \"displayParameters\": {}\n  },\n  \"usePayInMethod\": {\n    \"display\": \"Visa xxxx-090\",\n    \"id\": 1432\n  },\n  \"usePayOutMethod\": {\n    \"display\": \"Visa xxxx-090\",\n    \"id\": 1432\n  },\n  \"fee\": 1.02,\n  \"processingFee\": 1.02,\n  \"type\": \"FIXED\",\n  \"netPrice\": 1234.02,\n  \"grossPrice\": 1134.02,\n  \"amountInGross\": 102,\n  \"amountInNet\": 104,\n  \"fees\": {\n    \"percentage\": {\n      \"service\": 0.8008281904610115,\n      \"processing\": 6.027456183070403\n    },\n    \"value\": {\n      \"service\": 0.8008281904610115,\n      \"processing\": 6.027456183070403\n    }\n  },\n  \"dateCreated\": 1566198657000,\n  \"lastUpdated\": 1566198657000\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0241a25-3d13-4099-a908-095370ce9819",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "estimate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fromWallet\": 0.8008281904610115,\n  \"useMinimum\": false,\n  \"payInMethod\": \"wallet\",\n  \"from\": \"EUR\",\n  \"amountIn\": 1.4658129805029452,\n  \"to\": \"USDC\",\n  \"payOutMethod\": \"wallet\",\n  \"useMaximum\": false,\n  \"toWallet\": 6.027456183070403\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dfe9b6b8-b75d-41f0-ab03-3072ccbc9434",
+          "name": "Accept Quote",
+          "request": {
+            "name": "Accept Quote",
+            "description": {
+              "content": "Executes a quote.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "quote",
+                "accept",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "5dc4e061-31c6-4b96-8c4d-0ea984aece0b",
+                  "key": "uuid",
+                  "description": "(Required) The quote UUID you are accepting."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2be0c770-a8bc-465f-a5e2-9b529b1ad2ca",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote",
+                    "accept",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "5dc4e061-31c6-4b96-8c4d-0ea984aece0b",
+                      "key": "uuid",
+                      "description": "(Required) The quote UUID you are accepting."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quote\": {\n    \"id\": 1432,\n    \"from\": \"EUR\",\n    \"to\": \"ETH\",\n    \"amountIn\": 500,\n    \"amountDue\": 500,\n    \"amountOut\": 1.12,\n    \"price\": 446.43,\n    \"quoteStatus\": \"LOCKED\",\n    \"paymentStatus\": \"CANCELLED\",\n    \"acceptanceExpiryDate\": 1566198657000,\n    \"acceptanceDate\": 1566198657000,\n    \"paymentExpiryDate\": 1566198657000,\n    \"paymentReceiptDate\": 1566198657000,\n    \"payInLegs\": [\n      {\n        \"id\": 1432,\n        \"amount\": 100.32,\n        \"dateCreated\": 1566198657000,\n        \"reference\": \"string\",\n        \"currency\": \"ETH\"\n      },\n      {\n        \"id\": 1432,\n        \"amount\": 100.32,\n        \"dateCreated\": 1566198657000,\n        \"reference\": \"string\",\n        \"currency\": \"ETH\"\n      }\n    ],\n    \"payInMethod\": {\n      \"code\": \"wallet\",\n      \"settlementCurrency\": \"USD\",\n      \"estimatedExchangeRate\": 0.923,\n      \"id\": 1432,\n      \"accountMethods\": [\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        },\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        }\n      ],\n      \"requestedCurrency\": \"EUR\"\n    },\n    \"payOutMethod\": {\n      \"code\": \"gateway\",\n      \"currency\": \"EUR\",\n      \"id\": 1432,\n      \"accountMethods\": [\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        },\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        }\n      ]\n    },\n    \"uuid\": \"B6670497-D139-47E8-9F4A-F97A5D977057\",\n    \"payOutInstruction\": {\n      \"code\": \"gateway\",\n      \"currency\": \"ETH\"\n    },\n    \"payInInstruction\": {\n      \"action\": \"DISPLAY\",\n      \"form\": {\n        \"action\": \"action\",\n        \"parameters\": {\n          \"key\": \"parameters\"\n        }\n      },\n      \"redirectUrl\": \"https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n      \"displayParameters\": {}\n    },\n    \"usePayInMethod\": {\n      \"display\": \"Visa xxxx-090\",\n      \"id\": 1432\n    },\n    \"usePayOutMethod\": {\n      \"display\": \"Visa xxxx-090\",\n      \"id\": 1432\n    },\n    \"fee\": 1.02,\n    \"processingFee\": 1.02,\n    \"type\": \"MARKET\",\n    \"netPrice\": 1234.02,\n    \"grossPrice\": 1134.02,\n    \"amountInGross\": 102,\n    \"amountInNet\": 104,\n    \"fees\": {\n      \"percentage\": {\n        \"service\": 0.8008281904610115,\n        \"processing\": 6.027456183070403\n      },\n      \"value\": {\n        \"service\": 0.8008281904610115,\n        \"processing\": 6.027456183070403\n      }\n    },\n    \"dateCreated\": 1566198657000,\n    \"lastUpdated\": 1566198657000\n  },\n  \"payInInstruction\": {\n    \"action\": \"FORM\",\n    \"form\": {\n      \"action\": \"action\",\n      \"parameters\": {\n        \"key\": \"parameters\"\n      }\n    },\n    \"redirectUrl\": \"https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n    \"displayParameters\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43bec165-a6a6-4362-b430-7cbf1e69e65f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote",
+                    "accept",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "5dc4e061-31c6-4b96-8c4d-0ea984aece0b",
+                      "key": "uuid",
+                      "description": "(Required) The quote UUID you are accepting."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0afa7107-2b38-4831-84d1-cc1a915a539c",
+          "name": "Read Quote",
+          "request": {
+            "name": "Read Quote",
+            "description": {
+              "content": "Retrieves a specific quote.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "quote",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "0a12a214-1619-43fa-9be1-0029f6a440a0",
+                  "key": "uuid",
+                  "description": "(Required) UUID of the quote you are retrieving."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "65881a0f-692b-4fe8-b62d-e58cbb748194",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "0a12a214-1619-43fa-9be1-0029f6a440a0",
+                      "key": "uuid",
+                      "description": "(Required) UUID of the quote you are retrieving."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1432,\n  \"from\": \"EUR\",\n  \"to\": \"ETH\",\n  \"amountIn\": 500,\n  \"amountDue\": 500,\n  \"amountOut\": 1.12,\n  \"price\": 446.43,\n  \"quoteStatus\": \"PAYMENT_IN_FAILED\",\n  \"paymentStatus\": \"SEEN\",\n  \"acceptanceExpiryDate\": 1566198657000,\n  \"acceptanceDate\": 1566198657000,\n  \"paymentExpiryDate\": 1566198657000,\n  \"paymentReceiptDate\": 1566198657000,\n  \"payInLegs\": [\n    {\n      \"id\": 1432,\n      \"amount\": 100.32,\n      \"dateCreated\": 1566198657000,\n      \"reference\": \"string\",\n      \"currency\": \"ETH\"\n    },\n    {\n      \"id\": 1432,\n      \"amount\": 100.32,\n      \"dateCreated\": 1566198657000,\n      \"reference\": \"string\",\n      \"currency\": \"ETH\"\n    }\n  ],\n  \"payInMethod\": {\n    \"code\": \"wallet\",\n    \"settlementCurrency\": \"USD\",\n    \"estimatedExchangeRate\": 0.923,\n    \"id\": 1432,\n    \"accountMethods\": [\n      {\n        \"display\": \"Visa xxxx-090\",\n        \"id\": 1432\n      },\n      {\n        \"display\": \"Visa xxxx-090\",\n        \"id\": 1432\n      }\n    ],\n    \"requestedCurrency\": \"EUR\"\n  },\n  \"payOutMethod\": {\n    \"code\": \"gateway\",\n    \"currency\": \"EUR\",\n    \"id\": 1432,\n    \"accountMethods\": [\n      {\n        \"display\": \"Visa xxxx-090\",\n        \"id\": 1432\n      },\n      {\n        \"display\": \"Visa xxxx-090\",\n        \"id\": 1432\n      }\n    ]\n  },\n  \"uuid\": \"B6670497-D139-47E8-9F4A-F97A5D977057\",\n  \"payOutInstruction\": {\n    \"code\": \"gateway\",\n    \"currency\": \"ETH\"\n  },\n  \"payInInstruction\": {\n    \"action\": \"FORM\",\n    \"form\": {\n      \"action\": \"action\",\n      \"parameters\": {\n        \"key\": \"parameters\"\n      }\n    },\n    \"redirectUrl\": \"https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n    \"displayParameters\": {}\n  },\n  \"usePayInMethod\": {\n    \"display\": \"Visa xxxx-090\",\n    \"id\": 1432\n  },\n  \"usePayOutMethod\": {\n    \"display\": \"Visa xxxx-090\",\n    \"id\": 1432\n  },\n  \"fee\": 1.02,\n  \"processingFee\": 1.02,\n  \"type\": \"FIXED\",\n  \"netPrice\": 1234.02,\n  \"grossPrice\": 1134.02,\n  \"amountInGross\": 102,\n  \"amountInNet\": 104,\n  \"fees\": {\n    \"percentage\": {\n      \"service\": 0.8008281904610115,\n      \"processing\": 6.027456183070403\n    },\n    \"value\": {\n      \"service\": 0.8008281904610115,\n      \"processing\": 6.027456183070403\n    }\n  },\n  \"dateCreated\": 1566198657000,\n  \"lastUpdated\": 1566198657000\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9758245-944c-47d4-8fae-9ee4241b88ca",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "0a12a214-1619-43fa-9be1-0029f6a440a0",
+                      "key": "uuid",
+                      "description": "(Required) UUID of the quote you are retrieving."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e3ea6ab9-30e6-41f9-b938-0fb0dec441ae",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "0a12a214-1619-43fa-9be1-0029f6a440a0",
+                      "key": "uuid",
+                      "description": "(Required) UUID of the quote you are retrieving."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b519a787-0972-449a-96e6-4449f728cc69",
+          "name": "List Quotes",
+          "request": {
+            "name": "List Quotes",
+            "description": {
+              "content": "Retrieves all quotes on a specific Merchant ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "quote",
+                ":merchantId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "0a12a214-1619-43fa-9be1-0029f6a440a0",
+                  "key": "merchantId",
+                  "description": "(Required) Merchant ID you are retrieving quotes from."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "27446633-bc49-4ef6-9475-7b3cb74723fd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote",
+                    ":merchantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "0a12a214-1619-43fa-9be1-0029f6a440a0",
+                      "key": "merchantId",
+                      "description": "(Required) Merchant ID you are retrieving quotes from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1432,\n    \"from\": \"EUR\",\n    \"to\": \"ETH\",\n    \"amountIn\": 500,\n    \"amountDue\": 500,\n    \"amountOut\": 1.12,\n    \"price\": 446.43,\n    \"quoteStatus\": \"ESTIMATE\",\n    \"paymentStatus\": \"FRAUD_PENDING\",\n    \"acceptanceExpiryDate\": 1566198657000,\n    \"acceptanceDate\": 1566198657000,\n    \"paymentExpiryDate\": 1566198657000,\n    \"paymentReceiptDate\": 1566198657000,\n    \"payInLegs\": [\n      {\n        \"id\": 1432,\n        \"amount\": 100.32,\n        \"dateCreated\": 1566198657000,\n        \"reference\": \"string\",\n        \"currency\": \"ETH\"\n      },\n      {\n        \"id\": 1432,\n        \"amount\": 100.32,\n        \"dateCreated\": 1566198657000,\n        \"reference\": \"string\",\n        \"currency\": \"ETH\"\n      }\n    ],\n    \"payInMethod\": {\n      \"code\": \"wallet\",\n      \"settlementCurrency\": \"USD\",\n      \"estimatedExchangeRate\": 0.923,\n      \"id\": 1432,\n      \"accountMethods\": [\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        },\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        }\n      ],\n      \"requestedCurrency\": \"EUR\"\n    },\n    \"payOutMethod\": {\n      \"code\": \"gateway\",\n      \"currency\": \"EUR\",\n      \"id\": 1432,\n      \"accountMethods\": [\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        },\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        }\n      ]\n    },\n    \"uuid\": \"B6670497-D139-47E8-9F4A-F97A5D977057\",\n    \"payOutInstruction\": {\n      \"code\": \"gateway\",\n      \"currency\": \"ETH\"\n    },\n    \"payInInstruction\": {\n      \"action\": \"REDIRECT\",\n      \"form\": {\n        \"action\": \"action\",\n        \"parameters\": {\n          \"key\": \"parameters\"\n        }\n      },\n      \"redirectUrl\": \"https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n      \"displayParameters\": {}\n    },\n    \"usePayInMethod\": {\n      \"display\": \"Visa xxxx-090\",\n      \"id\": 1432\n    },\n    \"usePayOutMethod\": {\n      \"display\": \"Visa xxxx-090\",\n      \"id\": 1432\n    },\n    \"fee\": 1.02,\n    \"processingFee\": 1.02,\n    \"type\": \"MARKET\",\n    \"netPrice\": 1234.02,\n    \"grossPrice\": 1134.02,\n    \"amountInGross\": 102,\n    \"amountInNet\": 104,\n    \"fees\": {\n      \"percentage\": {\n        \"service\": 0.8008281904610115,\n        \"processing\": 6.027456183070403\n      },\n      \"value\": {\n        \"service\": 0.8008281904610115,\n        \"processing\": 6.027456183070403\n      }\n    },\n    \"dateCreated\": 1566198657000,\n    \"lastUpdated\": 1566198657000\n  },\n  {\n    \"id\": 1432,\n    \"from\": \"EUR\",\n    \"to\": \"ETH\",\n    \"amountIn\": 500,\n    \"amountDue\": 500,\n    \"amountOut\": 1.12,\n    \"price\": 446.43,\n    \"quoteStatus\": \"LOCKED\",\n    \"paymentStatus\": \"REFUND_PENDING\",\n    \"acceptanceExpiryDate\": 1566198657000,\n    \"acceptanceDate\": 1566198657000,\n    \"paymentExpiryDate\": 1566198657000,\n    \"paymentReceiptDate\": 1566198657000,\n    \"payInLegs\": [\n      {\n        \"id\": 1432,\n        \"amount\": 100.32,\n        \"dateCreated\": 1566198657000,\n        \"reference\": \"string\",\n        \"currency\": \"ETH\"\n      },\n      {\n        \"id\": 1432,\n        \"amount\": 100.32,\n        \"dateCreated\": 1566198657000,\n        \"reference\": \"string\",\n        \"currency\": \"ETH\"\n      }\n    ],\n    \"payInMethod\": {\n      \"code\": \"wallet\",\n      \"settlementCurrency\": \"USD\",\n      \"estimatedExchangeRate\": 0.923,\n      \"id\": 1432,\n      \"accountMethods\": [\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        },\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        }\n      ],\n      \"requestedCurrency\": \"EUR\"\n    },\n    \"payOutMethod\": {\n      \"code\": \"gateway\",\n      \"currency\": \"EUR\",\n      \"id\": 1432,\n      \"accountMethods\": [\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        },\n        {\n          \"display\": \"Visa xxxx-090\",\n          \"id\": 1432\n        }\n      ]\n    },\n    \"uuid\": \"B6670497-D139-47E8-9F4A-F97A5D977057\",\n    \"payOutInstruction\": {\n      \"code\": \"gateway\",\n      \"currency\": \"ETH\"\n    },\n    \"payInInstruction\": {\n      \"action\": \"REDIRECT\",\n      \"form\": {\n        \"action\": \"action\",\n        \"parameters\": {\n          \"key\": \"parameters\"\n        }\n      },\n      \"redirectUrl\": \"https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0\",\n      \"displayParameters\": {}\n    },\n    \"usePayInMethod\": {\n      \"display\": \"Visa xxxx-090\",\n      \"id\": 1432\n    },\n    \"usePayOutMethod\": {\n      \"display\": \"Visa xxxx-090\",\n      \"id\": 1432\n    },\n    \"fee\": 1.02,\n    \"processingFee\": 1.02,\n    \"type\": \"MARKET\",\n    \"netPrice\": 1234.02,\n    \"grossPrice\": 1134.02,\n    \"amountInGross\": 102,\n    \"amountInNet\": 104,\n    \"fees\": {\n      \"percentage\": {\n        \"service\": 0.8008281904610115,\n        \"processing\": 6.027456183070403\n      },\n      \"value\": {\n        \"service\": 0.8008281904610115,\n        \"processing\": 6.027456183070403\n      }\n    },\n    \"dateCreated\": 1566198657000,\n    \"lastUpdated\": 1566198657000\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a65385b-5538-4a2e-92f2-b8660f7727ed",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote",
+                    ":merchantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "0a12a214-1619-43fa-9be1-0029f6a440a0",
+                      "key": "merchantId",
+                      "description": "(Required) Merchant ID you are retrieving quotes from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "591b2a2a-e83e-4015-b4f3-1b092d13dc10",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "quote",
+                    ":merchantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "0a12a214-1619-43fa-9be1-0029f6a440a0",
+                      "key": "merchantId",
+                      "description": "(Required) Merchant ID you are retrieving quotes from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.bvnk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "181c91eb-4483-4115-b4d3-d28927b693f3",
+    "name": "BVNK API Endpoints Trading and Conversions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BVNK API is designed to facilitate seamless and secure transactions including payments, channels, anddigital wallet transactions.",
+      "type": "text/plain"
+    }
+  }
+}
