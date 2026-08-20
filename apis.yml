@@ -27,6 +27,19 @@ tags:
 - Wallets
 - Virtual Accounts
 - Cross-Border Payments
+- Financial-Services
+- Cards
+- Digital Assets
+- Banking
+- Compliance
+tags_raw:
+- Company
+- Payments
+- Stablecoins
+- Cryptocurrency
+- Wallets
+- Virtual Accounts
+- Cross-Border Payments
 - Financial Services
 - Cards
 - Digital Assets
@@ -103,6 +116,8 @@ apis:
   humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
   baseURL: https://api.bvnk.com
   tags:
+  - Currency
+  tags_raw:
   - Currencies
   properties:
   - type: OpenAPI
