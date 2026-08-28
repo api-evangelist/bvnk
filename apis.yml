@@ -10,6 +10,18 @@ description: BVNK is a stablecoin payments infrastructure company that lets busi
   payment simulator, and a Postman collection generated from the OpenAPI. BVNK operates as a regulated
   EMI in the UK (FCA) and Malta (MFSA), is ISO 27001:2022 and SOC 2 Type II certified, and also runs the
   Layer1 institutional digital-asset platform.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/66dacc76fb28939d860bf57c/66fc3ae406ca2e2c41d2ccff_og-image.png
 url: https://raw.githubusercontent.com/api-evangelist/bvnk/refs/heads/main/apis.yml
 x-type: company
