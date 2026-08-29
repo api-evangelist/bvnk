@@ -338,6 +338,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/bvnk-capability-edges.yml
+  name: BVNK Business Capability Map
 - type: Overlay
   url: overlays/bvnk-api-endpoints-overlay.yaml
 - type: Website

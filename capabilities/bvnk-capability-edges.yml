@@ -1,0 +1,68 @@
+slug: bvnk
+provider: BVNK
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Payments
+  spec_file: bvnk-payments-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.9
+  evidence: POST /api/v1/pay/summary  Create payment; PUT /api/v1/pay/validate  Validate Address; schemas
+    PayRequestDto, PayInDetailDto, PayOutDetailDto, PaymentStatusDto
+  reason: Operations capture, validate and retrieve payment instructions with pay-in/pay-out details and
+    payment status — payment instruction capture, validation and authorisation on a payments platform.
+- tag: Screening
+  spec_file: bvnk-screening-api-openapi.yml
+  capability_id: BC-1400
+  capability_id_l1: BC-1400
+  capability_name: Financial Crime Management
+  confidence: 0.85
+  evidence: PUT /digital/v1/screenings/action  manuallyActionHeldTransfer  Approve or reject a held transfer;
+    GET /digital/v1/screenings  List screening results (schemas ScreeningView, ScreeningMetadata, ManualActionRequest)
+  reason: Transfers are held pending screening results and then manually approved or rejected — classic
+    financial-crime screening with hit disposition. L1 only because the context does not say whether the
+    screening is sanctions-list based or AML behavioural monitoring.
+- tag: Channels
+  spec_file: bvnk-channels-api-openapi.yml
+  capability_id: BC-1340.20
+  capability_id_l1: BC-1340
+  capability_name: Payment Processing Management
+  confidence: 0.72
+  evidence: 'schemas: MerchantChannelPayment, PaymentStatusDto, ExchangeRateDto, NetworkFee; GET /api/v2/channel/payment  List
+    Channel Payments'
+  reason: Merchant blockchain collection channels that process and status-track incoming payments with
+    rates and network fees — payment processing/routing rather than customer-side initiation.
+- tag: Return
+  spec_file: bvnk-return-api-openapi.yml
+  capability_id: BC-1340
+  capability_id_l1: BC-1340
+  capability_name: Payments & Card Management
+  confidence: 0.7
+  evidence: POST /digital/v1/returns  createReturnTransactionRequest  Create return transaction request
+    (schemas TransactionRequest, ReturnRequest, Participant)
+  reason: Creating a return of a received transfer back to the originating participant is a payment return/reversal
+    on this rail. Left at L1 because the single operation does not clearly separate initiation of the
+    return instruction from downstream processing.
+- tag: Transaction Request
+  spec_file: bvnk-transaction-request-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.7
+  evidence: POST /digital/v1/transaction-requests  createTransaction  Create transaction request; schemas
+    CreateTransactionRequest, TransactionRequest, Participant
+  reason: Creating and retrieving transfer instructions between participants is payment instruction capture
+    and authorisation. The additional staking-request operation is out of scope of the capability, which
+    tempers confidence.
