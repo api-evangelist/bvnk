@@ -225,6 +225,8 @@ apis:
   humanURL: https://docs.bvnk.com/bvnk/api-explorer/endpoints/bvnk-api-endpoints
   baseURL: https://api.bvnk.com
   tags:
+  - Networks
+  tags_raw:
   - Network
   properties:
   - type: OpenAPI
