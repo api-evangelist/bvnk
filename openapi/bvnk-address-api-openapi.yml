@@ -300,6 +300,141 @@ paths:
       - application/json
 components:
   schemas:
+    ValidateAddressResponse:
+      example:
+        valid: true
+        errors:
+        - invalid format
+        - should be 32 characters
+      properties:
+        valid:
+          description: whether the address is valid
+          type: boolean
+        errors:
+          description: list of error messages if the address is invalid
+          example:
+          - invalid format
+          - should be 32 characters
+          items:
+            type: string
+          type: array
+    PaginatedResultAddress:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          aliases:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          supportedAssets:
+          - BTC
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          network: BITCOIN
+          master: true
+          reference: reference
+          balances:
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          supportedNetworks:
+          - ETHEREUM
+          customerId: cust123456789
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tag: 123456789
+        - address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          aliases:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          supportedAssets:
+          - BTC
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          network: BITCOIN
+          master: true
+          reference: reference
+          balances:
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          - reserved: ''
+            blockchain: ''
+            available: ''
+            asset: BTC
+            network: BITCOIN
+          supportedNetworks:
+          - ETHEREUM
+          customerId: cust123456789
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tag: 123456789
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Address'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    CreateAddressRequest:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        customerId: customer123
+        asset: BTC
+        network: BITCOIN
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        asset:
+          description: crypto currency for which address(es) should be created. if network is not given will create addreses in all networks supporting given asset
+          example: BTC
+          type: string
+        reference:
+          description: unique identifier for each destination that is receiving funds (whether tag or address). Similar to banking reference it is used to link deposit to a specific invoice
+          example: myUniqueRef333
+          type: string
+        customerId:
+          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer, merchant, company, etc.
+          example: customer123
+          type: string
+    ValidateAddressRequest:
+      example:
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        network: ETHEREUM
+      properties:
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
     Address:
       example:
         address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
@@ -389,77 +524,6 @@ components:
           items:
             type: string
           type: array
-    PaginatedResultAddress:
-      example:
-        pageable:
-          pageNumber: 6
-          pageSize: 1
-        content:
-        - address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
-          aliases:
-          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
-          supportedAssets:
-          - BTC
-          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          network: BITCOIN
-          master: true
-          reference: reference
-          balances:
-          - reserved: ''
-            blockchain: ''
-            available: ''
-            asset: BTC
-            network: BITCOIN
-          - reserved: ''
-            blockchain: ''
-            available: ''
-            asset: BTC
-            network: BITCOIN
-          supportedNetworks:
-          - ETHEREUM
-          customerId: cust123456789
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          tag: 123456789
-        - address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
-          aliases:
-          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
-          supportedAssets:
-          - BTC
-          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          network: BITCOIN
-          master: true
-          reference: reference
-          balances:
-          - reserved: ''
-            blockchain: ''
-            available: ''
-            asset: BTC
-            network: BITCOIN
-          - reserved: ''
-            blockchain: ''
-            available: ''
-            asset: BTC
-            network: BITCOIN
-          supportedNetworks:
-          - ETHEREUM
-          customerId: cust123456789
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          tag: 123456789
-        totalElements: 0
-      properties:
-        totalElements:
-          description: total number of items in all pages
-          format: int64
-          type: integer
-        content:
-          description: list of items
-          items:
-            $ref: '#/components/schemas/Address'
-          type: array
-        pageable:
-          $ref: '#/components/schemas/Pageable'
     Detail:
       example:
         documentLink: documentLink
@@ -474,24 +538,6 @@ components:
           additionalProperties:
             items:
               type: string
-    ValidateAddressResponse:
-      example:
-        valid: true
-        errors:
-        - invalid format
-        - should be 32 characters
-      properties:
-        valid:
-          description: whether the address is valid
-          type: boolean
-        errors:
-          description: list of error messages if the address is invalid
-          example:
-          - invalid format
-          - should be 32 characters
-          items:
-            type: string
-          type: array
     Pageable:
       example:
         pageNumber: 6
@@ -505,52 +551,26 @@ components:
           description: number of items in page
           format: int32
           type: integer
-    ValidateAddressRequest:
+    ApiError:
       example:
-        address: 103929005307927756724354605802047639613112342136
-        tag: 123456789
-        network: ETHEREUM
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
       properties:
-        network:
-          description: crypto network
-          example: ETHEREUM
+        code:
           type: string
-        address:
-          description: blockchain address
-          example: 103929005307927756724354605802047639613112342136
+        status:
           type: string
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
+        message:
           type: string
-    CreateAddressRequest:
-      example:
-        reference: myUniqueRef333
-        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        customerId: customer123
-        asset: BTC
-        network: BITCOIN
-      properties:
-        assetPoolId:
-          description: asset pool id
-          format: uuid
-          type: string
-        network:
-          description: crypto network
-          example: BITCOIN
-          type: string
-        asset:
-          description: crypto currency for which address(es) should be created. if network is not given will create addreses in all networks supporting given asset
-          example: BTC
-          type: string
-        reference:
-          description: unique identifier for each destination that is receiving funds (whether tag or address). Similar to banking reference it is used to link deposit to a specific invoice
-          example: myUniqueRef333
-          type: string
-        customerId:
-          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer, merchant, company, etc.
-          example: customer123
-          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
     Balance:
       example:
         reserved: ''
@@ -582,26 +602,6 @@ components:
         available: {}
         reserved: {}
         blockchain: {}
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

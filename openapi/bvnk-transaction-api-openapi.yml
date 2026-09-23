@@ -178,188 +178,6 @@ paths:
       - application/json
 components:
   schemas:
-    Address:
-      example:
-        address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
-        aliases:
-        - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
-        supportedAssets:
-        - BTC
-        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        network: BITCOIN
-        master: true
-        reference: reference
-        balances:
-        - reserved: ''
-          blockchain: ''
-          available: ''
-          asset: BTC
-          network: BITCOIN
-        - reserved: ''
-          blockchain: ''
-          available: ''
-          asset: BTC
-          network: BITCOIN
-        supportedNetworks:
-        - ETHEREUM
-        customerId: cust123456789
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        tag: 123456789
-      properties:
-        id:
-          description: internal id
-          format: uuid
-          type: string
-        address:
-          description: blockchain address
-          example: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
-          type: string
-        assetPoolId:
-          description: asset pool id
-          format: uuid
-          type: string
-        network:
-          description: crypto network
-          example: BITCOIN
-          type: string
-        keyPairId:
-          description: key pair id
-          format: uuid
-          type: string
-        reference:
-          description: key pair reference
-          type: string
-        supportedAssets:
-          description: list of assets supported by network
-          example:
-          - BTC
-          items:
-            type: string
-          type: array
-        aliases:
-          description: alternative address (e.g. BTC has segwitt and legacy format)
-          example:
-          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
-          items:
-            type: string
-          type: array
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
-          type: string
-        balances:
-          description: address balances
-          items:
-            $ref: '#/components/schemas/Balance'
-          type: array
-        customerId:
-          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer
-          example: cust123456789
-          type: string
-        master:
-          description: flag indicating whether this address is asset pool master address
-          type: boolean
-        supportedNetworks:
-          description: list of networks supporting given asset. mutually exclusive with network and supportedAssets
-          example:
-          - ETHEREUM
-          items:
-            type: string
-          type: array
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
-    BlockDetail:
-      example:
-        number: 123456
-        timestamp: 2021-01-01 00:00:00+00:00
-      properties:
-        number:
-          description: blockchain number
-          example: 123456
-          format: int64
-          type: integer
-        timestamp:
-          description: timestamp of the block
-          example: 2021-01-01 00:00:00+00:00
-          format: date-time
-          type: string
-    Failure:
-      example:
-        reason: INSUFFICIENT_FUNDS
-        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-      properties:
-        reason:
-          description: reason for failure
-          example: INSUFFICIENT_FUNDS
-          type: string
-        message:
-          description: error message
-          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-          type: string
-    Participant:
-      example:
-        amount: ''
-        address: 103929005307927756724354605802047639613112342136
-        tag: 123456789
-        asset: ETH
-      properties:
-        address:
-          description: blockchain address
-          example: 103929005307927756724354605802047639613112342136
-          type: string
-        amount: {}
-        asset:
-          description: Optional currency if different than in parent object
-          example: ETH
-          type: string
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
-          type: string
-    Pageable:
-      example:
-        pageNumber: 6
-        pageSize: 1
-      properties:
-        pageNumber:
-          description: current page number
-          format: int32
-          type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
-    TransactionMetadata:
-      example:
-        failure:
-          reason: INSUFFICIENT_FUNDS
-          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-      properties:
-        failure:
-          $ref: '#/components/schemas/Failure'
-    AssetValue:
-      example:
-        amount: ''
-        asset: BTC
-      properties:
-        amount: {}
-        asset:
-          description: currency
-          example: BTC
-          type: string
     PaginatedResultTransaction:
       example:
         pageable:
@@ -509,6 +327,89 @@ components:
           type: array
         pageable:
           $ref: '#/components/schemas/Pageable'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    BlockDetail:
+      example:
+        number: 123456
+        timestamp: 2021-01-01 00:00:00+00:00
+      properties:
+        number:
+          description: blockchain number
+          example: 123456
+          format: int64
+          type: integer
+        timestamp:
+          description: timestamp of the block
+          example: 2021-01-01 00:00:00+00:00
+          format: date-time
+          type: string
+    TransactionMetadata:
+      example:
+        failure:
+          reason: INSUFFICIENT_FUNDS
+          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        failure:
+          $ref: '#/components/schemas/Failure'
+    TransactionClaimRequest:
+      example:
+        hash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+        network: ETHEREUM
+      properties:
+        hash:
+          description: blockchain transaction hash
+          example: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    NetworkDetail:
+      example:
+        fee:
+          amount: ''
+          asset: BTC
+        block:
+          number: 123456
+          timestamp: 2021-01-01 00:00:00+00:00
+      properties:
+        block:
+          $ref: '#/components/schemas/BlockDetail'
+        fee:
+          $ref: '#/components/schemas/AssetValue'
     Transaction:
       example:
         amount: ''
@@ -648,32 +549,151 @@ components:
           description: timestamp when transaction was updated
           format: date-time
           type: string
-    TransactionClaimRequest:
+    Participant:
       example:
-        hash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
-        network: ETHEREUM
+        amount: ''
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        asset: ETH
       properties:
-        hash:
-          description: blockchain transaction hash
-          example: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
+    AssetValue:
+      example:
+        amount: ''
+        asset: BTC
+      properties:
+        amount: {}
+        asset:
+          description: currency
+          example: BTC
+          type: string
+    Address:
+      example:
+        address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+        aliases:
+        - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+        supportedAssets:
+        - BTC
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        network: BITCOIN
+        master: true
+        reference: reference
+        balances:
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        supportedNetworks:
+        - ETHEREUM
+        customerId: cust123456789
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        keyPairId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tag: 123456789
+      properties:
+        id:
+          description: internal id
+          format: uuid
+          type: string
+        address:
+          description: blockchain address
+          example: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+          type: string
+        assetPoolId:
+          description: asset pool id
+          format: uuid
           type: string
         network:
           description: crypto network
-          example: ETHEREUM
+          example: BITCOIN
           type: string
-    NetworkDetail:
+        keyPairId:
+          description: key pair id
+          format: uuid
+          type: string
+        reference:
+          description: key pair reference
+          type: string
+        supportedAssets:
+          description: list of assets supported by network
+          example:
+          - BTC
+          items:
+            type: string
+          type: array
+        aliases:
+          description: alternative address (e.g. BTC has segwitt and legacy format)
+          example:
+          - 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          items:
+            type: string
+          type: array
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
+        balances:
+          description: address balances
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+        customerId:
+          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer
+          example: cust123456789
+          type: string
+        master:
+          description: flag indicating whether this address is asset pool master address
+          type: boolean
+        supportedNetworks:
+          description: list of networks supporting given asset. mutually exclusive with network and supportedAssets
+          example:
+          - ETHEREUM
+          items:
+            type: string
+          type: array
+    Failure:
       example:
-        fee:
-          amount: ''
-          asset: BTC
-        block:
-          number: 123456
-          timestamp: 2021-01-01 00:00:00+00:00
+        reason: INSUFFICIENT_FUNDS
+        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
       properties:
-        block:
-          $ref: '#/components/schemas/BlockDetail'
-        fee:
-          $ref: '#/components/schemas/AssetValue'
+        reason:
+          description: reason for failure
+          example: INSUFFICIENT_FUNDS
+          type: string
+        message:
+          description: error message
+          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          type: string
     Balance:
       example:
         reserved: ''
@@ -705,26 +725,6 @@ components:
         available: {}
         reserved: {}
         blockchain: {}
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

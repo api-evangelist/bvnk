@@ -226,6 +226,146 @@ paths:
       - application/json
 components:
   schemas:
+    CreateStakingTransactionRequest:
+      example:
+        reference: myUniqueRef333
+        amount: ''
+        metadata:
+          key: metadata
+        address: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        asset: TRX
+        type: STAKE
+        network: TRON
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        asset:
+          description: currency
+          example: TRX
+          type: string
+        network:
+          description: crypto network
+          example: TRON
+          type: string
+        type:
+          enum:
+          - STAKE
+          - UNSTAKE
+          - RELEASE
+          type: string
+        reference:
+          description: custom identifier supplied for transaction that is used to link transaction to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        address:
+          description: blockchain address
+          example: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
+          type: string
+        amount: {}
+        metadata:
+          additionalProperties:
+            type: string
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    CreateTransactionRequest:
+      example:
+        reference: myUniqueRef333
+        sources:
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        destinations:
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        asset: USDT
+        network: ETHEREUM
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        asset:
+          description: currency
+          example: USDT
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        reference:
+          description: custom identifier supplied for transaction that is used to link transaction to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        sources:
+          description: (Optional) list of addresses and amounts that fund the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        destinations:
+          description: list of recipient addresses and amounts that benefit from the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+    Participant:
+      example:
+        amount: ''
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        asset: ETH
+      properties:
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
     PaginatedResultTransactionRequest:
       example:
         pageable:
@@ -305,20 +445,39 @@ components:
           type: array
         pageable:
           $ref: '#/components/schemas/Pageable'
-    Detail:
+    ApiError:
       example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
       properties:
-        documentLink:
+        code:
           type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    Failure:
+      example:
+        reason: INSUFFICIENT_FUNDS
+        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        reason:
+          description: reason for failure
+          example: INSUFFICIENT_FUNDS
+          type: string
+        message:
+          description: error message
+          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          type: string
     TransactionRequest:
       example:
         reference: myUniqueRef333
@@ -423,165 +582,6 @@ components:
           type: string
         failure:
           $ref: '#/components/schemas/Failure'
-    Participant:
-      example:
-        amount: ''
-        address: 103929005307927756724354605802047639613112342136
-        tag: 123456789
-        asset: ETH
-      properties:
-        address:
-          description: blockchain address
-          example: 103929005307927756724354605802047639613112342136
-          type: string
-        amount: {}
-        asset:
-          description: Optional currency if different than in parent object
-          example: ETH
-          type: string
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
-          type: string
-    Failure:
-      example:
-        reason: INSUFFICIENT_FUNDS
-        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-      properties:
-        reason:
-          description: reason for failure
-          example: INSUFFICIENT_FUNDS
-          type: string
-        message:
-          description: error message
-          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-          type: string
-    Pageable:
-      example:
-        pageNumber: 6
-        pageSize: 1
-      properties:
-        pageNumber:
-          description: current page number
-          format: int32
-          type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
-    CreateStakingTransactionRequest:
-      example:
-        reference: myUniqueRef333
-        amount: ''
-        metadata:
-          key: metadata
-        address: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
-        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        asset: TRX
-        type: STAKE
-        network: TRON
-      properties:
-        assetPoolId:
-          description: asset pool id
-          format: uuid
-          type: string
-        asset:
-          description: currency
-          example: TRX
-          type: string
-        network:
-          description: crypto network
-          example: TRON
-          type: string
-        type:
-          enum:
-          - STAKE
-          - UNSTAKE
-          - RELEASE
-          type: string
-        reference:
-          description: custom identifier supplied for transaction that is used to link transaction to specific customer or use case
-          example: myUniqueRef333
-          type: string
-        address:
-          description: blockchain address
-          example: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
-          type: string
-        amount: {}
-        metadata:
-          additionalProperties:
-            type: string
-    CreateTransactionRequest:
-      example:
-        reference: myUniqueRef333
-        sources:
-        - amount: ''
-          address: 103929005307927756724354605802047639613112342136
-          tag: 123456789
-          asset: ETH
-        - amount: ''
-          address: 103929005307927756724354605802047639613112342136
-          tag: 123456789
-          asset: ETH
-        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        destinations:
-        - amount: ''
-          address: 103929005307927756724354605802047639613112342136
-          tag: 123456789
-          asset: ETH
-        - amount: ''
-          address: 103929005307927756724354605802047639613112342136
-          tag: 123456789
-          asset: ETH
-        asset: USDT
-        network: ETHEREUM
-      properties:
-        assetPoolId:
-          description: asset pool id
-          format: uuid
-          type: string
-        asset:
-          description: currency
-          example: USDT
-          type: string
-        network:
-          description: crypto network
-          example: ETHEREUM
-          type: string
-        reference:
-          description: custom identifier supplied for transaction that is used to link transaction to specific customer or use case
-          example: myUniqueRef333
-          type: string
-        sources:
-          description: (Optional) list of addresses and amounts that fund the transaction
-          items:
-            $ref: '#/components/schemas/Participant'
-          type: array
-        destinations:
-          description: list of recipient addresses and amounts that benefit from the transaction
-          items:
-            $ref: '#/components/schemas/Participant'
-          type: array
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

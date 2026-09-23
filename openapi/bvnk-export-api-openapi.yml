@@ -185,45 +185,60 @@ paths:
       - application/json
 components:
   schemas:
-    PaginatedExports:
+    Export:
       example:
-        pageable:
-          pageNumber: 6
-          pageSize: 1
-        content:
-        - createdAt: 2020-01-01 00:00:00+00:00
-          filename: transaction_2024_04_19T11_20_11_901Z.csv
-          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-          type: transaction
-          inputParameters:
-            from: 2020-01-01 00:00:00+00:00
-            to: 2020-01-31 23:59:59+00:00
-          url: url
-          status: PROCESSING
-          updatedAt: 2020-01-02 12:34:56+00:00
-        - createdAt: 2020-01-01 00:00:00+00:00
-          filename: transaction_2024_04_19T11_20_11_901Z.csv
-          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-          type: transaction
-          inputParameters:
-            from: 2020-01-01 00:00:00+00:00
-            to: 2020-01-31 23:59:59+00:00
-          url: url
-          status: PROCESSING
-          updatedAt: 2020-01-02 12:34:56+00:00
-        totalElements: 0
+        createdAt: 2020-01-01 00:00:00+00:00
+        filename: transaction_2024_04_19T11_20_11_901Z.csv
+        id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        type: transaction
+        inputParameters:
+          from: 2020-01-01 00:00:00+00:00
+          to: 2020-01-31 23:59:59+00:00
+        url: url
+        status: PROCESSING
+        updatedAt: 2020-01-02 12:34:56+00:00
       properties:
-        totalElements:
-          description: total number of items in all pages
-          format: int64
-          type: integer
-        content:
-          description: list of items
-          items:
-            $ref: '#/components/schemas/Export'
-          type: array
-        pageable:
-          $ref: '#/components/schemas/Pageable'
+        id:
+          description: Unique identifier of the export
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          format: uuid
+          type: string
+        status:
+          description: Current status of the export job
+          enum:
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: PROCESSING
+          type: string
+        type:
+          description: Export type name
+          example: transaction
+          type: string
+        inputParameters:
+          additionalProperties:
+            type: string
+          description: JSON string containing input parameters for the job
+          example:
+            from: 2020-01-01 00:00:00+00:00
+            to: 2020-01-31 23:59:59+00:00
+        filename:
+          description: Filename of the resulting export
+          example: transaction_2024_04_19T11_20_11_901Z.csv
+          type: string
+        url:
+          description: URL for file download
+          type: string
+        createdAt:
+          description: Timestamp when the export was created
+          example: 2020-01-01 00:00:00+00:00
+          format: date-time
+          type: string
+        updatedAt:
+          description: Timestamp when the export was last updated
+          example: 2020-01-02 12:34:56+00:00
+          format: date-time
+          type: string
     CreateBalanceExportRequest:
       example:
         assets: '[BTC]'
@@ -284,6 +299,45 @@ components:
           description: The ID of the asset pool for which the report will be generated.
           format: uuid
           type: string
+    PaginatedExports:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - createdAt: 2020-01-01 00:00:00+00:00
+          filename: transaction_2024_04_19T11_20_11_901Z.csv
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          type: transaction
+          inputParameters:
+            from: 2020-01-01 00:00:00+00:00
+            to: 2020-01-31 23:59:59+00:00
+          url: url
+          status: PROCESSING
+          updatedAt: 2020-01-02 12:34:56+00:00
+        - createdAt: 2020-01-01 00:00:00+00:00
+          filename: transaction_2024_04_19T11_20_11_901Z.csv
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          type: transaction
+          inputParameters:
+            from: 2020-01-01 00:00:00+00:00
+            to: 2020-01-31 23:59:59+00:00
+          url: url
+          status: PROCESSING
+          updatedAt: 2020-01-02 12:34:56+00:00
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Export'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
     Detail:
       example:
         documentLink: documentLink
@@ -311,60 +365,6 @@ components:
           description: number of items in page
           format: int32
           type: integer
-    Export:
-      example:
-        createdAt: 2020-01-01 00:00:00+00:00
-        filename: transaction_2024_04_19T11_20_11_901Z.csv
-        id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-        type: transaction
-        inputParameters:
-          from: 2020-01-01 00:00:00+00:00
-          to: 2020-01-31 23:59:59+00:00
-        url: url
-        status: PROCESSING
-        updatedAt: 2020-01-02 12:34:56+00:00
-      properties:
-        id:
-          description: Unique identifier of the export
-          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-          format: uuid
-          type: string
-        status:
-          description: Current status of the export job
-          enum:
-          - PROCESSING
-          - COMPLETED
-          - FAILED
-          example: PROCESSING
-          type: string
-        type:
-          description: Export type name
-          example: transaction
-          type: string
-        inputParameters:
-          additionalProperties:
-            type: string
-          description: JSON string containing input parameters for the job
-          example:
-            from: 2020-01-01 00:00:00+00:00
-            to: 2020-01-31 23:59:59+00:00
-        filename:
-          description: Filename of the resulting export
-          example: transaction_2024_04_19T11_20_11_901Z.csv
-          type: string
-        url:
-          description: URL for file download
-          type: string
-        createdAt:
-          description: Timestamp when the export was created
-          example: 2020-01-01 00:00:00+00:00
-          format: date-time
-          type: string
-        updatedAt:
-          description: Timestamp when the export was last updated
-          example: 2020-01-02 12:34:56+00:00
-          format: date-time
-          type: string
     ApiError:
       example:
         code: code

@@ -145,6 +145,32 @@ paths:
       x-accepts: application/json
 components:
   schemas:
+    PaymentLeg:
+      example:
+        reference: 36836129
+        amount: 100.32
+        dateCreated: 1566198657000
+        currency: ETH
+        id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        amount:
+          example: 100.32
+          type: number
+        dateCreated:
+          example: 1566198657000
+          format: int64
+          type: integer
+        reference:
+          example: 36836129
+          type: string
+        currency:
+          example: ETH
+          type: string
+      type: object
     PayInMethod:
       example:
         code: wallet
@@ -178,6 +204,58 @@ components:
           items:
             $ref: '#/components/schemas/AccountMethod'
           type: array
+      type: object
+    PayOutMethod:
+      example:
+        code: gateway
+        currency: EUR
+        id: 1432
+        accountMethods:
+        - display: Visa xxxx-090
+          id: 1432
+        - display: Visa xxxx-090
+          id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: gateway
+          type: string
+        currency:
+          example: EUR
+          type: string
+        accountMethods:
+          items:
+            $ref: '#/components/schemas/AccountMethod'
+          type: array
+      type: object
+    AccountMethod:
+      example:
+        display: Visa xxxx-090
+        id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        display:
+          example: Visa xxxx-090
+          type: string
+      type: object
+    Form:
+      example:
+        action: action
+        parameters:
+          key: parameters
+      properties:
+        action:
+          type: string
+        parameters:
+          additionalProperties:
+            type: string
+          type: object
       type: object
     PayInInstruction:
       example:
@@ -412,69 +490,6 @@ components:
           format: int64
           type: integer
       type: object
-    Form:
-      example:
-        action: action
-        parameters:
-          key: parameters
-      properties:
-        action:
-          type: string
-        parameters:
-          additionalProperties:
-            type: string
-          type: object
-      type: object
-    QuoteRequest:
-      example:
-        fromWallet: 0.8008281904610115
-        useMinimum: false
-        payInMethod: wallet
-        from: EUR
-        amountIn: 1.4658129805029452
-        to: USDC
-        payOutMethod: wallet
-        useMaximum: false
-        toWallet: 6.027456183070403
-      properties:
-        from:
-          default: EUR
-          type: string
-        to:
-          default: USDC
-          type: string
-        fromWallet:
-          default: 3598236
-          type: number
-        useMinimum:
-          default: false
-          type: boolean
-        useMaximum:
-          default: false
-          type: boolean
-        toWallet:
-          default: 3598514
-          type: number
-        amountIn:
-          default: 10
-          type: number
-        payInMethod:
-          default: wallet
-          type: string
-        payOutMethod:
-          default: wallet
-          type: string
-      required:
-      - amountIn
-      - from
-      - fromWallet
-      - payInMethod
-      - payOutMethod
-      - to
-      - toWallet
-      - useMaximum
-      - useMinimum
-      type: object
     PayOutInstruction:
       example:
         code: gateway
@@ -482,72 +497,6 @@ components:
       properties:
         code:
           example: gateway
-          type: string
-        currency:
-          example: ETH
-          type: string
-      type: object
-    PayOutMethod:
-      example:
-        code: gateway
-        currency: EUR
-        id: 1432
-        accountMethods:
-        - display: Visa xxxx-090
-          id: 1432
-        - display: Visa xxxx-090
-          id: 1432
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        code:
-          example: gateway
-          type: string
-        currency:
-          example: EUR
-          type: string
-        accountMethods:
-          items:
-            $ref: '#/components/schemas/AccountMethod'
-          type: array
-      type: object
-    Fees:
-      example:
-        percentage:
-          service: 0.8008281904610115
-          processing: 6.027456183070403
-        value:
-          service: 0.8008281904610115
-          processing: 6.027456183070403
-      properties:
-        percentage:
-          $ref: '#/components/schemas/Fee'
-        value:
-          $ref: '#/components/schemas/Fee'
-      type: object
-    PaymentLeg:
-      example:
-        reference: 36836129
-        amount: 100.32
-        dateCreated: 1566198657000
-        currency: ETH
-        id: 1432
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        amount:
-          example: 100.32
-          type: number
-        dateCreated:
-          example: 1566198657000
-          format: int64
-          type: integer
-        reference:
-          example: 36836129
           type: string
         currency:
           example: ETH
@@ -648,19 +597,6 @@ components:
         payInInstruction:
           $ref: '#/components/schemas/PayInInstruction'
       type: object
-    AccountMethod:
-      example:
-        display: Visa xxxx-090
-        id: 1432
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        display:
-          example: Visa xxxx-090
-          type: string
-      type: object
     Fee:
       example:
         service: 0.8008281904610115
@@ -670,6 +606,70 @@ components:
           type: number
         processing:
           type: number
+      type: object
+    QuoteRequest:
+      example:
+        fromWallet: 0.8008281904610115
+        useMinimum: false
+        payInMethod: wallet
+        from: EUR
+        amountIn: 1.4658129805029452
+        to: USDC
+        payOutMethod: wallet
+        useMaximum: false
+        toWallet: 6.027456183070403
+      properties:
+        from:
+          default: EUR
+          type: string
+        to:
+          default: USDC
+          type: string
+        fromWallet:
+          default: 3598236
+          type: number
+        useMinimum:
+          default: false
+          type: boolean
+        useMaximum:
+          default: false
+          type: boolean
+        toWallet:
+          default: 3598514
+          type: number
+        amountIn:
+          default: 10
+          type: number
+        payInMethod:
+          default: wallet
+          type: string
+        payOutMethod:
+          default: wallet
+          type: string
+      required:
+      - amountIn
+      - from
+      - fromWallet
+      - payInMethod
+      - payOutMethod
+      - to
+      - toWallet
+      - useMaximum
+      - useMinimum
+      type: object
+    Fees:
+      example:
+        percentage:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+        value:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+      properties:
+        percentage:
+          $ref: '#/components/schemas/Fee'
+        value:
+          $ref: '#/components/schemas/Fee'
       type: object
   securitySchemes:
     Hawk:

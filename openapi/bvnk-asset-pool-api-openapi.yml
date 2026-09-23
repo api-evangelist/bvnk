@@ -499,37 +499,6 @@ components:
           additionalProperties:
             items:
               type: string
-    Balance:
-      example:
-        reserved: ''
-        blockchain: ''
-        available: ''
-        asset: BTC
-        network: BITCOIN
-      properties:
-        network:
-          description: network
-          enum:
-          - BASE
-          - BINANCE
-          - BITCOIN
-          - BITCOIN_CASH
-          - DOGECOIN
-          - ETHEREUM
-          - LITECOIN
-          - POLYGON
-          - RIPPLE
-          - SOLANA
-          - TRON
-          example: BITCOIN
-          type: string
-        asset:
-          description: asset
-          example: BTC
-          type: string
-        available: {}
-        reserved: {}
-        blockchain: {}
     CreateAssetPoolRequest:
       example:
         reference: myUniqueRef333
@@ -563,6 +532,37 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
+    Balance:
+      example:
+        reserved: ''
+        blockchain: ''
+        available: ''
+        asset: BTC
+        network: BITCOIN
+      properties:
+        network:
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          description: asset
+          example: BTC
+          type: string
+        available: {}
+        reserved: {}
+        blockchain: {}
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

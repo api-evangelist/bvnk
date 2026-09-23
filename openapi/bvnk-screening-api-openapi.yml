@@ -43,7 +43,7 @@ paths:
       - oauth2:
         - screenings:edit
       - httpSignature: []
-      summary: Approve or reject a held transfer. Deposits can be only approved.
+      summary: Approve or reject a held transfer. Deposits can be only approved
       tags:
       - Screening
       x-content-type: application/json
@@ -196,53 +196,66 @@ paths:
       - application/json
 components:
   schemas:
-    Detail:
+    ManualActionRequest:
       example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
+        reason: Confirmed false positive
+        action: APPROVE
+        transferId: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
+        operation: DEPOSIT
+        addressId: 11e785c1-a31a-4de9-9585-351056bea639
       properties:
-        documentLink:
+        action:
+          description: Screening action to execute on the transfer
+          enum:
+          - APPROVE
+          - REJECT
+          example: APPROVE
           type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
-    Participant:
-      example:
-        amount: ''
-        address: 103929005307927756724354605802047639613112342136
-        tag: 123456789
-        asset: ETH
-      properties:
-        address:
-          description: blockchain address
-          example: 103929005307927756724354605802047639613112342136
+        operation:
+          description: Transaction type
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          example: DEPOSIT
           type: string
-        amount: {}
-        asset:
-          description: Optional currency if different than in parent object
-          example: ETH
-          type: string
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
-          type: string
-    Failure:
-      example:
-        reason: INSUFFICIENT_FUNDS
-        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-      properties:
         reason:
-          description: reason for failure
-          example: INSUFFICIENT_FUNDS
+          description: Reason for approving or rejecting the suspended transfer
+          example: Confirmed false positive
           type: string
-        message:
-          description: error message
-          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+        transferId:
+          description: Transfer identifier for which screening is performed
+          example: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
+          format: uuid
           type: string
+        addressId:
+          description: Specific destination address identifier for which screening is performed. Required only for deposits.
+          example: 11e785c1-a31a-4de9-9585-351056bea639
+          format: uuid
+          type: string
+      required:
+      - action
+      - operation
+      - reason
+      - transferId
+    ScreeningMetadata:
+      example:
+        urls:
+        - urls
+        - urls
+        ids:
+        - ids
+        - ids
+      properties:
+        urls:
+          description: URLs to external screening providers relevant to the deposit
+          items:
+            type: string
+          type: array
+        ids:
+          description: Deposit screening identifiers within external screening providers
+          items:
+            type: string
+          type: array
     PaginatedScreenings:
       example:
         pageable:
@@ -328,47 +341,48 @@ components:
           type: array
         pageable:
           $ref: '#/components/schemas/Pageable'
-    ManualActionRequest:
+    TransactionMetadata:
       example:
-        reason: Confirmed false positive
-        action: APPROVE
-        transferId: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
-        operation: DEPOSIT
-        addressId: 11e785c1-a31a-4de9-9585-351056bea639
+        failure:
+          reason: INSUFFICIENT_FUNDS
+          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
       properties:
-        action:
-          description: Screening action to execute on the transfer
-          enum:
-          - APPROVE
-          - REJECT
-          example: APPROVE
+        failure:
+          $ref: '#/components/schemas/Failure'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
           type: string
-        operation:
-          description: Transaction type
-          enum:
-          - DEPOSIT
-          - WITHDRAWAL
-          example: DEPOSIT
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    Participant:
+      example:
+        amount: ''
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        asset: ETH
+      properties:
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
           type: string
-        reason:
-          description: Reason for approving or rejecting the suspended transfer
-          example: Confirmed false positive
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
           type: string
-        transferId:
-          description: Transfer identifier for which screening is performed
-          example: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
-          format: uuid
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
           type: string
-        addressId:
-          description: Specific destination address identifier for which screening is performed. Required only for deposits.
-          example: 11e785c1-a31a-4de9-9585-351056bea639
-          format: uuid
-          type: string
-      required:
-      - action
-      - operation
-      - reason
-      - transferId
     Pageable:
       example:
         pageNumber: 6
@@ -382,14 +396,39 @@ components:
           description: number of items in page
           format: int32
           type: integer
-    TransactionMetadata:
+    ApiError:
       example:
-        failure:
-          reason: INSUFFICIENT_FUNDS
-          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
       properties:
-        failure:
-          $ref: '#/components/schemas/Failure'
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    Failure:
+      example:
+        reason: INSUFFICIENT_FUNDS
+        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        reason:
+          description: reason for failure
+          example: INSUFFICIENT_FUNDS
+          type: string
+        message:
+          description: error message
+          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          type: string
     ScreeningView:
       example:
         transactionMetadata:
@@ -517,45 +556,6 @@ components:
           example: fefc3e7b-743b-489f-9311-0921f4930dc7
           format: uuid
           type: string
-    ScreeningMetadata:
-      example:
-        urls:
-        - urls
-        - urls
-        ids:
-        - ids
-        - ids
-      properties:
-        urls:
-          description: URLs to external screening providers relevant to the deposit
-          items:
-            type: string
-          type: array
-        ids:
-          description: Deposit screening identifiers within external screening providers
-          items:
-            type: string
-          type: array
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

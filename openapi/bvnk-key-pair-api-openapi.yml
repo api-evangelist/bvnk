@@ -198,50 +198,6 @@ components:
           type: array
         pageable:
           $ref: '#/components/schemas/Pageable'
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
-    Pageable:
-      example:
-        pageNumber: 6
-        pageSize: 1
-      properties:
-        pageNumber:
-          description: current page number
-          format: int32
-          type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
-    CreateKeyPairRequest:
-      example:
-        reference: myUniqueRef333
-        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        master: true
-      properties:
-        assetPoolId:
-          description: asset pool id
-          format: uuid
-          type: string
-        reference:
-          description: custom identifier supplied for key pair that is used to link key pair to specific customer or use case
-          example: myUniqueRef333
-          type: string
-        master:
-          description: whether this is a master key for the asset pool
-          type: boolean
     KeyPair:
       example:
         reference: myUniqueRef333
@@ -264,6 +220,50 @@ components:
         master:
           description: whether this is a master key for the asset pool
           type: boolean
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    CreateKeyPairRequest:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        master: true
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        reference:
+          description: custom identifier supplied for key pair that is used to link key pair to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        master:
+          description: whether this is a master key for the asset pool
+          type: boolean
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
     ApiError:
       example:
         code: code

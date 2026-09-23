@@ -57,6 +57,47 @@ paths:
       - application/json
 components:
   schemas:
+    EstimateTransactionFeeRequest:
+      example:
+        sources:
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        destinations:
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        - amount: ''
+          address: 103929005307927756724354605802047639613112342136
+          tag: 123456789
+          asset: ETH
+        asset: USDT
+        network: ETHEREUM
+      properties:
+        asset:
+          description: currency
+          example: USDT
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        sources:
+          description: (Optional) list of addresses and amounts that fund the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        destinations:
+          description: (Optional) list of recipient addresses and amounts that benefit from the transaction
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
     Detail:
       example:
         documentLink: documentLink
@@ -101,47 +142,6 @@ components:
           description: currency
           example: BTC
           type: string
-    EstimateTransactionFeeRequest:
-      example:
-        sources:
-        - amount: ''
-          address: 103929005307927756724354605802047639613112342136
-          tag: 123456789
-          asset: ETH
-        - amount: ''
-          address: 103929005307927756724354605802047639613112342136
-          tag: 123456789
-          asset: ETH
-        destinations:
-        - amount: ''
-          address: 103929005307927756724354605802047639613112342136
-          tag: 123456789
-          asset: ETH
-        - amount: ''
-          address: 103929005307927756724354605802047639613112342136
-          tag: 123456789
-          asset: ETH
-        asset: USDT
-        network: ETHEREUM
-      properties:
-        asset:
-          description: currency
-          example: USDT
-          type: string
-        network:
-          description: crypto network
-          example: ETHEREUM
-          type: string
-        sources:
-          description: (Optional) list of addresses and amounts that fund the transaction
-          items:
-            $ref: '#/components/schemas/Participant'
-          type: array
-        destinations:
-          description: (Optional) list of recipient addresses and amounts that benefit from the transaction
-          items:
-            $ref: '#/components/schemas/Participant'
-          type: array
     ApiError:
       example:
         code: code

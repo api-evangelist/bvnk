@@ -207,151 +207,6 @@ paths:
       x-accepts: application/json
 components:
   schemas:
-    TransactionReport:
-      example:
-        expiryDate: 1631619489000
-        lastUpdated: 1631619489000
-        dateCreated: 1631619489000
-        id: 594
-        type: transactions
-        requestData:
-          transactionType: 'null'
-          fromDate: 2023-03-01
-          externalProcessing: 'null'
-          walletId: 504841
-          include: include
-          accountName: 'null'
-          toDate: 2023-06-30
-          format: CSV
-          exclude: exclude
-          languageTag: en-US
-          type: transactions
-          category: 0
-        uuid: 9d1f67f2-a647-404b-9b02-247c77be81d0
-        status: PENDING
-      properties:
-        id:
-          example: 594
-          format: int64
-          type: integer
-        uuid:
-          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
-          type: string
-        dateCreated:
-          example: 1631619489000
-          format: int64
-          type: integer
-        lastUpdated:
-          example: 1631619489000
-          format: int64
-          type: integer
-        expiryDate:
-          example: 1631619489000
-          format: int64
-          type: integer
-        status:
-          example: PENDING
-          type: string
-        type:
-          example: transactions
-          type: string
-        requestData:
-          $ref: '#/components/schemas/TransactionReportRequestData'
-      type: object
-    CurrencyProtocol:
-      example:
-        code: ERC20
-        network: Ethereum
-      properties:
-        code:
-          example: ERC20
-          type: string
-        network:
-          example: Ethereum
-          type: string
-      type: object
-    Currency:
-      example:
-        quantityPrecision: 6
-        pricePrecision: 0
-        withdrawalFee: 0.01
-        code: ETH
-        icon: https://cdn.com/eth-icon.png
-        depositFee: 0.0
-        withdrawalParameters:
-        - code: destinationTag
-          name: Destination Tag
-          id: 1432
-          required: false
-          example: '123432312'
-        - code: destinationTag
-          name: Destination Tag
-          id: 1432
-          required: false
-          example: '123432312'
-        name: Ethereum
-        options:
-          address: https://etherscan.io/address/{{address}}
-          explorer: https://etherscan.io/
-          confirmations: 12
-          transaction: https://etherscan.io/tx/{{hash}}
-        fiat: false
-        id: 1432
-        supportsDeposits: false
-        protocols:
-        - code: ERC20
-          network: Ethereum
-        - code: ERC20
-          network: Ethereum
-        supportsWithdrawals: false
-      properties:
-        code:
-          example: ETH
-          type: string
-        depositFee:
-          example: 0.0
-          type: number
-        fiat:
-          default: false
-          type: boolean
-        icon:
-          example: https://cdn.com/eth-icon.png
-          type: string
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        name:
-          example: Ethereum
-          type: string
-        options:
-          $ref: '#/components/schemas/CurrencyOptions'
-        pricePrecision:
-          default: 5
-          format: int32
-          type: integer
-        protocols:
-          items:
-            $ref: '#/components/schemas/CurrencyProtocol'
-          type: array
-        quantityPrecision:
-          default: 5
-          format: int32
-          type: integer
-        supportsDeposits:
-          default: false
-          type: boolean
-        supportsWithdrawals:
-          default: false
-          type: boolean
-        withdrawalFee:
-          example: 0.01
-          type: number
-        withdrawalParameters:
-          items:
-            $ref: '#/components/schemas/ExternalCurrencyWithdrawalParameter'
-          type: array
-      type: object
     TransactionReportRequestData:
       example:
         transactionType: 'null'
@@ -405,6 +260,85 @@ components:
           type: string
           example: null
       type: object
+    TransactionReport:
+      example:
+        expiryDate: 1631619489000
+        lastUpdated: 1631619489000
+        dateCreated: 1631619489000
+        id: 594
+        type: transactions
+        requestData:
+          transactionType: 'null'
+          fromDate: 2023-03-01
+          externalProcessing: 'null'
+          walletId: 504841
+          include: include
+          accountName: 'null'
+          toDate: 2023-06-30
+          format: CSV
+          exclude: exclude
+          languageTag: en-US
+          type: transactions
+          category: 0
+        uuid: 9d1f67f2-a647-404b-9b02-247c77be81d0
+        status: PENDING
+      properties:
+        id:
+          example: 594
+          format: int64
+          type: integer
+        uuid:
+          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        dateCreated:
+          example: 1631619489000
+          format: int64
+          type: integer
+        lastUpdated:
+          example: 1631619489000
+          format: int64
+          type: integer
+        expiryDate:
+          example: 1631619489000
+          format: int64
+          type: integer
+        status:
+          example: PENDING
+          type: string
+        type:
+          example: transactions
+          type: string
+        requestData:
+          $ref: '#/components/schemas/TransactionReportRequestData'
+      type: object
+    WalletRequest:
+      example:
+        description: My 2nd EUR Wallet
+        currency: ETH
+      properties:
+        currency:
+          default: ETH
+          type: string
+        description:
+          default: My 2nd EUR Wallet
+          type: string
+      required:
+      - currency
+      - description
+      type: object
+    ServerErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      type: object
     CurrencyOptions:
       example:
         address: https://etherscan.io/address/{{address}}
@@ -424,6 +358,31 @@ components:
         confirmations:
           example: 12
           type: integer
+      type: object
+    ExternalCurrencyWithdrawalParameter:
+      example:
+        code: destinationTag
+        name: Destination Tag
+        id: 1432
+        required: false
+        example: '123432312'
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: destinationTag
+          type: string
+        name:
+          example: Destination Tag
+          type: string
+        required:
+          default: false
+          type: boolean
+        example:
+          example: '123432312'
+          type: string
       type: object
     Wallet:
       example:
@@ -542,58 +501,99 @@ components:
           format: float
           type: number
       type: object
-    ExternalCurrencyWithdrawalParameter:
+    CurrencyProtocol:
       example:
-        code: destinationTag
-        name: Destination Tag
-        id: 1432
-        required: false
-        example: '123432312'
+        code: ERC20
+        network: Ethereum
       properties:
+        code:
+          example: ERC20
+          type: string
+        network:
+          example: Ethereum
+          type: string
+      type: object
+    Currency:
+      example:
+        quantityPrecision: 6
+        pricePrecision: 0
+        withdrawalFee: 0.01
+        code: ETH
+        icon: https://cdn.com/eth-icon.png
+        depositFee: 0.0
+        withdrawalParameters:
+        - code: destinationTag
+          name: Destination Tag
+          id: 1432
+          required: false
+          example: '123432312'
+        - code: destinationTag
+          name: Destination Tag
+          id: 1432
+          required: false
+          example: '123432312'
+        name: Ethereum
+        options:
+          address: https://etherscan.io/address/{{address}}
+          explorer: https://etherscan.io/
+          confirmations: 12
+          transaction: https://etherscan.io/tx/{{hash}}
+        fiat: false
+        id: 1432
+        supportsDeposits: false
+        protocols:
+        - code: ERC20
+          network: Ethereum
+        - code: ERC20
+          network: Ethereum
+        supportsWithdrawals: false
+      properties:
+        code:
+          example: ETH
+          type: string
+        depositFee:
+          example: 0.0
+          type: number
+        fiat:
+          default: false
+          type: boolean
+        icon:
+          example: https://cdn.com/eth-icon.png
+          type: string
         id:
           example: 1432
           format: int64
           type: integer
-        code:
-          example: destinationTag
-          type: string
         name:
-          example: Destination Tag
+          example: Ethereum
           type: string
-        required:
+        options:
+          $ref: '#/components/schemas/CurrencyOptions'
+        pricePrecision:
+          default: 5
+          format: int32
+          type: integer
+        protocols:
+          items:
+            $ref: '#/components/schemas/CurrencyProtocol'
+          type: array
+        quantityPrecision:
+          default: 5
+          format: int32
+          type: integer
+        supportsDeposits:
           default: false
           type: boolean
-        example:
-          example: '123432312'
-          type: string
-      type: object
-    ServerErrorDto:
-      description: Error object shared when an exception or error is encountered
-      properties:
-        code:
-          description: this is used to get internationalisation translation
-          type: string
-        message:
-          description: exception message
-          type: string
-      required:
-      - code
-      - message
-      type: object
-    WalletRequest:
-      example:
-        description: My 2nd EUR Wallet
-        currency: ETH
-      properties:
-        currency:
-          default: ETH
-          type: string
-        description:
-          default: My 2nd EUR Wallet
-          type: string
-      required:
-      - currency
-      - description
+        supportsWithdrawals:
+          default: false
+          type: boolean
+        withdrawalFee:
+          example: 0.01
+          type: number
+        withdrawalParameters:
+          items:
+            $ref: '#/components/schemas/ExternalCurrencyWithdrawalParameter'
+          type: array
       type: object
     Balance:
       example:
