@@ -61,6 +61,41 @@ paths:
       - application/json
 components:
   schemas:
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    Asset:
+      example:
+        code: BTC
+        model: UTXO
+        decimalPrecision: 0
+      properties:
+        code:
+          description: currency code
+          example: BTC
+          type: string
+        decimalPrecision:
+          description: currency decimal precision
+          format: int32
+          type: integer
+        model:
+          description: transaction model supported by the asset
+          enum:
+          - UTXO
+          - ACCOUNT
+          - CONTRACT
+          type: string
     ApiError:
       example:
         code: code
@@ -81,20 +116,6 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
     Network:
       example:
         nativeAsset: BTC
@@ -125,27 +146,6 @@ components:
           default: false
           description: whether network supports address tags
           type: boolean
-    Asset:
-      example:
-        code: BTC
-        model: UTXO
-        decimalPrecision: 0
-      properties:
-        code:
-          description: currency code
-          example: BTC
-          type: string
-        decimalPrecision:
-          description: currency decimal precision
-          format: int32
-          type: integer
-        model:
-          description: transaction model supported by the asset
-          enum:
-          - UTXO
-          - ACCOUNT
-          - CONTRACT
-          type: string
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

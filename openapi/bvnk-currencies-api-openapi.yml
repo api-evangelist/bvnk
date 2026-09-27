@@ -156,148 +156,6 @@ paths:
       x-accepts: application/json
 components:
   schemas:
-    Merchant:
-      example:
-        autoConvertInvalidPayments: true
-        webhookVersion: 1
-        wallet:
-          lookup: lookup
-          withdrawalFee: 0.001
-          address: 707390250188898007213214622985268615627297025014
-          available: 0.59573928
-          description: ETH wallet
-          depositFee: 0.0
-          approxAvailable: '0.59573928'
-          convertedAvailable: 20917.59
-          protocol: ETH
-          balance: 0.59573928
-          approxBalance: '0.59573928'
-          alternatives: []
-          supportsThirdParty: false
-          currency:
-            quantityPrecision: 6
-            pricePrecision: 0
-            withdrawalFee: 0.01
-            code: ETH
-            icon: https://cdn.com/eth-icon.png
-            depositFee: 0.0
-            withdrawalParameters:
-            - code: destinationTag
-              name: Destination Tag
-              id: 1432
-              required: false
-              example: '123432312'
-            - code: destinationTag
-              name: Destination Tag
-              id: 1432
-              required: false
-              example: '123432312'
-            name: Ethereum
-            options:
-              address: https://etherscan.io/address/{{address}}
-              explorer: https://etherscan.io/
-              confirmations: 12
-              transaction: https://etherscan.io/tx/{{hash}}
-            fiat: false
-            id: 1432
-            supportsDeposits: false
-            protocols:
-            - code: ERC20
-              network: Ethereum
-            - code: ERC20
-              network: Ethereum
-            supportsWithdrawals: false
-          custodianWallet: true
-          id: 1432
-          supportsDeposits: true
-          supportsWithdrawals: true
-          isEmoney: false
-        merchantId: b312436e-e477-49d4-be7f-9d027f9b9e34
-        displayName: Test Merchant Name
-        emailRecipients: emailRecipients
-        id: 1432
-        secret: MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM
-        webhookUrl: https://www.URL.com/to/send/webhooks/to
-        defaultExpiryMinutes: 1440
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        merchantId:
-          example: b312436e-e477-49d4-be7f-9d027f9b9e34
-          type: string
-        displayName:
-          example: Test Merchant Name
-          type: string
-        secret:
-          example: MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM
-          type: string
-        webhookUrl:
-          example: https://www.URL.com/to/send/webhooks/to
-          type: string
-        autoConvertInvalidPayments:
-          default: true
-          type: boolean
-        defaultExpiryMinutes:
-          example: 1440
-          format: int32
-          type: integer
-        webhookVersion:
-          example: 1
-          format: int32
-          type: integer
-        wallet:
-          $ref: '#/components/schemas/Wallet'
-        emailRecipients:
-          type: string
-          example: null
-      type: object
-    CurrencyOptions:
-      example:
-        address: https://etherscan.io/address/{{address}}
-        explorer: https://etherscan.io/
-        confirmations: 12
-        transaction: https://etherscan.io/tx/{{hash}}
-      properties:
-        transaction:
-          example: https://etherscan.io/tx/{{hash}}
-          type: string
-        explorer:
-          example: https://etherscan.io/
-          type: string
-        address:
-          example: https://etherscan.io/address/{{address}}
-          type: string
-        confirmations:
-          example: 12
-          type: integer
-      type: object
-    ExternalCurrencyWithdrawalParameter:
-      example:
-        code: destinationTag
-        name: Destination Tag
-        id: 1432
-        required: false
-        example: '123432312'
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        code:
-          example: destinationTag
-          type: string
-        name:
-          example: Destination Tag
-          type: string
-        required:
-          default: false
-          type: boolean
-        example:
-          example: '123432312'
-          type: string
-      type: object
     Wallet:
       example:
         lookup: lookup
@@ -415,18 +273,6 @@ components:
           format: float
           type: number
       type: object
-    CurrencyProtocol:
-      example:
-        code: ERC20
-        network: Ethereum
-      properties:
-        code:
-          example: ERC20
-          type: string
-        network:
-          example: Ethereum
-          type: string
-      type: object
     Currency:
       example:
         quantityPrecision: 6
@@ -508,6 +354,160 @@ components:
           items:
             $ref: '#/components/schemas/ExternalCurrencyWithdrawalParameter'
           type: array
+      type: object
+    CurrencyOptions:
+      example:
+        address: https://etherscan.io/address/{{address}}
+        explorer: https://etherscan.io/
+        confirmations: 12
+        transaction: https://etherscan.io/tx/{{hash}}
+      properties:
+        transaction:
+          example: https://etherscan.io/tx/{{hash}}
+          type: string
+        explorer:
+          example: https://etherscan.io/
+          type: string
+        address:
+          example: https://etherscan.io/address/{{address}}
+          type: string
+        confirmations:
+          example: 12
+          type: integer
+      type: object
+    Merchant:
+      example:
+        autoConvertInvalidPayments: true
+        webhookVersion: 1
+        wallet:
+          lookup: lookup
+          withdrawalFee: 0.001
+          address: 707390250188898007213214622985268615627297025014
+          available: 0.59573928
+          description: ETH wallet
+          depositFee: 0.0
+          approxAvailable: '0.59573928'
+          convertedAvailable: 20917.59
+          protocol: ETH
+          balance: 0.59573928
+          approxBalance: '0.59573928'
+          alternatives: []
+          supportsThirdParty: false
+          currency:
+            quantityPrecision: 6
+            pricePrecision: 0
+            withdrawalFee: 0.01
+            code: ETH
+            icon: https://cdn.com/eth-icon.png
+            depositFee: 0.0
+            withdrawalParameters:
+            - code: destinationTag
+              name: Destination Tag
+              id: 1432
+              required: false
+              example: '123432312'
+            - code: destinationTag
+              name: Destination Tag
+              id: 1432
+              required: false
+              example: '123432312'
+            name: Ethereum
+            options:
+              address: https://etherscan.io/address/{{address}}
+              explorer: https://etherscan.io/
+              confirmations: 12
+              transaction: https://etherscan.io/tx/{{hash}}
+            fiat: false
+            id: 1432
+            supportsDeposits: false
+            protocols:
+            - code: ERC20
+              network: Ethereum
+            - code: ERC20
+              network: Ethereum
+            supportsWithdrawals: false
+          custodianWallet: true
+          id: 1432
+          supportsDeposits: true
+          supportsWithdrawals: true
+          isEmoney: false
+        merchantId: b312436e-e477-49d4-be7f-9d027f9b9e34
+        displayName: Test Merchant Name
+        emailRecipients: emailRecipients
+        id: 1432
+        secret: MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM
+        webhookUrl: https://www.URL.com/to/send/webhooks/to
+        defaultExpiryMinutes: 1440
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        merchantId:
+          example: b312436e-e477-49d4-be7f-9d027f9b9e34
+          type: string
+        displayName:
+          example: Test Merchant Name
+          type: string
+        secret:
+          example: MzI5OGUyZGMtN2FkOC00NzVkLThjNzEtMWVjMzk2ZjQ5OGMwYTBlZTBlOGYtMjBhNi00NjMxLWI1MTctMTI5MjlmMjdhYmM
+          type: string
+        webhookUrl:
+          example: https://www.URL.com/to/send/webhooks/to
+          type: string
+        autoConvertInvalidPayments:
+          default: true
+          type: boolean
+        defaultExpiryMinutes:
+          example: 1440
+          format: int32
+          type: integer
+        webhookVersion:
+          example: 1
+          format: int32
+          type: integer
+        wallet:
+          $ref: '#/components/schemas/Wallet'
+        emailRecipients:
+          type: string
+          example: null
+      type: object
+    ExternalCurrencyWithdrawalParameter:
+      example:
+        code: destinationTag
+        name: Destination Tag
+        id: 1432
+        required: false
+        example: '123432312'
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: destinationTag
+          type: string
+        name:
+          example: Destination Tag
+          type: string
+        required:
+          default: false
+          type: boolean
+        example:
+          example: '123432312'
+          type: string
+      type: object
+    CurrencyProtocol:
+      example:
+        code: ERC20
+        network: Ethereum
+      properties:
+        code:
+          example: ERC20
+          type: string
+        network:
+          example: Ethereum
+          type: string
       type: object
   securitySchemes:
     Hawk:

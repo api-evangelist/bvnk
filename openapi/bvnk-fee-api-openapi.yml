@@ -57,6 +57,20 @@ paths:
       - application/json
 components:
   schemas:
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
     EstimateTransactionFeeRequest:
       example:
         sources:
@@ -98,40 +112,6 @@ components:
           items:
             $ref: '#/components/schemas/Participant'
           type: array
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
-    Participant:
-      example:
-        amount: ''
-        address: 103929005307927756724354605802047639613112342136
-        tag: 123456789
-        asset: ETH
-      properties:
-        address:
-          description: blockchain address
-          example: 103929005307927756724354605802047639613112342136
-          type: string
-        amount: {}
-        asset:
-          description: Optional currency if different than in parent object
-          example: ETH
-          type: string
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
-          type: string
     AssetValue:
       example:
         amount: ''
@@ -162,6 +142,26 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
+    Participant:
+      example:
+        amount: ''
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        asset: ETH
+      properties:
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

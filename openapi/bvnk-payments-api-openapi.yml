@@ -243,6 +243,12 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    DirectionDto:
+      description: Payment in or payment out
+      enum:
+      - IN
+      - OUT
+      type: string
     PaymentStatusDto:
       description: Payment status
       enum:
@@ -255,6 +261,173 @@ components:
       - EXPIRED
       example: PENDING
       type: string
+    GatewayTransactionDto:
+      description: Specify details about transaction (onchain or offchain) linked to the payment
+      example:
+        amount: 100.0
+        dateCreated: 1566203005000
+        sources:
+        - 1048067243501743171847519123319628402502707679848
+        - 1048067243501743171847519123319628402502707679848
+        exchangeRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+        networkFeeAmount: 1.05
+        risk: ETH wallet
+        dateConfirmed: 1566203005000
+        hash: hash
+        networkFeeCurrency: BTC
+        displayRate:
+          rate: 1680.1
+          counter: EUR
+          base: ETH
+      properties:
+        dateCreated:
+          example: 1566203005000
+          format: int64
+          type: integer
+        dateConfirmed:
+          example: 1566203005000
+          format: int64
+          type: integer
+        hash:
+          description: Transaction hash
+          type: string
+        amount:
+          description: payment amount
+          example: 100.0
+          type: number
+        risk:
+          example: ETH wallet
+          type: object
+        networkFeeCurrency:
+          description: currency acronym
+          example: BTC
+          type: string
+        networkFeeAmount:
+          description: payment amount
+          example: 1.05
+          type: number
+        sources:
+          description: list of source addresses (only applicable if payment in)
+          items:
+            example: 1048067243501743171847519123319628402502707679848
+            type: string
+          type: array
+        displayRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+        exchangeRate:
+          $ref: '#/components/schemas/ExchangeRateDto'
+      type: object
+    PayRequestDto:
+      description: DTO required to create a payment in or a payment out
+      example:
+        reference: myUniqueRef333
+        amount: 0.08008281904610115
+        expiryMinutes: 6
+        merchantId: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+        payInDetails:
+          currency: ETH
+        payOutDetails:
+          protocol: ERC20
+          code: crypto
+          address: 1048067243501743171847519123319628402502707679848
+          currency: ETH
+          tag: ''
+        currency: EUR
+        returnUrl: https://my-shop.com/payment-complete?ref=xyz
+        type: null
+      properties:
+        merchantId:
+          default: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
+          description: Your Merchant ID. You can find it on the Merchant Details page in your account
+          maxLength: 50
+          minLength: 6
+          type: string
+        amount:
+          default: 223.05
+          description: payment amount
+          type: number
+          exclusiveMinimum: 0
+        expiryMinutes:
+          default: 20
+          description: time period after which payment expires
+          type: integer
+        currency:
+          default: EUR
+          description: currency acronym
+          maxLength: 20
+          minLength: 2
+          type: string
+          x-setter-extra-annotation: '@ToUpperCase'
+        returnUrl:
+          default: https://my-shop.com/payment-complete?ref=xyz
+          description: URL that the customer will be redirected to if they click a 'Back to Merchant' button on the payment web page
+          type: string
+        reference:
+          default: myUniqueRef333
+          description: Your payment reference ID. Feel free to submit any ID to tie the payment to your customer
+          maxLength: 255
+          minLength: 6
+          type: string
+        type:
+          $ref: '#/components/schemas/DirectionDto'
+        payInDetails:
+          $ref: '#/components/schemas/PayInDetailDto'
+        payOutDetails:
+          $ref: '#/components/schemas/PayOutDetailDto'
+      required:
+      - amount
+      - currency
+      - merchantId
+      - reference
+      - type
+      type: object
+    ClientValidationErrorDto:
+      description: List of validation errors
+      properties:
+        errorList:
+          items:
+            $ref: '#/components/schemas/ValidationErrorDto'
+          type: array
+    PayOutDetailDto:
+      description: Specify payment details
+      example:
+        protocol: ERC20
+        code: crypto
+        address: 1048067243501743171847519123319628402502707679848
+        currency: ETH
+        tag: ''
+      properties:
+        code:
+          description: Gateway to be used (crypto or wallet)
+          example: crypto
+          type: string
+        currency:
+          description: Currency acronym payout needs to be made in
+          example: ETH
+          maxLength: 20
+          minLength: 2
+          type: string
+          x-setter-extra-annotation: '@ToUpperCase'
+        address:
+          description: Address to withdrawal funds to
+          example: 1048067243501743171847519123319628402502707679848
+          type: string
+        tag:
+          description: This is a payment destination tag. This fields isn't null when the paidCurrency currency value is XRP
+          example: ''
+          type: string
+        protocol:
+          description: Protocol behind a currency (ERC20 or TRC20)
+          example: ERC20
+          type: string
+      required:
+      - address
+      - code
+      - currency
+      type: object
     PayAmountsDto:
       description: Contains the type of currency, and amount to be paid and received
       example:
@@ -275,6 +448,72 @@ components:
           example: 76.45
           type: number
       type: object
+    AlternativeAddress:
+      description: List of non-default addresses for other tokens
+      example:
+        protocol: protocol
+        address: address
+        tag: tag
+        uri: uri
+      properties:
+        protocol:
+          type: string
+        address:
+          type: string
+        tag:
+          type: string
+        uri:
+          type: string
+      type: object
+    ExchangeRateDto:
+      description: contains exchange rate information to convert from base to counter currency
+      example:
+        rate: 1680.1
+        counter: EUR
+        base: ETH
+      properties:
+        base:
+          description: currency acronym
+          example: ETH
+          type: string
+        counter:
+          description: currency acronym
+          example: EUR
+          type: string
+        rate:
+          description: TBC
+          example: 1680.1
+          type: number
+      type: object
+    ServerErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    ValidationErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        parameter:
+          description: input that is causing the error
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      - parameter
     SummaryPaymentDto:
       description: Contains all the information about a summary payment object
       example:
@@ -496,91 +735,6 @@ components:
             $ref: '#/components/schemas/AlternativeAddress'
           type: array
       type: object
-    DirectionDto:
-      description: Payment in or payment out
-      enum:
-      - IN
-      - OUT
-      type: string
-    ServerErrorDto:
-      description: Error object shared when an exception or error is encountered
-      properties:
-        code:
-          description: this is used to get internationalisation translation
-          type: string
-        message:
-          description: exception message
-          type: string
-      required:
-      - code
-      - message
-      type: object
-    ClientValidationErrorDto:
-      description: List of validation errors
-      properties:
-        errorList:
-          items:
-            $ref: '#/components/schemas/ValidationErrorDto'
-          type: array
-    GatewayTransactionDto:
-      description: Specify details about transaction (onchain or offchain) linked to the payment
-      example:
-        amount: 100.0
-        dateCreated: 1566203005000
-        sources:
-        - 1048067243501743171847519123319628402502707679848
-        - 1048067243501743171847519123319628402502707679848
-        exchangeRate:
-          rate: 1680.1
-          counter: EUR
-          base: ETH
-        networkFeeAmount: 1.05
-        risk: ETH wallet
-        dateConfirmed: 1566203005000
-        hash: hash
-        networkFeeCurrency: BTC
-        displayRate:
-          rate: 1680.1
-          counter: EUR
-          base: ETH
-      properties:
-        dateCreated:
-          example: 1566203005000
-          format: int64
-          type: integer
-        dateConfirmed:
-          example: 1566203005000
-          format: int64
-          type: integer
-        hash:
-          description: Transaction hash
-          type: string
-        amount:
-          description: payment amount
-          example: 100.0
-          type: number
-        risk:
-          example: ETH wallet
-          type: object
-        networkFeeCurrency:
-          description: currency acronym
-          example: BTC
-          type: string
-        networkFeeAmount:
-          description: payment amount
-          example: 1.05
-          type: number
-        sources:
-          description: list of source addresses (only applicable if payment in)
-          items:
-            example: 1048067243501743171847519123319628402502707679848
-            type: string
-          type: array
-        displayRate:
-          $ref: '#/components/schemas/ExchangeRateDto'
-        exchangeRate:
-          $ref: '#/components/schemas/ExchangeRateDto'
-      type: object
     PayInDetailDto:
       description: Specify payment details
       example:
@@ -594,160 +748,6 @@ components:
           type: string
           x-setter-extra-annotation: '@ToUpperCase'
       required:
-      - currency
-      type: object
-    ExchangeRateDto:
-      description: contains exchange rate information to convert from base to counter currency
-      example:
-        rate: 1680.1
-        counter: EUR
-        base: ETH
-      properties:
-        base:
-          description: currency acronym
-          example: ETH
-          type: string
-        counter:
-          description: currency acronym
-          example: EUR
-          type: string
-        rate:
-          description: TBC
-          example: 1680.1
-          type: number
-      type: object
-    AlternativeAddress:
-      description: List of non-default addresses for other tokens
-      example:
-        protocol: protocol
-        address: address
-        tag: tag
-        uri: uri
-      properties:
-        protocol:
-          type: string
-        address:
-          type: string
-        tag:
-          type: string
-        uri:
-          type: string
-      type: object
-    PayRequestDto:
-      description: DTO required to create a payment in or a payment out
-      example:
-        reference: myUniqueRef333
-        amount: 0.08008281904610115
-        expiryMinutes: 6
-        merchantId: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
-        payInDetails:
-          currency: ETH
-        payOutDetails:
-          protocol: ERC20
-          code: crypto
-          address: 1048067243501743171847519123319628402502707679848
-          currency: ETH
-          tag: ''
-        currency: EUR
-        returnUrl: https://my-shop.com/payment-complete?ref=xyz
-        type: null
-      properties:
-        merchantId:
-          default: 5C8D8D78-366A-4AFB-B658-A64CE543C5DB
-          description: Your Merchant ID. You can find it on the Merchant Details page in your account
-          maxLength: 50
-          minLength: 6
-          type: string
-        amount:
-          default: 223.05
-          description: payment amount
-          type: number
-          exclusiveMinimum: 0
-        expiryMinutes:
-          default: 20
-          description: time period after which payment expires
-          type: integer
-        currency:
-          default: EUR
-          description: currency acronym
-          maxLength: 20
-          minLength: 2
-          type: string
-          x-setter-extra-annotation: '@ToUpperCase'
-        returnUrl:
-          default: https://my-shop.com/payment-complete?ref=xyz
-          description: URL that the customer will be redirected to if they click a 'Back to Merchant' button on the payment web page
-          type: string
-        reference:
-          default: myUniqueRef333
-          description: Your payment reference ID. Feel free to submit any ID to tie the payment to your customer
-          maxLength: 255
-          minLength: 6
-          type: string
-        type:
-          $ref: '#/components/schemas/DirectionDto'
-        payInDetails:
-          $ref: '#/components/schemas/PayInDetailDto'
-        payOutDetails:
-          $ref: '#/components/schemas/PayOutDetailDto'
-      required:
-      - amount
-      - currency
-      - merchantId
-      - reference
-      - type
-      type: object
-    ValidationErrorDto:
-      description: Error object shared when an exception or error is encountered
-      properties:
-        code:
-          description: this is used to get internationalisation translation
-          type: string
-        parameter:
-          description: input that is causing the error
-          type: string
-        message:
-          description: exception message
-          type: string
-      required:
-      - code
-      - message
-      - parameter
-    PayOutDetailDto:
-      description: Specify payment details
-      example:
-        protocol: ERC20
-        code: crypto
-        address: 1048067243501743171847519123319628402502707679848
-        currency: ETH
-        tag: ''
-      properties:
-        code:
-          description: Gateway to be used (crypto or wallet)
-          example: crypto
-          type: string
-        currency:
-          description: Currency acronym payout needs to be made in
-          example: ETH
-          maxLength: 20
-          minLength: 2
-          type: string
-          x-setter-extra-annotation: '@ToUpperCase'
-        address:
-          description: Address to withdrawal funds to
-          example: 1048067243501743171847519123319628402502707679848
-          type: string
-        tag:
-          description: This is a payment destination tag. This fields isn't null when the paidCurrency currency value is XRP
-          example: ''
-          type: string
-        protocol:
-          description: Protocol behind a currency (ERC20 or TRC20)
-          example: ERC20
-          type: string
-      required:
-      - address
-      - code
       - currency
       type: object
   securitySchemes:

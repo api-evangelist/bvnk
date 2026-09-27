@@ -57,7 +57,7 @@ tags:
 - Wallets
 - Virtual Accounts
 - Cross-Border Payments
-- Financial-Services
+- Financial Services
 - Cards
 - Digital Assets
 - Banking
@@ -75,6 +75,7 @@ tags_raw:
 - Digital Assets
 - Banking
 - Compliance
+- Financial-Services
 apis:
 - aid: bvnk:bvnk-cards-api
   name: BVNK Cards API

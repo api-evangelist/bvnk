@@ -308,130 +308,6 @@ components:
       - EXPIRED
       example: PENDING
       type: string
-    MerchantChannelRequest:
-      example:
-        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
-        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
-        payCurrency: ETH
-        displayCurrency: EUR
-      properties:
-        merchantId:
-          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
-          description: The merchant ID that you are creating the channel on.
-          type: string
-        payCurrency:
-          default: ETH
-          description: Cryptocurrency code that the channel will operate on.
-          type: string
-        displayCurrency:
-          default: EUR
-          description: The currency which pricing will be displayed to the end user in (can be the same as payCurrency, or can be different).
-          type: string
-        reference:
-          default: c1b933d5-3354-4f83-a05f-0b53f1be85f2
-          description: An external reference for the channel that your customer will see.
-          type: string
-      required:
-      - displayCurrency
-      - merchantId
-      - payCurrency
-      - reference
-      type: object
-    MerchantChannel:
-      example:
-        address: 1032808453727112588357558221434846992893758074638
-        redirectUrl: https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0
-        walletCurrency: EUR
-        uuid: 9d1f67f2-a647-404b-9b02-247c77be81d0
-        uri: ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
-        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
-        lastUpdated: 1631619193321
-        protocol: ETH
-        dateCreated: 1631619193321
-        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
-        payCurrency: ETH
-        alternatives:
-        - protocol: protocol
-          address: address
-          tag: tag
-          uri: uri
-        - protocol: protocol
-          address: address
-          tag: tag
-          uri: uri
-        id: 65
-        tag: tag
-        displayCurrency: JPY
-        status: OPEN
-      properties:
-        id:
-          default: 0
-          example: 65
-          type: integer
-        dateCreated:
-          default: 0
-          example: 1631619193321
-          type: integer
-        lastUpdated:
-          default: 0
-          example: 1631619193321
-          type: integer
-        merchantId:
-          example: 0a12a214-1619-43fa-9be1-0029f6a440a0
-          type: string
-        walletCurrency:
-          example: EUR
-          type: string
-        displayCurrency:
-          example: JPY
-          type: string
-        payCurrency:
-          example: ETH
-          type: string
-        address:
-          example: 1032808453727112588357558221434846992893758074638
-          type: string
-        tag:
-          type: string
-          example: null
-        protocol:
-          example: ETH
-          type: string
-        reference:
-          example: c1b933d5-3354-4f83-a05f-0b53f1be85f2
-          type: string
-        status:
-          enum:
-          - OPEN
-          - CLOSED
-          type: string
-        uuid:
-          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
-          type: string
-        redirectUrl:
-          example: https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0
-          type: string
-        uri:
-          example: ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
-          type: string
-        alternatives:
-          items:
-            $ref: '#/components/schemas/AlternativeAddress'
-          type: array
-      type: object
-    ServerErrorDto:
-      description: Error object shared when an exception or error is encountered
-      properties:
-        code:
-          description: this is used to get internationalisation translation
-          type: string
-        message:
-          description: exception message
-          type: string
-      required:
-      - code
-      - message
-      type: object
     MerchantChannelPayment:
       example:
         address: 1032808453727112588357558221434846992893758074638
@@ -555,22 +431,6 @@ components:
         networkFee:
           $ref: '#/components/schemas/NetworkFee'
       type: object
-    NetworkFee:
-      example:
-        displayAmount: 6.027456183070403
-        paidCurrency: paidCurrency
-        displayCurrency: displayCurrency
-        paidAmount: 0.8008281904610115
-      properties:
-        paidCurrency:
-          type: string
-        paidAmount:
-          type: number
-        displayCurrency:
-          type: string
-        displayAmount:
-          type: number
-      type: object
     ClientValidationErrorDto:
       description: List of validation errors
       properties:
@@ -578,6 +438,52 @@ components:
           items:
             $ref: '#/components/schemas/ValidationErrorDto'
           type: array
+    MerchantChannelRequest:
+      example:
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        payCurrency: ETH
+        displayCurrency: EUR
+      properties:
+        merchantId:
+          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          description: The merchant ID that you are creating the channel on.
+          type: string
+        payCurrency:
+          default: ETH
+          description: Cryptocurrency code that the channel will operate on.
+          type: string
+        displayCurrency:
+          default: EUR
+          description: The currency which pricing will be displayed to the end user in (can be the same as payCurrency, or can be different).
+          type: string
+        reference:
+          default: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          description: An external reference for the channel that your customer will see.
+          type: string
+      required:
+      - displayCurrency
+      - merchantId
+      - payCurrency
+      - reference
+      type: object
+    AlternativeAddress:
+      description: List of non-default addresses for other tokens
+      example:
+        protocol: protocol
+        address: address
+        tag: tag
+        uri: uri
+      properties:
+        protocol:
+          type: string
+        address:
+          type: string
+        tag:
+          type: string
+        uri:
+          type: string
+      type: object
     ExchangeRateDto:
       description: contains exchange rate information to convert from base to counter currency
       example:
@@ -598,22 +504,100 @@ components:
           example: 1680.1
           type: number
       type: object
-    AlternativeAddress:
-      description: List of non-default addresses for other tokens
+    MerchantChannel:
       example:
-        protocol: protocol
-        address: address
+        address: 1032808453727112588357558221434846992893758074638
+        redirectUrl: https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0
+        walletCurrency: EUR
+        uuid: 9d1f67f2-a647-404b-9b02-247c77be81d0
+        uri: ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        lastUpdated: 1631619193321
+        protocol: ETH
+        dateCreated: 1631619193321
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        payCurrency: ETH
+        alternatives:
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        - protocol: protocol
+          address: address
+          tag: tag
+          uri: uri
+        id: 65
         tag: tag
-        uri: uri
+        displayCurrency: JPY
+        status: OPEN
       properties:
-        protocol:
+        id:
+          default: 0
+          example: 65
+          type: integer
+        dateCreated:
+          default: 0
+          example: 1631619193321
+          type: integer
+        lastUpdated:
+          default: 0
+          example: 1631619193321
+          type: integer
+        merchantId:
+          example: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          type: string
+        walletCurrency:
+          example: EUR
+          type: string
+        displayCurrency:
+          example: JPY
+          type: string
+        payCurrency:
+          example: ETH
           type: string
         address:
+          example: 1032808453727112588357558221434846992893758074638
           type: string
         tag:
           type: string
-        uri:
+          example: null
+        protocol:
+          example: ETH
           type: string
+        reference:
+          example: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          type: string
+        status:
+          enum:
+          - OPEN
+          - CLOSED
+          type: string
+        uuid:
+          example: 9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        redirectUrl:
+          example: https://pay.sandbox.bvnk.com/channel?uuid=9d1f67f2-a647-404b-9b02-247c77be81d0
+          type: string
+        uri:
+          example: ethereum:0xb4e8bb9918248007dc9d0dc12ae1142f0d62ef0e
+          type: string
+        alternatives:
+          items:
+            $ref: '#/components/schemas/AlternativeAddress'
+          type: array
+      type: object
+    ServerErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
       type: object
     ValidationErrorDto:
       description: Error object shared when an exception or error is encountered
@@ -631,6 +615,22 @@ components:
       - code
       - message
       - parameter
+    NetworkFee:
+      example:
+        displayAmount: 6.027456183070403
+        paidCurrency: paidCurrency
+        displayCurrency: displayCurrency
+        paidAmount: 0.8008281904610115
+      properties:
+        paidCurrency:
+          type: string
+        paidAmount:
+          type: number
+        displayCurrency:
+          type: string
+        displayAmount:
+          type: number
+      type: object
   securitySchemes:
     Hawk:
       description: 'Hawk Payload (see: https://github.com/hueniverse/hawk)'
