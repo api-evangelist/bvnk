@@ -61,20 +61,6 @@ paths:
       - application/json
 components:
   schemas:
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
     Asset:
       example:
         code: BTC
@@ -116,6 +102,20 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
     Network:
       example:
         nativeAsset: BTC

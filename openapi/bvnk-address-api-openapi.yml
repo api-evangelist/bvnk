@@ -300,6 +300,57 @@ paths:
       - application/json
 components:
   schemas:
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    Balance:
+      example:
+        reserved: ''
+        blockchain: ''
+        available: ''
+        asset: BTC
+        network: BITCOIN
+      properties:
+        network:
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          description: asset
+          example: BTC
+          type: string
+        available: {}
+        reserved: {}
+        blockchain: {}
     Detail:
       example:
         documentLink: documentLink
@@ -332,54 +383,19 @@ components:
           description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
           example: 123456789
           type: string
-    ApiError:
+    Pageable:
       example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
+        pageNumber: 6
+        pageSize: 1
       properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
-    CreateAddressRequest:
-      example:
-        reference: myUniqueRef333
-        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        customerId: customer123
-        asset: BTC
-        network: BITCOIN
-      properties:
-        assetPoolId:
-          description: asset pool id
-          format: uuid
-          type: string
-        network:
-          description: crypto network
-          example: BITCOIN
-          type: string
-        asset:
-          description: crypto currency for which address(es) should be created. if network is not given will create addreses in all networks supporting given asset
-          example: BTC
-          type: string
-        reference:
-          description: unique identifier for each destination that is receiving funds (whether tag or address). Similar to banking reference it is used to link deposit to a specific invoice
-          example: myUniqueRef333
-          type: string
-        customerId:
-          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer, merchant, company, etc.
-          example: customer123
-          type: string
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
     Address:
       example:
         address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
@@ -469,55 +485,6 @@ components:
           items:
             type: string
           type: array
-    Balance:
-      example:
-        reserved: ''
-        blockchain: ''
-        available: ''
-        asset: BTC
-        network: BITCOIN
-      properties:
-        network:
-          description: network
-          enum:
-          - BASE
-          - BINANCE
-          - BITCOIN
-          - BITCOIN_CASH
-          - DOGECOIN
-          - ETHEREUM
-          - LITECOIN
-          - POLYGON
-          - RIPPLE
-          - SOLANA
-          - TRON
-          example: BITCOIN
-          type: string
-        asset:
-          description: asset
-          example: BTC
-          type: string
-        available: {}
-        reserved: {}
-        blockchain: {}
-    ValidateAddressResponse:
-      example:
-        valid: true
-        errors:
-        - invalid format
-        - should be 32 characters
-      properties:
-        valid:
-          description: whether the address is valid
-          type: boolean
-        errors:
-          description: list of error messages if the address is invalid
-          example:
-          - invalid format
-          - should be 32 characters
-          items:
-            type: string
-          type: array
     PaginatedResultAddress:
       example:
         pageable:
@@ -589,19 +556,52 @@ components:
           type: array
         pageable:
           $ref: '#/components/schemas/Pageable'
-    Pageable:
+    ValidateAddressResponse:
       example:
-        pageNumber: 6
-        pageSize: 1
+        valid: true
+        errors:
+        - invalid format
+        - should be 32 characters
       properties:
-        pageNumber:
-          description: current page number
-          format: int32
-          type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
+        valid:
+          description: whether the address is valid
+          type: boolean
+        errors:
+          description: list of error messages if the address is invalid
+          example:
+          - invalid format
+          - should be 32 characters
+          items:
+            type: string
+          type: array
+    CreateAddressRequest:
+      example:
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        customerId: customer123
+        asset: BTC
+        network: BITCOIN
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        asset:
+          description: crypto currency for which address(es) should be created. if network is not given will create addreses in all networks supporting given asset
+          example: BTC
+          type: string
+        reference:
+          description: unique identifier for each destination that is receiving funds (whether tag or address). Similar to banking reference it is used to link deposit to a specific invoice
+          example: myUniqueRef333
+          type: string
+        customerId:
+          description: custom non-unique identifier supplied for address that is used to link address to external entity like customer, merchant, company, etc.
+          example: customer123
+          type: string
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

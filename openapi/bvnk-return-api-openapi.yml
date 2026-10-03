@@ -56,31 +56,6 @@ paths:
       - application/json
 components:
   schemas:
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
-    ReturnRequest:
-      example:
-        destinationAddress: destinationAddress
-        transactionId: transactionId
-      properties:
-        transactionId:
-          description: ID of the transaction to return
-          type: string
-        destinationAddress:
-          description: address into which funds should be returned
-          type: string
     Failure:
       example:
         reason: INSUFFICIENT_FUNDS
@@ -114,6 +89,40 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    Participant:
+      example:
+        amount: ''
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        asset: ETH
+      properties:
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
     TransactionRequest:
       example:
         reference: myUniqueRef333
@@ -218,25 +227,16 @@ components:
           type: string
         failure:
           $ref: '#/components/schemas/Failure'
-    Participant:
+    ReturnRequest:
       example:
-        amount: ''
-        address: 103929005307927756724354605802047639613112342136
-        tag: 123456789
-        asset: ETH
+        destinationAddress: destinationAddress
+        transactionId: transactionId
       properties:
-        address:
-          description: blockchain address
-          example: 103929005307927756724354605802047639613112342136
+        transactionId:
+          description: ID of the transaction to return
           type: string
-        amount: {}
-        asset:
-          description: Optional currency if different than in parent object
-          example: ETH
-          type: string
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
+        destinationAddress:
+          description: address into which funds should be returned
           type: string
   securitySchemes:
     openId:

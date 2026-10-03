@@ -451,20 +451,6 @@ paths:
       - application/json
 components:
   schemas:
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
     ApiError:
       example:
         code: code
@@ -485,40 +471,19 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
-    UpdateAssetPoolRequest:
+    CreateAssetPoolRequest:
       example:
-        property: masterKeyPairId
-        value: value
+        reference: myUniqueRef333
+        name: Payment Processing Spanish VASP
       properties:
-        property:
-          description: name of asset pool property
-          enum:
-          - masterKeyPairId
-          - reference
-          example: masterKeyPairId
+        name:
+          description: name of asset pool
+          example: Payment Processing Spanish VASP
           type: string
-        value:
-          description: value for the property
+        reference:
+          description: custom supplied identifier for asset pool. Also used to initialise master key pair
+          example: myUniqueRef333
           type: string
-    AssetPoolSummary:
-      example:
-        balances:
-        - reserved: ''
-          blockchain: ''
-          available: ''
-          asset: BTC
-          network: BITCOIN
-        - reserved: ''
-          blockchain: ''
-          available: ''
-          asset: BTC
-          network: BITCOIN
-      properties:
-        balances:
-          description: balances summary
-          items:
-            $ref: '#/components/schemas/Balance'
-          type: array
     Balance:
       example:
         reserved: ''
@@ -550,18 +515,53 @@ components:
         available: {}
         reserved: {}
         blockchain: {}
-    CreateAssetPoolRequest:
+    Detail:
       example:
-        reference: myUniqueRef333
-        name: Payment Processing Spanish VASP
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
       properties:
-        name:
-          description: name of asset pool
-          example: Payment Processing Spanish VASP
+        documentLink:
           type: string
-        reference:
-          description: custom supplied identifier for asset pool. Also used to initialise master key pair
-          example: myUniqueRef333
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    AssetPoolSummary:
+      example:
+        balances:
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+      properties:
+        balances:
+          description: balances summary
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+    UpdateAssetPoolRequest:
+      example:
+        property: masterKeyPairId
+        value: value
+      properties:
+        property:
+          description: name of asset pool property
+          enum:
+          - masterKeyPairId
+          - reference
+          example: masterKeyPairId
+          type: string
+        value:
+          description: value for the property
           type: string
   securitySchemes:
     openId:

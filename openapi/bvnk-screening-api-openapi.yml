@@ -196,47 +196,6 @@ paths:
       - application/json
 components:
   schemas:
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
-    ScreeningMetadata:
-      example:
-        urls:
-        - urls
-        - urls
-        ids:
-        - ids
-        - ids
-      properties:
-        urls:
-          description: URLs to external screening providers relevant to the deposit
-          items:
-            type: string
-          type: array
-        ids:
-          description: Deposit screening identifiers within external screening providers
-          items:
-            type: string
-          type: array
-    TransactionMetadata:
-      example:
-        failure:
-          reason: INSUFFICIENT_FUNDS
-          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-      properties:
-        failure:
-          $ref: '#/components/schemas/Failure'
     Failure:
       example:
         reason: INSUFFICIENT_FUNDS
@@ -270,47 +229,25 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
-    ManualActionRequest:
+    ScreeningMetadata:
       example:
-        reason: Confirmed false positive
-        action: APPROVE
-        transferId: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
-        operation: DEPOSIT
-        addressId: 11e785c1-a31a-4de9-9585-351056bea639
+        urls:
+        - urls
+        - urls
+        ids:
+        - ids
+        - ids
       properties:
-        action:
-          description: Screening action to execute on the transfer
-          enum:
-          - APPROVE
-          - REJECT
-          example: APPROVE
-          type: string
-        operation:
-          description: Transaction type
-          enum:
-          - DEPOSIT
-          - WITHDRAWAL
-          example: DEPOSIT
-          type: string
-        reason:
-          description: Reason for approving or rejecting the suspended transfer
-          example: Confirmed false positive
-          type: string
-        transferId:
-          description: Transfer identifier for which screening is performed
-          example: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
-          format: uuid
-          type: string
-        addressId:
-          description: Specific destination address identifier for which screening is performed. Required only for deposits.
-          example: 11e785c1-a31a-4de9-9585-351056bea639
-          format: uuid
-          type: string
-      required:
-      - action
-      - operation
-      - reason
-      - transferId
+        urls:
+          description: URLs to external screening providers relevant to the deposit
+          items:
+            type: string
+          type: array
+        ids:
+          description: Deposit screening identifiers within external screening providers
+          items:
+            type: string
+          type: array
     PaginatedScreenings:
       example:
         pageable:
@@ -396,6 +333,74 @@ components:
           type: array
         pageable:
           $ref: '#/components/schemas/Pageable'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    ManualActionRequest:
+      example:
+        reason: Confirmed false positive
+        action: APPROVE
+        transferId: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
+        operation: DEPOSIT
+        addressId: 11e785c1-a31a-4de9-9585-351056bea639
+      properties:
+        action:
+          description: Screening action to execute on the transfer
+          enum:
+          - APPROVE
+          - REJECT
+          example: APPROVE
+          type: string
+        operation:
+          description: Transaction type
+          enum:
+          - DEPOSIT
+          - WITHDRAWAL
+          example: DEPOSIT
+          type: string
+        reason:
+          description: Reason for approving or rejecting the suspended transfer
+          example: Confirmed false positive
+          type: string
+        transferId:
+          description: Transfer identifier for which screening is performed
+          example: 018f5bdd-ca48-70bd-9df1-daccba5e0dc0
+          format: uuid
+          type: string
+        addressId:
+          description: Specific destination address identifier for which screening is performed. Required only for deposits.
+          example: 11e785c1-a31a-4de9-9585-351056bea639
+          format: uuid
+          type: string
+      required:
+      - action
+      - operation
+      - reason
+      - transferId
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
     Participant:
       example:
         amount: ''
@@ -416,6 +421,14 @@ components:
           description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
           example: 123456789
           type: string
+    TransactionMetadata:
+      example:
+        failure:
+          reason: INSUFFICIENT_FUNDS
+          message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        failure:
+          $ref: '#/components/schemas/Failure'
     ScreeningView:
       example:
         transactionMetadata:
@@ -543,19 +556,6 @@ components:
           example: fefc3e7b-743b-489f-9311-0921f4930dc7
           format: uuid
           type: string
-    Pageable:
-      example:
-        pageNumber: 6
-        pageSize: 1
-      properties:
-        pageNumber:
-          description: current page number
-          format: int32
-          type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

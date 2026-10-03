@@ -273,6 +273,43 @@ components:
           format: float
           type: number
       type: object
+    CurrencyProtocol:
+      example:
+        code: ERC20
+        network: Ethereum
+      properties:
+        code:
+          example: ERC20
+          type: string
+        network:
+          example: Ethereum
+          type: string
+      type: object
+    ExternalCurrencyWithdrawalParameter:
+      example:
+        code: destinationTag
+        name: Destination Tag
+        id: 1432
+        required: false
+        example: '123432312'
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: destinationTag
+          type: string
+        name:
+          example: Destination Tag
+          type: string
+        required:
+          default: false
+          type: boolean
+        example:
+          example: '123432312'
+          type: string
+      type: object
     Currency:
       example:
         quantityPrecision: 6
@@ -354,26 +391,6 @@ components:
           items:
             $ref: '#/components/schemas/ExternalCurrencyWithdrawalParameter'
           type: array
-      type: object
-    CurrencyOptions:
-      example:
-        address: https://etherscan.io/address/{{address}}
-        explorer: https://etherscan.io/
-        confirmations: 12
-        transaction: https://etherscan.io/tx/{{hash}}
-      properties:
-        transaction:
-          example: https://etherscan.io/tx/{{hash}}
-          type: string
-        explorer:
-          example: https://etherscan.io/
-          type: string
-        address:
-          example: https://etherscan.io/address/{{address}}
-          type: string
-        confirmations:
-          example: 12
-          type: integer
       type: object
     Merchant:
       example:
@@ -472,42 +489,25 @@ components:
           type: string
           example: null
       type: object
-    ExternalCurrencyWithdrawalParameter:
+    CurrencyOptions:
       example:
-        code: destinationTag
-        name: Destination Tag
-        id: 1432
-        required: false
-        example: '123432312'
+        address: https://etherscan.io/address/{{address}}
+        explorer: https://etherscan.io/
+        confirmations: 12
+        transaction: https://etherscan.io/tx/{{hash}}
       properties:
-        id:
-          example: 1432
-          format: int64
+        transaction:
+          example: https://etherscan.io/tx/{{hash}}
+          type: string
+        explorer:
+          example: https://etherscan.io/
+          type: string
+        address:
+          example: https://etherscan.io/address/{{address}}
+          type: string
+        confirmations:
+          example: 12
           type: integer
-        code:
-          example: destinationTag
-          type: string
-        name:
-          example: Destination Tag
-          type: string
-        required:
-          default: false
-          type: boolean
-        example:
-          example: '123432312'
-          type: string
-      type: object
-    CurrencyProtocol:
-      example:
-        code: ERC20
-        network: Ethereum
-      properties:
-        code:
-          example: ERC20
-          type: string
-        network:
-          example: Ethereum
-          type: string
       type: object
   securitySchemes:
     Hawk:
