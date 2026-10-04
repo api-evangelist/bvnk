@@ -451,39 +451,39 @@ paths:
       - application/json
 components:
   schemas:
-    ApiError:
+    AssetPoolSummary:
       example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
+        balances:
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
+        - reserved: ''
+          blockchain: ''
+          available: ''
+          asset: BTC
+          network: BITCOIN
       properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
-    CreateAssetPoolRequest:
+        balances:
+          description: balances summary
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+    Detail:
       example:
-        reference: myUniqueRef333
-        name: Payment Processing Spanish VASP
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
       properties:
-        name:
-          description: name of asset pool
-          example: Payment Processing Spanish VASP
+        documentLink:
           type: string
-        reference:
-          description: custom supplied identifier for asset pool. Also used to initialise master key pair
-          example: myUniqueRef333
-          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
     Balance:
       example:
         reserved: ''
@@ -515,39 +515,6 @@ components:
         available: {}
         reserved: {}
         blockchain: {}
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
-    AssetPoolSummary:
-      example:
-        balances:
-        - reserved: ''
-          blockchain: ''
-          available: ''
-          asset: BTC
-          network: BITCOIN
-        - reserved: ''
-          blockchain: ''
-          available: ''
-          asset: BTC
-          network: BITCOIN
-      properties:
-        balances:
-          description: balances summary
-          items:
-            $ref: '#/components/schemas/Balance'
-          type: array
     UpdateAssetPoolRequest:
       example:
         property: masterKeyPairId
@@ -563,6 +530,39 @@ components:
         value:
           description: value for the property
           type: string
+    CreateAssetPoolRequest:
+      example:
+        reference: myUniqueRef333
+        name: Payment Processing Spanish VASP
+      properties:
+        name:
+          description: name of asset pool
+          example: Payment Processing Spanish VASP
+          type: string
+        reference:
+          description: custom supplied identifier for asset pool. Also used to initialise master key pair
+          example: myUniqueRef333
+          type: string
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

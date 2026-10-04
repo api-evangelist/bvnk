@@ -185,6 +185,20 @@ paths:
       - application/json
 components:
   schemas:
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
     PaginatedExports:
       example:
         pageable:
@@ -224,26 +238,6 @@ components:
           type: array
         pageable:
           $ref: '#/components/schemas/Pageable'
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
     CreateBalanceExportRequest:
       example:
         assets: '[BTC]'
@@ -304,20 +298,26 @@ components:
           description: The ID of the asset pool for which the report will be generated.
           format: uuid
           type: string
-    Detail:
+    ApiError:
       example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
       properties:
-        documentLink:
+        code:
           type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
     Pageable:
       example:
         pageNumber: 6

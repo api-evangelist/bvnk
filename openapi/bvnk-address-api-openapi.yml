@@ -300,57 +300,6 @@ paths:
       - application/json
 components:
   schemas:
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
-    Balance:
-      example:
-        reserved: ''
-        blockchain: ''
-        available: ''
-        asset: BTC
-        network: BITCOIN
-      properties:
-        network:
-          description: network
-          enum:
-          - BASE
-          - BINANCE
-          - BITCOIN
-          - BITCOIN_CASH
-          - DOGECOIN
-          - ETHEREUM
-          - LITECOIN
-          - POLYGON
-          - RIPPLE
-          - SOLANA
-          - TRON
-          example: BITCOIN
-          type: string
-        asset:
-          description: asset
-          example: BTC
-          type: string
-        available: {}
-        reserved: {}
-        blockchain: {}
     Detail:
       example:
         documentLink: documentLink
@@ -365,37 +314,6 @@ components:
           additionalProperties:
             items:
               type: string
-    ValidateAddressRequest:
-      example:
-        address: 103929005307927756724354605802047639613112342136
-        tag: 123456789
-        network: ETHEREUM
-      properties:
-        network:
-          description: crypto network
-          example: ETHEREUM
-          type: string
-        address:
-          description: blockchain address
-          example: 103929005307927756724354605802047639613112342136
-          type: string
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
-          type: string
-    Pageable:
-      example:
-        pageNumber: 6
-        pageSize: 1
-      properties:
-        pageNumber:
-          description: current page number
-          format: int32
-          type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
     Address:
       example:
         address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
@@ -485,6 +403,55 @@ components:
           items:
             type: string
           type: array
+    Balance:
+      example:
+        reserved: ''
+        blockchain: ''
+        available: ''
+        asset: BTC
+        network: BITCOIN
+      properties:
+        network:
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          description: asset
+          example: BTC
+          type: string
+        available: {}
+        reserved: {}
+        blockchain: {}
+    ValidateAddressRequest:
+      example:
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        network: ETHEREUM
+      properties:
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
     PaginatedResultAddress:
       example:
         pageable:
@@ -574,6 +541,39 @@ components:
           items:
             type: string
           type: array
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
     CreateAddressRequest:
       example:
         reference: myUniqueRef333

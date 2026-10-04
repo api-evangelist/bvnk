@@ -145,6 +145,33 @@ paths:
       x-accepts: application/json
 components:
   schemas:
+    AccountMethod:
+      example:
+        display: Visa xxxx-090
+        id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        display:
+          example: Visa xxxx-090
+          type: string
+      type: object
+    Fees:
+      example:
+        percentage:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+        value:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+      properties:
+        percentage:
+          $ref: '#/components/schemas/Fee'
+        value:
+          $ref: '#/components/schemas/Fee'
+      type: object
     Quote:
       example:
         acceptanceDate: 1566198657000
@@ -352,18 +379,31 @@ components:
           format: int64
           type: integer
       type: object
-    Form:
+    PaymentLeg:
       example:
-        action: action
-        parameters:
-          key: parameters
+        reference: 36836129
+        amount: 100.32
+        dateCreated: 1566198657000
+        currency: ETH
+        id: 1432
       properties:
-        action:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        amount:
+          example: 100.32
+          type: number
+        dateCreated:
+          example: 1566198657000
+          format: int64
+          type: integer
+        reference:
+          example: 36836129
           type: string
-        parameters:
-          additionalProperties:
-            type: string
-          type: object
+        currency:
+          example: ETH
+          type: string
       type: object
     PayInMethod:
       example:
@@ -394,32 +434,6 @@ components:
         estimatedExchangeRate:
           example: 0.923
           type: number
-        accountMethods:
-          items:
-            $ref: '#/components/schemas/AccountMethod'
-          type: array
-      type: object
-    PayOutMethod:
-      example:
-        code: gateway
-        currency: EUR
-        id: 1432
-        accountMethods:
-        - display: Visa xxxx-090
-          id: 1432
-        - display: Visa xxxx-090
-          id: 1432
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        code:
-          example: gateway
-          type: string
-        currency:
-          example: EUR
-          type: string
         accountMethods:
           items:
             $ref: '#/components/schemas/AccountMethod'
@@ -475,70 +489,6 @@ components:
       - useMaximum
       - useMinimum
       type: object
-    PayOutInstruction:
-      example:
-        code: gateway
-        currency: ETH
-      properties:
-        code:
-          example: gateway
-          type: string
-        currency:
-          example: ETH
-          type: string
-      type: object
-    PaymentLeg:
-      example:
-        reference: 36836129
-        amount: 100.32
-        dateCreated: 1566198657000
-        currency: ETH
-        id: 1432
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        amount:
-          example: 100.32
-          type: number
-        dateCreated:
-          example: 1566198657000
-          format: int64
-          type: integer
-        reference:
-          example: 36836129
-          type: string
-        currency:
-          example: ETH
-          type: string
-      type: object
-    PayInInstruction:
-      example:
-        redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
-        form:
-          action: action
-          parameters:
-            key: parameters
-        action: REDIRECT
-        displayParameters: '{}'
-      properties:
-        action:
-          enum:
-          - REDIRECT
-          - FORM
-          - DISPLAY
-          - NONE
-          type: string
-        form:
-          $ref: '#/components/schemas/Form'
-        redirectUrl:
-          example: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
-          type: string
-        displayParameters:
-          example: '{}'
-          type: object
-      type: object
     Fee:
       example:
         service: 0.8008281904610115
@@ -549,32 +499,18 @@ components:
         processing:
           type: number
       type: object
-    Fees:
+    Form:
       example:
-        percentage:
-          service: 0.8008281904610115
-          processing: 6.027456183070403
-        value:
-          service: 0.8008281904610115
-          processing: 6.027456183070403
+        action: action
+        parameters:
+          key: parameters
       properties:
-        percentage:
-          $ref: '#/components/schemas/Fee'
-        value:
-          $ref: '#/components/schemas/Fee'
-      type: object
-    AccountMethod:
-      example:
-        display: Visa xxxx-090
-        id: 1432
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        display:
-          example: Visa xxxx-090
+        action:
           type: string
+        parameters:
+          additionalProperties:
+            type: string
+          type: object
       type: object
     AcceptedQuote:
       example:
@@ -670,6 +606,70 @@ components:
           $ref: '#/components/schemas/Quote'
         payInInstruction:
           $ref: '#/components/schemas/PayInInstruction'
+      type: object
+    PayOutInstruction:
+      example:
+        code: gateway
+        currency: ETH
+      properties:
+        code:
+          example: gateway
+          type: string
+        currency:
+          example: ETH
+          type: string
+      type: object
+    PayOutMethod:
+      example:
+        code: gateway
+        currency: EUR
+        id: 1432
+        accountMethods:
+        - display: Visa xxxx-090
+          id: 1432
+        - display: Visa xxxx-090
+          id: 1432
+      properties:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        code:
+          example: gateway
+          type: string
+        currency:
+          example: EUR
+          type: string
+        accountMethods:
+          items:
+            $ref: '#/components/schemas/AccountMethod'
+          type: array
+      type: object
+    PayInInstruction:
+      example:
+        redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+        form:
+          action: action
+          parameters:
+            key: parameters
+        action: REDIRECT
+        displayParameters: '{}'
+      properties:
+        action:
+          enum:
+          - REDIRECT
+          - FORM
+          - DISPLAY
+          - NONE
+          type: string
+        form:
+          $ref: '#/components/schemas/Form'
+        redirectUrl:
+          example: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+          type: string
+        displayParameters:
+          example: '{}'
+          type: object
       type: object
   securitySchemes:
     Hawk:

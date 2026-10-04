@@ -57,36 +57,6 @@ paths:
       - application/json
 components:
   schemas:
-    AssetValue:
-      example:
-        amount: ''
-        asset: BTC
-      properties:
-        amount: {}
-        asset:
-          description: currency
-          example: BTC
-          type: string
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
     Detail:
       example:
         documentLink: documentLink
@@ -142,6 +112,36 @@ components:
           items:
             $ref: '#/components/schemas/Participant'
           type: array
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    AssetValue:
+      example:
+        amount: ''
+        asset: BTC
+      properties:
+        amount: {}
+        asset:
+          description: currency
+          example: BTC
+          type: string
     Participant:
       example:
         amount: ''

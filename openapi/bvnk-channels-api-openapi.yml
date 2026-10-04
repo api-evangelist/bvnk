@@ -296,18 +296,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PaymentStatusDto:
-      description: Payment status
-      enum:
-      - PENDING
-      - PROCESSING
-      - CANCELLED
-      - COMPLETE
-      - UNDERPAID
-      - OVERPAID
-      - EXPIRED
-      example: PENDING
-      type: string
     MerchantChannel:
       example:
         address: 1032808453727112588357558221434846992893758074638
@@ -389,6 +377,109 @@ components:
           items:
             $ref: '#/components/schemas/AlternativeAddress'
           type: array
+      type: object
+    NetworkFee:
+      example:
+        displayAmount: 6.027456183070403
+        paidCurrency: paidCurrency
+        displayCurrency: displayCurrency
+        paidAmount: 0.8008281904610115
+      properties:
+        paidCurrency:
+          type: string
+        paidAmount:
+          type: number
+        displayCurrency:
+          type: string
+        displayAmount:
+          type: number
+      type: object
+    MerchantChannelRequest:
+      example:
+        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
+        payCurrency: ETH
+        displayCurrency: EUR
+      properties:
+        merchantId:
+          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
+          description: The merchant ID that you are creating the channel on.
+          type: string
+        payCurrency:
+          default: ETH
+          description: Cryptocurrency code that the channel will operate on.
+          type: string
+        displayCurrency:
+          default: EUR
+          description: The currency which pricing will be displayed to the end user in (can be the same as payCurrency, or can be different).
+          type: string
+        reference:
+          default: c1b933d5-3354-4f83-a05f-0b53f1be85f2
+          description: An external reference for the channel that your customer will see.
+          type: string
+      required:
+      - displayCurrency
+      - merchantId
+      - payCurrency
+      - reference
+      type: object
+    AlternativeAddress:
+      description: List of non-default addresses for other tokens
+      example:
+        protocol: protocol
+        address: address
+        tag: tag
+        uri: uri
+      properties:
+        protocol:
+          type: string
+        address:
+          type: string
+        tag:
+          type: string
+        uri:
+          type: string
+      type: object
+    PaymentStatusDto:
+      description: Payment status
+      enum:
+      - PENDING
+      - PROCESSING
+      - CANCELLED
+      - COMPLETE
+      - UNDERPAID
+      - OVERPAID
+      - EXPIRED
+      example: PENDING
+      type: string
+    ValidationErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        parameter:
+          description: input that is causing the error
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
+      - parameter
+    ServerErrorDto:
+      description: Error object shared when an exception or error is encountered
+      properties:
+        code:
+          description: this is used to get internationalisation translation
+          type: string
+        message:
+          description: exception message
+          type: string
+      required:
+      - code
+      - message
       type: object
     ClientValidationErrorDto:
       description: List of validation errors
@@ -520,22 +611,6 @@ components:
         networkFee:
           $ref: '#/components/schemas/NetworkFee'
       type: object
-    ValidationErrorDto:
-      description: Error object shared when an exception or error is encountered
-      properties:
-        code:
-          description: this is used to get internationalisation translation
-          type: string
-        parameter:
-          description: input that is causing the error
-          type: string
-        message:
-          description: exception message
-          type: string
-      required:
-      - code
-      - message
-      - parameter
     ExchangeRateDto:
       description: contains exchange rate information to convert from base to counter currency
       example:
@@ -555,81 +630,6 @@ components:
           description: TBC
           example: 1680.1
           type: number
-      type: object
-    ServerErrorDto:
-      description: Error object shared when an exception or error is encountered
-      properties:
-        code:
-          description: this is used to get internationalisation translation
-          type: string
-        message:
-          description: exception message
-          type: string
-      required:
-      - code
-      - message
-      type: object
-    MerchantChannelRequest:
-      example:
-        reference: c1b933d5-3354-4f83-a05f-0b53f1be85f2
-        merchantId: 0a12a214-1619-43fa-9be1-0029f6a440a0
-        payCurrency: ETH
-        displayCurrency: EUR
-      properties:
-        merchantId:
-          default: 0a12a214-1619-43fa-9be1-0029f6a440a0
-          description: The merchant ID that you are creating the channel on.
-          type: string
-        payCurrency:
-          default: ETH
-          description: Cryptocurrency code that the channel will operate on.
-          type: string
-        displayCurrency:
-          default: EUR
-          description: The currency which pricing will be displayed to the end user in (can be the same as payCurrency, or can be different).
-          type: string
-        reference:
-          default: c1b933d5-3354-4f83-a05f-0b53f1be85f2
-          description: An external reference for the channel that your customer will see.
-          type: string
-      required:
-      - displayCurrency
-      - merchantId
-      - payCurrency
-      - reference
-      type: object
-    NetworkFee:
-      example:
-        displayAmount: 6.027456183070403
-        paidCurrency: paidCurrency
-        displayCurrency: displayCurrency
-        paidAmount: 0.8008281904610115
-      properties:
-        paidCurrency:
-          type: string
-        paidAmount:
-          type: number
-        displayCurrency:
-          type: string
-        displayAmount:
-          type: number
-      type: object
-    AlternativeAddress:
-      description: List of non-default addresses for other tokens
-      example:
-        protocol: protocol
-        address: address
-        tag: tag
-        uri: uri
-      properties:
-        protocol:
-          type: string
-        address:
-          type: string
-        tag:
-          type: string
-        uri:
-          type: string
       type: object
   securitySchemes:
     Hawk:

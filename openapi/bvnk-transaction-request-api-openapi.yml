@@ -226,81 +226,6 @@ paths:
       - application/json
 components:
   schemas:
-    Failure:
-      example:
-        reason: INSUFFICIENT_FUNDS
-        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-      properties:
-        reason:
-          description: reason for failure
-          example: INSUFFICIENT_FUNDS
-          type: string
-        message:
-          description: error message
-          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-          type: string
-    CreateStakingTransactionRequest:
-      example:
-        reference: myUniqueRef333
-        amount: ''
-        metadata:
-          key: metadata
-        address: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
-        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        asset: TRX
-        type: STAKE
-        network: TRON
-      properties:
-        assetPoolId:
-          description: asset pool id
-          format: uuid
-          type: string
-        asset:
-          description: currency
-          example: TRX
-          type: string
-        network:
-          description: crypto network
-          example: TRON
-          type: string
-        type:
-          enum:
-          - STAKE
-          - UNSTAKE
-          - RELEASE
-          type: string
-        reference:
-          description: custom identifier supplied for transaction that is used to link transaction to specific customer or use case
-          example: myUniqueRef333
-          type: string
-        address:
-          description: blockchain address
-          example: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
-          type: string
-        amount: {}
-        metadata:
-          additionalProperties:
-            type: string
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
     Detail:
       example:
         documentLink: documentLink
@@ -315,98 +240,6 @@ components:
           additionalProperties:
             items:
               type: string
-    Pageable:
-      example:
-        pageNumber: 6
-        pageSize: 1
-      properties:
-        pageNumber:
-          description: current page number
-          format: int32
-          type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
-    PaginatedResultTransactionRequest:
-      example:
-        pageable:
-          pageNumber: 6
-          pageSize: 1
-        content:
-        - reference: myUniqueRef333
-          createdAt: 2000-01-23 04:56:07+00:00
-          sources:
-          - amount: ''
-            address: 103929005307927756724354605802047639613112342136
-            tag: 123456789
-            asset: ETH
-          - amount: ''
-            address: 103929005307927756724354605802047639613112342136
-            tag: 123456789
-            asset: ETH
-          requestId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          failure:
-            reason: INSUFFICIENT_FUNDS
-            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          destinations:
-          - amount: ''
-            address: 103929005307927756724354605802047639613112342136
-            tag: 123456789
-            asset: ETH
-          - amount: ''
-            address: 103929005307927756724354605802047639613112342136
-            tag: 123456789
-            asset: ETH
-          asset: USDT
-          type: DEPOSIT
-          network: ETHEREUM
-          status: BLOCKED
-          updatedAt: 2000-01-23 04:56:07+00:00
-        - reference: myUniqueRef333
-          createdAt: 2000-01-23 04:56:07+00:00
-          sources:
-          - amount: ''
-            address: 103929005307927756724354605802047639613112342136
-            tag: 123456789
-            asset: ETH
-          - amount: ''
-            address: 103929005307927756724354605802047639613112342136
-            tag: 123456789
-            asset: ETH
-          requestId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          failure:
-            reason: INSUFFICIENT_FUNDS
-            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          destinations:
-          - amount: ''
-            address: 103929005307927756724354605802047639613112342136
-            tag: 123456789
-            asset: ETH
-          - amount: ''
-            address: 103929005307927756724354605802047639613112342136
-            tag: 123456789
-            asset: ETH
-          asset: USDT
-          type: DEPOSIT
-          network: ETHEREUM
-          status: BLOCKED
-          updatedAt: 2000-01-23 04:56:07+00:00
-        totalElements: 0
-      properties:
-        totalElements:
-          description: total number of items in all pages
-          format: int64
-          type: integer
-        content:
-          description: list of items
-          items:
-            $ref: '#/components/schemas/TransactionRequest'
-          type: array
-        pageable:
-          $ref: '#/components/schemas/Pageable'
     CreateTransactionRequest:
       example:
         reference: myUniqueRef333
@@ -458,26 +291,19 @@ components:
           items:
             $ref: '#/components/schemas/Participant'
           type: array
-    Participant:
+    Pageable:
       example:
-        amount: ''
-        address: 103929005307927756724354605802047639613112342136
-        tag: 123456789
-        asset: ETH
+        pageNumber: 6
+        pageSize: 1
       properties:
-        address:
-          description: blockchain address
-          example: 103929005307927756724354605802047639613112342136
-          type: string
-        amount: {}
-        asset:
-          description: Optional currency if different than in parent object
-          example: ETH
-          type: string
-        tag:
-          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
-          example: 123456789
-          type: string
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
     TransactionRequest:
       example:
         reference: myUniqueRef333
@@ -582,6 +408,180 @@ components:
           type: string
         failure:
           $ref: '#/components/schemas/Failure'
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    PaginatedResultTransactionRequest:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - reference: myUniqueRef333
+          createdAt: 2000-01-23 04:56:07+00:00
+          sources:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          requestId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          failure:
+            reason: INSUFFICIENT_FUNDS
+            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          destinations:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          asset: USDT
+          type: DEPOSIT
+          network: ETHEREUM
+          status: BLOCKED
+          updatedAt: 2000-01-23 04:56:07+00:00
+        - reference: myUniqueRef333
+          createdAt: 2000-01-23 04:56:07+00:00
+          sources:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          requestId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          failure:
+            reason: INSUFFICIENT_FUNDS
+            message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          destinations:
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          - amount: ''
+            address: 103929005307927756724354605802047639613112342136
+            tag: 123456789
+            asset: ETH
+          asset: USDT
+          type: DEPOSIT
+          network: ETHEREUM
+          status: BLOCKED
+          updatedAt: 2000-01-23 04:56:07+00:00
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/TransactionRequest'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+    CreateStakingTransactionRequest:
+      example:
+        reference: myUniqueRef333
+        amount: ''
+        metadata:
+          key: metadata
+        address: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        asset: TRX
+        type: STAKE
+        network: TRON
+      properties:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
+          type: string
+        asset:
+          description: currency
+          example: TRX
+          type: string
+        network:
+          description: crypto network
+          example: TRON
+          type: string
+        type:
+          enum:
+          - STAKE
+          - UNSTAKE
+          - RELEASE
+          type: string
+        reference:
+          description: custom identifier supplied for transaction that is used to link transaction to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        address:
+          description: blockchain address
+          example: TNx5eZNjpmKw8s1a3GB1VBH246uf9V6pfe
+          type: string
+        amount: {}
+        metadata:
+          additionalProperties:
+            type: string
+    Failure:
+      example:
+        reason: INSUFFICIENT_FUNDS
+        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        reason:
+          description: reason for failure
+          example: INSUFFICIENT_FUNDS
+          type: string
+        message:
+          description: error message
+          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+    Participant:
+      example:
+        amount: ''
+        address: 103929005307927756724354605802047639613112342136
+        tag: 123456789
+        asset: ETH
+      properties:
+        address:
+          description: blockchain address
+          example: 103929005307927756724354605802047639613112342136
+          type: string
+        amount: {}
+        asset:
+          description: Optional currency if different than in parent object
+          example: ETH
+          type: string
+        tag:
+          description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
+          example: 123456789
+          type: string
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
