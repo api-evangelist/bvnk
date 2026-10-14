@@ -28,6 +28,6 @@
     - j. providing transfer services for crypto-assets on behalf of clients.
     matched_domain: bvnk.com
     detected_by: sweep-crypto.py
-    detected: '2026-10-13'
+    detected: '2026-10-14'
   status: not-a-workflow
   arazzo: null
