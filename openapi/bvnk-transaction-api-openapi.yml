@@ -178,20 +178,6 @@ paths:
       - application/json
 components:
   schemas:
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
     Address:
       example:
         address: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
@@ -281,52 +267,6 @@ components:
           items:
             type: string
           type: array
-    BlockDetail:
-      example:
-        number: 123456
-        timestamp: 2021-01-01 00:00:00+00:00
-      properties:
-        number:
-          description: blockchain number
-          example: 123456
-          format: int64
-          type: integer
-        timestamp:
-          description: timestamp of the block
-          example: 2021-01-01 00:00:00+00:00
-          format: date-time
-          type: string
-    Balance:
-      example:
-        reserved: ''
-        blockchain: ''
-        available: ''
-        asset: BTC
-        network: BITCOIN
-      properties:
-        network:
-          description: network
-          enum:
-          - BASE
-          - BINANCE
-          - BITCOIN
-          - BITCOIN_CASH
-          - DOGECOIN
-          - ETHEREUM
-          - LITECOIN
-          - POLYGON
-          - RIPPLE
-          - SOLANA
-          - TRON
-          example: BITCOIN
-          type: string
-        asset:
-          description: asset
-          example: BTC
-          type: string
-        available: {}
-        reserved: {}
-        blockchain: {}
     PaginatedResultTransaction:
       example:
         pageable:
@@ -476,49 +416,6 @@ components:
           type: array
         pageable:
           $ref: '#/components/schemas/Pageable'
-    Pageable:
-      example:
-        pageNumber: 6
-        pageSize: 1
-      properties:
-        pageNumber:
-          description: current page number
-          format: int32
-          type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
-    AssetValue:
-      example:
-        amount: ''
-        asset: BTC
-      properties:
-        amount: {}
-        asset:
-          description: currency
-          example: BTC
-          type: string
     Transaction:
       example:
         amount: ''
@@ -658,45 +555,6 @@ components:
           description: timestamp when transaction was updated
           format: date-time
           type: string
-    NetworkDetail:
-      example:
-        fee:
-          amount: ''
-          asset: BTC
-        block:
-          number: 123456
-          timestamp: 2021-01-01 00:00:00+00:00
-      properties:
-        block:
-          $ref: '#/components/schemas/BlockDetail'
-        fee:
-          $ref: '#/components/schemas/AssetValue'
-    TransactionClaimRequest:
-      example:
-        hash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
-        network: ETHEREUM
-      properties:
-        hash:
-          description: blockchain transaction hash
-          example: 8234104122482341265491137074636836252947884782870784360943022469005013929455
-          type: string
-        network:
-          description: crypto network
-          example: ETHEREUM
-          type: string
-    Failure:
-      example:
-        reason: INSUFFICIENT_FUNDS
-        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-      properties:
-        reason:
-          description: reason for failure
-          example: INSUFFICIENT_FUNDS
-          type: string
-        message:
-          description: error message
-          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
-          type: string
     Participant:
       example:
         amount: ''
@@ -717,6 +575,19 @@ components:
           description: destination tag that serves as optional payment identifier. Only applicable to select networks like Ripple, Solana etc.
           example: 123456789
           type: string
+    Pageable:
+      example:
+        pageNumber: 6
+        pageSize: 1
+      properties:
+        pageNumber:
+          description: current page number
+          format: int32
+          type: integer
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
     TransactionMetadata:
       example:
         failure:
@@ -725,6 +596,135 @@ components:
       properties:
         failure:
           $ref: '#/components/schemas/Failure'
+    Failure:
+      example:
+        reason: INSUFFICIENT_FUNDS
+        message: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+      properties:
+        reason:
+          description: reason for failure
+          example: INSUFFICIENT_FUNDS
+          type: string
+        message:
+          description: error message
+          example: insufficient funds on address 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+    TransactionClaimRequest:
+      example:
+        hash: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+        network: ETHEREUM
+      properties:
+        hash:
+          description: blockchain transaction hash
+          example: 8234104122482341265491137074636836252947884782870784360943022469005013929455
+          type: string
+        network:
+          description: crypto network
+          example: ETHEREUM
+          type: string
+    NetworkDetail:
+      example:
+        fee:
+          amount: ''
+          asset: BTC
+        block:
+          number: 123456
+          timestamp: 2021-01-01 00:00:00+00:00
+      properties:
+        block:
+          $ref: '#/components/schemas/BlockDetail'
+        fee:
+          $ref: '#/components/schemas/AssetValue'
+    Balance:
+      example:
+        reserved: ''
+        blockchain: ''
+        available: ''
+        asset: BTC
+        network: BITCOIN
+      properties:
+        network:
+          description: network
+          enum:
+          - BASE
+          - BINANCE
+          - BITCOIN
+          - BITCOIN_CASH
+          - DOGECOIN
+          - ETHEREUM
+          - LITECOIN
+          - POLYGON
+          - RIPPLE
+          - SOLANA
+          - TRON
+          example: BITCOIN
+          type: string
+        asset:
+          description: asset
+          example: BTC
+          type: string
+        available: {}
+        reserved: {}
+        blockchain: {}
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    AssetValue:
+      example:
+        amount: ''
+        asset: BTC
+      properties:
+        amount: {}
+        asset:
+          description: currency
+          example: BTC
+          type: string
+    BlockDetail:
+      example:
+        number: 123456
+        timestamp: 2021-01-01 00:00:00+00:00
+      properties:
+        number:
+          description: blockchain number
+          example: 123456
+          format: int64
+          type: integer
+        timestamp:
+          description: timestamp of the block
+          example: 2021-01-01 00:00:00+00:00
+          format: date-time
+          type: string
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

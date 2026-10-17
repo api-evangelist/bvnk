@@ -185,59 +185,39 @@ paths:
       - application/json
 components:
   schemas:
-    Detail:
+    Pageable:
       example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
+        pageNumber: 6
+        pageSize: 1
       properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
-    PaginatedExports:
-      example:
-        pageable:
-          pageNumber: 6
-          pageSize: 1
-        content:
-        - createdAt: 2020-01-01 00:00:00+00:00
-          filename: transaction_2024_04_19T11_20_11_901Z.csv
-          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-          type: transaction
-          inputParameters:
-            from: 2020-01-01 00:00:00+00:00
-            to: 2020-01-31 23:59:59+00:00
-          url: url
-          status: PROCESSING
-          updatedAt: 2020-01-02 12:34:56+00:00
-        - createdAt: 2020-01-01 00:00:00+00:00
-          filename: transaction_2024_04_19T11_20_11_901Z.csv
-          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-          type: transaction
-          inputParameters:
-            from: 2020-01-01 00:00:00+00:00
-            to: 2020-01-31 23:59:59+00:00
-          url: url
-          status: PROCESSING
-          updatedAt: 2020-01-02 12:34:56+00:00
-        totalElements: 0
-      properties:
-        totalElements:
-          description: total number of items in all pages
-          format: int64
+        pageNumber:
+          description: current page number
+          format: int32
           type: integer
-        content:
-          description: list of items
-          items:
-            $ref: '#/components/schemas/Export'
-          type: array
-        pageable:
-          $ref: '#/components/schemas/Pageable'
+        pageSize:
+          description: number of items in page
+          format: int32
+          type: integer
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
     CreateBalanceExportRequest:
       example:
         assets: '[BTC]'
@@ -298,39 +278,59 @@ components:
           description: The ID of the asset pool for which the report will be generated.
           format: uuid
           type: string
-    ApiError:
+    Detail:
       example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
       properties:
-        code:
+        documentLink:
           type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
-    Pageable:
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    PaginatedExports:
       example:
-        pageNumber: 6
-        pageSize: 1
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - createdAt: 2020-01-01 00:00:00+00:00
+          filename: transaction_2024_04_19T11_20_11_901Z.csv
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          type: transaction
+          inputParameters:
+            from: 2020-01-01 00:00:00+00:00
+            to: 2020-01-31 23:59:59+00:00
+          url: url
+          status: PROCESSING
+          updatedAt: 2020-01-02 12:34:56+00:00
+        - createdAt: 2020-01-01 00:00:00+00:00
+          filename: transaction_2024_04_19T11_20_11_901Z.csv
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          type: transaction
+          inputParameters:
+            from: 2020-01-01 00:00:00+00:00
+            to: 2020-01-31 23:59:59+00:00
+          url: url
+          status: PROCESSING
+          updatedAt: 2020-01-02 12:34:56+00:00
+        totalElements: 0
       properties:
-        pageNumber:
-          description: current page number
-          format: int32
+        totalElements:
+          description: total number of items in all pages
+          format: int64
           type: integer
-        pageSize:
-          description: number of items in page
-          format: int32
-          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/Export'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
     Export:
       example:
         createdAt: 2020-01-01 00:00:00+00:00

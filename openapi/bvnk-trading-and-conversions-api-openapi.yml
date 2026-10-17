@@ -145,33 +145,6 @@ paths:
       x-accepts: application/json
 components:
   schemas:
-    AccountMethod:
-      example:
-        display: Visa xxxx-090
-        id: 1432
-      properties:
-        id:
-          example: 1432
-          format: int64
-          type: integer
-        display:
-          example: Visa xxxx-090
-          type: string
-      type: object
-    Fees:
-      example:
-        percentage:
-          service: 0.8008281904610115
-          processing: 6.027456183070403
-        value:
-          service: 0.8008281904610115
-          processing: 6.027456183070403
-      properties:
-        percentage:
-          $ref: '#/components/schemas/Fee'
-        value:
-          $ref: '#/components/schemas/Fee'
-      type: object
     Quote:
       example:
         acceptanceDate: 1566198657000
@@ -439,78 +412,30 @@ components:
             $ref: '#/components/schemas/AccountMethod'
           type: array
       type: object
-    QuoteRequest:
+    PayOutInstruction:
       example:
-        fromWallet: 0.8008281904610115
-        useMinimum: false
-        payInMethod: wallet
-        from: EUR
-        amountIn: 1.4658129805029452
-        to: USDC
-        payOutMethod: wallet
-        useMaximum: false
-        toWallet: 6.027456183070403
+        code: gateway
+        currency: ETH
       properties:
-        from:
-          default: EUR
+        code:
+          example: gateway
           type: string
-        to:
-          default: USDC
+        currency:
+          example: ETH
           type: string
-        fromWallet:
-          default: 3598236
-          type: number
-        useMinimum:
-          default: false
-          type: boolean
-        useMaximum:
-          default: false
-          type: boolean
-        toWallet:
-          default: 3598514
-          type: number
-        amountIn:
-          default: 10
-          type: number
-        payInMethod:
-          default: wallet
-          type: string
-        payOutMethod:
-          default: wallet
-          type: string
-      required:
-      - amountIn
-      - from
-      - fromWallet
-      - payInMethod
-      - payOutMethod
-      - to
-      - toWallet
-      - useMaximum
-      - useMinimum
       type: object
-    Fee:
+    AccountMethod:
       example:
-        service: 0.8008281904610115
-        processing: 6.027456183070403
+        display: Visa xxxx-090
+        id: 1432
       properties:
-        service:
-          type: number
-        processing:
-          type: number
-      type: object
-    Form:
-      example:
-        action: action
-        parameters:
-          key: parameters
-      properties:
-        action:
+        id:
+          example: 1432
+          format: int64
+          type: integer
+        display:
+          example: Visa xxxx-090
           type: string
-        parameters:
-          additionalProperties:
-            type: string
-          type: object
       type: object
     AcceptedQuote:
       example:
@@ -607,17 +532,55 @@ components:
         payInInstruction:
           $ref: '#/components/schemas/PayInInstruction'
       type: object
-    PayOutInstruction:
+    Fees:
       example:
-        code: gateway
-        currency: ETH
+        percentage:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
+        value:
+          service: 0.8008281904610115
+          processing: 6.027456183070403
       properties:
-        code:
-          example: gateway
+        percentage:
+          $ref: '#/components/schemas/Fee'
+        value:
+          $ref: '#/components/schemas/Fee'
+      type: object
+    Fee:
+      example:
+        service: 0.8008281904610115
+        processing: 6.027456183070403
+      properties:
+        service:
+          type: number
+        processing:
+          type: number
+      type: object
+    PayInInstruction:
+      example:
+        redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
+        form:
+          action: action
+          parameters:
+            key: parameters
+        action: REDIRECT
+        displayParameters: '{}'
+      properties:
+        action:
+          enum:
+          - REDIRECT
+          - FORM
+          - DISPLAY
+          - NONE
           type: string
-        currency:
-          example: ETH
+        form:
+          $ref: '#/components/schemas/Form'
+        redirectUrl:
+          example: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
           type: string
+        displayParameters:
+          example: '{}'
+          type: object
       type: object
     PayOutMethod:
       example:
@@ -645,31 +608,68 @@ components:
             $ref: '#/components/schemas/AccountMethod'
           type: array
       type: object
-    PayInInstruction:
+    Form:
       example:
-        redirectUrl: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
-        form:
-          action: action
-          parameters:
-            key: parameters
-        action: REDIRECT
-        displayParameters: '{}'
+        action: action
+        parameters:
+          key: parameters
       properties:
         action:
-          enum:
-          - REDIRECT
-          - FORM
-          - DISPLAY
-          - NONE
           type: string
-        form:
-          $ref: '#/components/schemas/Form'
-        redirectUrl:
-          example: https://gateway.com/complete/3A6FAFFA-F21D-416E-B17E-2529A9BC44A0
-          type: string
-        displayParameters:
-          example: '{}'
+        parameters:
+          additionalProperties:
+            type: string
           type: object
+      type: object
+    QuoteRequest:
+      example:
+        fromWallet: 0.8008281904610115
+        useMinimum: false
+        payInMethod: wallet
+        from: EUR
+        amountIn: 1.4658129805029452
+        to: USDC
+        payOutMethod: wallet
+        useMaximum: false
+        toWallet: 6.027456183070403
+      properties:
+        from:
+          default: EUR
+          type: string
+        to:
+          default: USDC
+          type: string
+        fromWallet:
+          default: 3598236
+          type: number
+        useMinimum:
+          default: false
+          type: boolean
+        useMaximum:
+          default: false
+          type: boolean
+        toWallet:
+          default: 3598514
+          type: number
+        amountIn:
+          default: 10
+          type: number
+        payInMethod:
+          default: wallet
+          type: string
+        payOutMethod:
+          default: wallet
+          type: string
+      required:
+      - amountIn
+      - from
+      - fromWallet
+      - payInMethod
+      - payOutMethod
+      - to
+      - toWallet
+      - useMaximum
+      - useMinimum
       type: object
   securitySchemes:
     Hawk:

@@ -61,6 +61,56 @@ paths:
       - application/json
 components:
   schemas:
+    ApiError:
+      example:
+        code: code
+        details:
+          documentLink: documentLink
+          errors:
+            key:
+            - errors
+            - errors
+        message: message
+        status: status
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        details:
+          $ref: '#/components/schemas/Detail'
+    Network:
+      example:
+        nativeAsset: BTC
+        tagSupported: false
+        supportedAssets:
+        - code: BTC
+          model: UTXO
+          decimalPrecision: 0
+        - code: BTC
+          model: UTXO
+          decimalPrecision: 0
+        network: BITCOIN
+      properties:
+        network:
+          description: crypto network
+          example: BITCOIN
+          type: string
+        nativeAsset:
+          description: native network currency
+          example: BTC
+          type: string
+        supportedAssets:
+          description: list of assets supported by network
+          items:
+            $ref: '#/components/schemas/Asset'
+          type: array
+        tagSupported:
+          default: false
+          description: whether network supports address tags
+          type: boolean
     Asset:
       example:
         code: BTC
@@ -96,56 +146,6 @@ components:
           additionalProperties:
             items:
               type: string
-    Network:
-      example:
-        nativeAsset: BTC
-        tagSupported: false
-        supportedAssets:
-        - code: BTC
-          model: UTXO
-          decimalPrecision: 0
-        - code: BTC
-          model: UTXO
-          decimalPrecision: 0
-        network: BITCOIN
-      properties:
-        network:
-          description: crypto network
-          example: BITCOIN
-          type: string
-        nativeAsset:
-          description: native network currency
-          example: BTC
-          type: string
-        supportedAssets:
-          description: list of assets supported by network
-          items:
-            $ref: '#/components/schemas/Asset'
-          type: array
-        tagSupported:
-          default: false
-          description: whether network supports address tags
-          type: boolean
-    ApiError:
-      example:
-        code: code
-        details:
-          documentLink: documentLink
-          errors:
-            key:
-            - errors
-            - errors
-        message: message
-        status: status
-      properties:
-        code:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        details:
-          $ref: '#/components/schemas/Detail'
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

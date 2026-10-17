@@ -451,6 +451,19 @@ paths:
       - application/json
 components:
   schemas:
+    CreateAssetPoolRequest:
+      example:
+        reference: myUniqueRef333
+        name: Payment Processing Spanish VASP
+      properties:
+        name:
+          description: name of asset pool
+          example: Payment Processing Spanish VASP
+          type: string
+        reference:
+          description: custom supplied identifier for asset pool. Also used to initialise master key pair
+          example: myUniqueRef333
+          type: string
     AssetPoolSummary:
       example:
         balances:
@@ -470,20 +483,6 @@ components:
           items:
             $ref: '#/components/schemas/Balance'
           type: array
-    Detail:
-      example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
-      properties:
-        documentLink:
-          type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
     Balance:
       example:
         reserved: ''
@@ -515,34 +514,6 @@ components:
         available: {}
         reserved: {}
         blockchain: {}
-    UpdateAssetPoolRequest:
-      example:
-        property: masterKeyPairId
-        value: value
-      properties:
-        property:
-          description: name of asset pool property
-          enum:
-          - masterKeyPairId
-          - reference
-          example: masterKeyPairId
-          type: string
-        value:
-          description: value for the property
-          type: string
-    CreateAssetPoolRequest:
-      example:
-        reference: myUniqueRef333
-        name: Payment Processing Spanish VASP
-      properties:
-        name:
-          description: name of asset pool
-          example: Payment Processing Spanish VASP
-          type: string
-        reference:
-          description: custom supplied identifier for asset pool. Also used to initialise master key pair
-          example: myUniqueRef333
-          type: string
     ApiError:
       example:
         code: code
@@ -563,6 +534,35 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
+    Detail:
+      example:
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
+      properties:
+        documentLink:
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    UpdateAssetPoolRequest:
+      example:
+        property: masterKeyPairId
+        value: value
+      properties:
+        property:
+          description: name of asset pool property
+          enum:
+          - masterKeyPairId
+          - reference
+          example: masterKeyPairId
+          type: string
+        value:
+          description: value for the property
+          type: string
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration

@@ -171,20 +171,23 @@ paths:
       - application/json
 components:
   schemas:
-    Detail:
+    CreateKeyPairRequest:
       example:
-        documentLink: documentLink
-        errors:
-          key:
-          - errors
-          - errors
+        reference: myUniqueRef333
+        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        master: true
       properties:
-        documentLink:
+        assetPoolId:
+          description: asset pool id
+          format: uuid
           type: string
-        errors:
-          additionalProperties:
-            items:
-              type: string
+        reference:
+          description: custom identifier supplied for key pair that is used to link key pair to specific customer or use case
+          example: myUniqueRef333
+          type: string
+        master:
+          description: whether this is a master key for the asset pool
+          type: boolean
     KeyPair:
       example:
         reference: myUniqueRef333
@@ -207,33 +210,6 @@ components:
         master:
           description: whether this is a master key for the asset pool
           type: boolean
-    PaginatedResultKeyPair:
-      example:
-        pageable:
-          pageNumber: 6
-          pageSize: 1
-        content:
-        - reference: myUniqueRef333
-          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          master: true
-        - reference: myUniqueRef333
-          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          master: true
-        totalElements: 0
-      properties:
-        totalElements:
-          description: total number of items in all pages
-          format: int64
-          type: integer
-        content:
-          description: list of items
-          items:
-            $ref: '#/components/schemas/KeyPair'
-          type: array
-        pageable:
-          $ref: '#/components/schemas/Pageable'
     Pageable:
       example:
         pageNumber: 6
@@ -267,23 +243,47 @@ components:
           type: string
         details:
           $ref: '#/components/schemas/Detail'
-    CreateKeyPairRequest:
+    Detail:
       example:
-        reference: myUniqueRef333
-        assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        master: true
+        documentLink: documentLink
+        errors:
+          key:
+          - errors
+          - errors
       properties:
-        assetPoolId:
-          description: asset pool id
-          format: uuid
+        documentLink:
           type: string
-        reference:
-          description: custom identifier supplied for key pair that is used to link key pair to specific customer or use case
-          example: myUniqueRef333
-          type: string
-        master:
-          description: whether this is a master key for the asset pool
-          type: boolean
+        errors:
+          additionalProperties:
+            items:
+              type: string
+    PaginatedResultKeyPair:
+      example:
+        pageable:
+          pageNumber: 6
+          pageSize: 1
+        content:
+        - reference: myUniqueRef333
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          master: true
+        - reference: myUniqueRef333
+          assetPoolId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          master: true
+        totalElements: 0
+      properties:
+        totalElements:
+          description: total number of items in all pages
+          format: int64
+          type: integer
+        content:
+          description: list of items
+          items:
+            $ref: '#/components/schemas/KeyPair'
+          type: array
+        pageable:
+          $ref: '#/components/schemas/Pageable'
   securitySchemes:
     openId:
       openIdConnectUrl: https://auth.sandbox.layer1.com/auth/realms/bvnk/.well-known/openid-configuration
